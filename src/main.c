@@ -1,27 +1,30 @@
 #include "stm8s_conf.h"
-/**
-  *inc->stm8s_conf.h - раскоментировать строчки с нужными хедерами 
-  *периферии и необходимыми обработчиками прерываний. Все закоментированные
-  *обработчики ведут на бесконечные циклы.
-  * 
-  *Project->Options->General Options - выбрать мк
-  *
-  *Project->Options->Debugger - выбрать отладчик
-  *
-  *Project->Options->C/C++ Compiler->Preprocessor->Defined symbols  - задать
-  *семейство процессора(перечислены в lib->SPL->inc->stm8s.h), а также задать
-  *частоты внутренних и внешних генераторов(если не задать, то будут ипользованы
-  *значения по умолчанию из stm8s.h).
-  */
+#include "main.h"
+
+// User global variables
+struct Break xBreak;
 
 int SystemInit(void)
 {
-    return 0;
+  return 0;
 }
 
 void main(void)
 {
-	SystemInit();
-	while (1){};
+  SystemInit();
+  while (1)
+  {
+    if (xBreak.break_fsm == detect_rise)
+    {
+      if (bLinCheckBreak(&xBreak))
+      {
+        // switch lin receive fsm state
+      }
+      else
+      {
+        // Reset break fsm
+        xBreak.break_fsm = wait_fall;
+      }
+    }
+  };
 }
-

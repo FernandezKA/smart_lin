@@ -12,3 +12,10 @@ Debug/Obj/.ninja_log
 *.dnx
 *.ps1
 *.bat
+*.o
+*.out
+*.wsdt
+*.dbgdt
+*.ewd
+*.ewt
+*.eww
