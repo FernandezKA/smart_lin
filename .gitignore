@@ -1,0 +1,14 @@
+
+*.ewp
+Debug/Obj/.ninja_deps
+Debug/Obj/.ninja_log
+*.ninja
+*.pbi
+*.dep
+*.xcl
+*.pbd
+*.browse
+*.pbw
+*.dnx
+*.ps1
+*.bat
