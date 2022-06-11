@@ -27,5 +27,8 @@ INTERRUPT_HANDLER(UART1_TX_IRQHandler, 17)
 
 INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
 {
-  
+  //Clear status flags
+  UART1->SR = 0x00U;
+  //Get action on FSM receive
+  bLinPacketReceive(UART1->DR, &eLinReceive, &lin_rec);
 }

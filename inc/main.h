@@ -11,12 +11,16 @@
 
 #include "structure_definitions.h"
 #include "lin_hw_layer.h"
+#include "packet_parser.h"
 
 INTERRUPT void EXTI_PORTD_IRQHandler(void);
 INTERRUPT void UART1_TX_IRQHandler(void); /* UART1 TX */
 INTERRUPT void UART1_RX_IRQHandler(void); /* UART1 RX */
 
 extern uint32_t BAUDRATE;
+extern struct lin_packet lin_rec;
+extern enum Receive_FSM eLinReceive;
+
 
 
 #endif
