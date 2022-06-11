@@ -1,6 +1,8 @@
 #ifndef _main_h_
 #define _main_h_
 
+#define MAX_SIZE_DATA_FRAME 0x08U
+
 #define F_CPU 8000000U
 #define GET_BITS(x, pos) ((x & (1 << pos)) >> pos)
 
@@ -13,5 +15,8 @@
 INTERRUPT void EXTI_PORTD_IRQHandler(void);
 INTERRUPT void UART1_TX_IRQHandler(void); /* UART1 TX */
 INTERRUPT void UART1_RX_IRQHandler(void); /* UART1 RX */
+
+extern uint32_t BAUDRATE;
+
 
 #endif

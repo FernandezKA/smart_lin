@@ -1,6 +1,8 @@
 #ifndef _packet_parser_h_
 #define _packet_parser_h_
 
+#define SYNCH_FIELD 0x55U
+
 #include "main.h"
 
 enum Receive_FSM

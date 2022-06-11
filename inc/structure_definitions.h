@@ -7,7 +7,7 @@ struct lin_packet
 {
   uint8_t PID;
   uint8_t size;     // User field for size detect
-  uint8_t Data[8U]; // Max data frame size is 8 bytes
+  uint8_t Data[MAX_SIZE_DATA_FRAME]; // Max data frame size is 8 bytes
   uint8_t CRC;
   uint8_t CounterDataFrame;
 };
@@ -26,9 +26,9 @@ enum filter_trig
 
 struct filter_structure
 {
-  enum filter_trig filter_array[8U];
-  uint8_t low_edges[8U];
-  uint8_t high_edges[8U];
+  enum filter_trig filter_array[MAX_SIZE_DATA_FRAME];
+  uint8_t low_edges[MAX_SIZE_DATA_FRAME];
+  uint8_t high_edges[MAX_SIZE_DATA_FRAME];
   uint8_t used_filters; // Used filters detected at bit fields
 };
 

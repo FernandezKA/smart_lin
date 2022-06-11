@@ -3,6 +3,7 @@
 
 // User global variables
 struct Break xBreak;
+extern uint32_t BAUDRATE;
 
 int SystemInit(void)
 {
@@ -26,5 +27,8 @@ void main(void)
         xBreak.break_fsm = wait_fall;
       }
     }
+    //Check receive lin FSM state
+    if()
+
   };
 }

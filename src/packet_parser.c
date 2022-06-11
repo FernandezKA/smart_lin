@@ -7,13 +7,13 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_pac
   switch (*_rec_fsm)
   {
   case wait_break:
-    // This case handled on IRQ handler (pait of EXTI + TIM4)
+    // This case handled on IRQ handler (part of EXTI + TIM4)
 
     return false;
     break;
 
   case wait_synch:
-    if (_data == 0x55U)
+    if (_data == SYNCH_FIELD)
     {
       *_rec_fsm = wait_PID;
     }
@@ -25,7 +25,7 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_pac
     break;
 
   case wait_PID:
-    // Right now not detect parity error
+    // Right now I not detect parity error
     _packet->PID = _data & 0x3FU;
     _packet->size = u8GetSizeDataFrame(*_packet);
     return false;
