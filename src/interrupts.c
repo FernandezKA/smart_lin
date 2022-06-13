@@ -10,7 +10,7 @@ INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
     _cnt_val |= TIM1->CNTRL;
     xBreak.u16Counter = _cnt_val;
     xBreak.break_fsm = detect_rise;
-    vConfigLIN();
+    //vConfigLIN();
   }
   else
   { // Falling edge
