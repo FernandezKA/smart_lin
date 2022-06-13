@@ -70,13 +70,13 @@ bool bLinCheckBreak(struct Break *_break)
 {
   if (_break->break_fsm == detect_rise)
   {
-    if (_break->u8Counter > 0x08U && _break->u8Counter < 0x0CU)
+    if (_break->u16Counter > 0x08U && _break->u16Counter < 0x0CU)
     {
       return true;
     }
     else
     {
-      _break->u8Counter = 0x00U;
+      _break->u16Counter = 0x00U;
       _break->break_fsm = wait_fall;
       return false;
     }
@@ -85,4 +85,12 @@ bool bLinCheckBreak(struct Break *_break)
   {
     return false;
   }
+}
+
+void vConfigLIN(void){
+   GPIOD->CR2 &= ~(1U<<5);//DISABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
+}
+
+void vConfigBreak(void){
+    GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
 }

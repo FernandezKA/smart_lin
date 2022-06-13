@@ -3,7 +3,7 @@
 
 #define MAX_SIZE_DATA_FRAME 0x08U
 
-#define F_CPU 8000000U
+#define F_CPU 16000000U
 #define GET_BITS(x, pos) ((x & (1 << pos)) >> pos)
 
 #include "stm8s_conf.h"

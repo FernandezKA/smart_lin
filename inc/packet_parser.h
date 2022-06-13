@@ -5,6 +5,8 @@
 
 #include "main.h"
 
+/*This part of code used for packed received*/
+
 enum Receive_FSM
 {
   wait_break,
@@ -16,5 +18,8 @@ enum Receive_FSM
 };
 
 bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_packet *_packet);
+
+/* This part of code used for parse input packed with depend on user defined rules */
+
 
 #endif

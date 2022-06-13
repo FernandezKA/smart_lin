@@ -1,0 +1,18 @@
+#ifndef _init_h_
+#define _init_h_
+#include "main.h"
+
+void CLK_Init(void);
+
+void UART_Init(uint16_t BAUD);
+
+void LIN_Init(void);
+
+void PORT_Init(void);
+
+void TIM1_Init(void);
+
+void IRQ_Init(void);
+
+
+#endif

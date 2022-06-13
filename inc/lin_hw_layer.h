@@ -16,7 +16,7 @@ struct Break
     increment,
     detect_rise
   } break_fsm;
-  uint8_t u8Counter;
+  uint16_t u16Counter;
 };
 
 extern struct Break xBreak;
@@ -36,5 +36,9 @@ void vLinPacketClear(struct lin_packet *_packet);
 uint8_t u8GetSizeDataFrame(struct lin_packet _packet);
 
 bool bLinCheckBreak(struct Break* _break);
+
+void vConfigBreak(void);
+
+void vConfigLIN(void);
 
 #endif

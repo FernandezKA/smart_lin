@@ -1,0 +1,280 @@
+type	name	value	zone	address	bytes	access	other
+Internal	A	---			1	readWrite	strong	
+Internal	X	---			2	readWrite	strong	
+Internal	Y	---			2	readWrite	strong	
+Internal	SP	---			2	readWrite	strong	
+Internal	PC	---			3	readWrite	strong	
+Internal	CC	---			1	readWrite	strong	
+Internal	XL	---			1	readWrite	strong	
+Internal	XH	---			1	readWrite	strong	
+Internal	YL	---			1	readWrite	strong	
+Internal	YH	---			1	readWrite	strong	
+Internal	PCL	---			1	readWrite	strong	
+Internal	PCH	---			1	readWrite	strong	
+Internal	PCE	---			1	readWrite	strong	
+Internal	?b0	---			1	readWrite	strong	
+Internal	?b1	---			1	readWrite	strong	
+Internal	?b2	---			1	readWrite	strong	
+Internal	?b3	---			1	readWrite	strong	
+Internal	?b4	---			1	readWrite	strong	
+Internal	?b5	---			1	readWrite	strong	
+Internal	?b6	---			1	readWrite	strong	
+Internal	?b7	---			1	readWrite	strong	
+Internal	?b8	---			1	readWrite	strong	
+Internal	?b9	---			1	readWrite	strong	
+Internal	?b10	---			1	readWrite	strong	
+Internal	?b11	---			1	readWrite	strong	
+Internal	?b12	---			1	readWrite	strong	
+Internal	?b13	---			1	readWrite	strong	
+Internal	?b14	---			1	readWrite	strong	
+Internal	?b15	---			1	readWrite	strong	
+Internal	?w0	---			2	readWrite	strong	
+Internal	?w1	---			2	readWrite	strong	
+Internal	?w2	---			2	readWrite	strong	
+Internal	?w3	---			2	readWrite	strong	
+Internal	?w4	---			2	readWrite	strong	
+Internal	?w5	---			2	readWrite	strong	
+Internal	?w6	---			2	readWrite	strong	
+Internal	?w7	---			2	readWrite	strong	
+Internal	?e0	---			3	readWrite	strong	
+Internal	?e1	---			3	readWrite	strong	
+Internal	?e2	---			3	readWrite	strong	
+Internal	?e3	---			3	readWrite	strong	
+Internal	?l0	---			4	readWrite	strong	
+Internal	?l1	---			4	readWrite	strong	
+Internal	?l2	---			4	readWrite	strong	
+Internal	?l3	---			4	readWrite	strong	
+Factory	PA_ODR	---	Memory	0x5000	1	readWrite	strong	
+Factory	PA_IDR	---	Memory	0x5001	1	readWrite	strong	
+Factory	PA_DDR	---	Memory	0x5002	1	readWrite	strong	
+Factory	PA_CR1	---	Memory	0x5003	1	readWrite	strong	
+Factory	PA_CR2	---	Memory	0x5004	1	readWrite	strong	
+Factory	PB_ODR	---	Memory	0x5005	1	readWrite	strong	
+Factory	PB_IDR	---	Memory	0x5006	1	readWrite	strong	
+Factory	PB_DDR	---	Memory	0x5007	1	readWrite	strong	
+Factory	PB_CR1	---	Memory	0x5008	1	readWrite	strong	
+Factory	PB_CR2	---	Memory	0x5009	1	readWrite	strong	
+Factory	PC_ODR	---	Memory	0x500a	1	readWrite	strong	
+Factory	PC_IDR	---	Memory	0x500b	1	readWrite	strong	
+Factory	PC_DDR	---	Memory	0x500c	1	readWrite	strong	
+Factory	PC_CR1	---	Memory	0x500d	1	readWrite	strong	
+Factory	PC_CR2	---	Memory	0x500e	1	readWrite	strong	
+Factory	PD_ODR	---	Memory	0x500f	1	readWrite	strong	
+Factory	PD_IDR	---	Memory	0x5010	1	readWrite	strong	
+Factory	PD_DDR	---	Memory	0x5011	1	readWrite	strong	
+Factory	PD_CR1	---	Memory	0x5012	1	readWrite	strong	
+Factory	PD_CR2	---	Memory	0x5013	1	readWrite	strong	
+Factory	PE_ODR	---	Memory	0x5014	1	readWrite	strong	
+Factory	PE_IDR	---	Memory	0x5015	1	readWrite	strong	
+Factory	PE_DDR	---	Memory	0x5016	1	readWrite	strong	
+Factory	PE_CR1	---	Memory	0x5017	1	readWrite	strong	
+Factory	PE_CR2	---	Memory	0x5018	1	readWrite	strong	
+Factory	PF_ODR	---	Memory	0x5019	1	readWrite	strong	
+Factory	PF_IDR	---	Memory	0x501a	1	readWrite	strong	
+Factory	PF_DDR	---	Memory	0x501b	1	readWrite	strong	
+Factory	PF_CR1	---	Memory	0x501c	1	readWrite	strong	
+Factory	PF_CR2	---	Memory	0x501d	1	readWrite	strong	
+Factory	FLASH_CR1	---	Memory	0x505a	1	readWrite	strong	
+Factory	FLASH_CR2	---	Memory	0x505b	1	readWrite	strong	
+Factory	FLASH_NCR2	---	Memory	0x505c	1	readWrite	strong	
+Factory	FLASH_FPR	---	Memory	0x505d	1	readWrite	strong	
+Factory	FLASH_NFPR	---	Memory	0x505e	1	readWrite	strong	
+Factory	FLASH_IAPSR	---	Memory	0x505f	1	readWrite	strong	
+Factory	FLASH_PUKR	---	Memory	0x5062	1	readWrite	strong	
+Factory	FLASH_DUKR	---	Memory	0x5064	1	readWrite	strong	
+Factory	EXTI_CR1	---	Memory	0x50a0	1	readWrite	strong	
+Factory	EXTI_CR2	---	Memory	0x50a1	1	readWrite	strong	
+Factory	RST_SR	---	Memory	0x50b3	1	readWrite	strong	
+Factory	ITC_SPR1	---	Memory	0x7f70	1	readWrite	strong	
+Factory	ITC_SPR2	---	Memory	0x7f71	1	readWrite	strong	
+Factory	ITC_SPR3	---	Memory	0x7f72	1	readWrite	strong	
+Factory	ITC_SPR4	---	Memory	0x7f73	1	readWrite	strong	
+Factory	ITC_SPR5	---	Memory	0x7f74	1	readWrite	strong	
+Factory	ITC_SPR6	---	Memory	0x7f75	1	readWrite	strong	
+Factory	ITC_SPR7	---	Memory	0x7f76	1	readWrite	strong	
+Factory	ITC_SPR8	---	Memory	0x7f77	1	readWrite	strong	
+Factory	CLK_ICKR	---	Memory	0x50c0	1	readWrite	strong	
+Factory	CLK_ECKR	---	Memory	0x50c1	1	readWrite	strong	
+Factory	CLK_CMSR	---	Memory	0x50c3	1	readWrite	strong	
+Factory	CLK_SWR	---	Memory	0x50c4	1	readWrite	strong	
+Factory	CLK_SWCR	---	Memory	0x50c5	1	readWrite	strong	
+Factory	CLK_CKDIVR	---	Memory	0x50c6	1	readWrite	strong	
+Factory	CLK_PCKENR1	---	Memory	0x50c7	1	readWrite	strong	
+Factory	CLK_CSSR	---	Memory	0x50c8	1	readWrite	strong	
+Factory	CLK_CCOR	---	Memory	0x50c9	1	readWrite	strong	
+Factory	CLK_PCKENR2	---	Memory	0x50ca	1	readWrite	strong	
+Factory	CLK_HSITRIMR	---	Memory	0x50cc	1	readWrite	strong	
+Factory	CLK_SWIMCCR	---	Memory	0x50cd	1	readWrite	strong	
+Factory	WWDG_CR	---	Memory	0x50d1	1	readWrite	strong	
+Factory	WWDG_WR	---	Memory	0x50d2	1	readWrite	strong	
+Factory	IWDG_KR	---	Memory	0x50e0	1	readWrite	strong	
+Factory	IWDG_PR	---	Memory	0x50e1	1	readWrite	strong	
+Factory	IWDG_RLR	---	Memory	0x50e2	1	readWrite	strong	
+Factory	AWU_CSR1	---	Memory	0x50f0	1	readWrite	strong	
+Factory	AWU_APR	---	Memory	0x50f1	1	readWrite	strong	
+Factory	AWU_TBR	---	Memory	0x50f2	1	readWrite	strong	
+Factory	BEEP_CSR	---	Memory	0x50f3	1	readWrite	strong	
+Factory	SPI_CR1	---	Memory	0x5200	1	readWrite	strong	
+Factory	SPI_CR2	---	Memory	0x5201	1	readWrite	strong	
+Factory	SPI_ICR	---	Memory	0x5202	1	readWrite	strong	
+Factory	SPI_SR	---	Memory	0x5203	1	readWrite	strong	
+Factory	SPI_DR	---	Memory	0x5204	1	readWrite	strong	
+Factory	SPI_CRCPR	---	Memory	0x5205	1	readWrite	strong	
+Factory	SPI_RXCRCR	---	Memory	0x5206	1	readWrite	strong	
+Factory	SPI_TXCRCR	---	Memory	0x5207	1	readWrite	strong	
+Factory	I2C_CR1	---	Memory	0x5210	1	readWrite	strong	
+Factory	I2C_CR2	---	Memory	0x5211	1	readWrite	strong	
+Factory	I2C_FREQR	---	Memory	0x5212	1	readWrite	strong	
+Factory	I2C_OARL	---	Memory	0x5213	1	readWrite	strong	
+Factory	I2C_OARH	---	Memory	0x5214	1	readWrite	strong	
+Factory	I2C_DR	---	Memory	0x5216	1	readWrite	strong	
+Factory	I2C_SR1	---	Memory	0x5217	1	readWrite	strong	
+Factory	I2C_SR2	---	Memory	0x5218	1	readWrite	strong	
+Factory	I2C_SR3	---	Memory	0x5219	1	readWrite	strong	
+Factory	I2C_ITR	---	Memory	0x521a	1	readWrite	strong	
+Factory	I2C_CCRL	---	Memory	0x521b	1	readWrite	strong	
+Factory	I2C_CCRH	---	Memory	0x521c	1	readWrite	strong	
+Factory	I2C_TRISER	---	Memory	0x521d	1	readWrite	strong	
+Factory	I2C_PECR	---	Memory	0x521e	1	readWrite	strong	
+Factory	UART1_SR	---	Memory	0x5230	1	readWrite	strong	
+Factory	UART1_DR	---	Memory	0x5231	1	readWrite	strong	
+Factory	UART1_BRR1	---	Memory	0x5232	1	readWrite	strong	
+Factory	UART1_BRR2	---	Memory	0x5233	1	readWrite	strong	
+Factory	UART1_CR1	---	Memory	0x5234	1	readWrite	strong	
+Factory	UART1_CR2	---	Memory	0x5235	1	readWrite	strong	
+Factory	UART1_CR3	---	Memory	0x5236	1	readWrite	strong	
+Factory	UART1_CR4	---	Memory	0x5237	1	readWrite	strong	
+Factory	UART1_CR5	---	Memory	0x5238	1	readWrite	strong	
+Factory	UART1_GTR	---	Memory	0x5239	1	readWrite	strong	
+Factory	UART1_PSCR	---	Memory	0x523a	1	readWrite	strong	
+Factory	TIM1_CR1	---	Memory	0x5250	1	readWrite	strong	
+Factory	TIM1_CR2	---	Memory	0x5251	1	readWrite	strong	
+Factory	TIM1_SMCR	---	Memory	0x5252	1	readWrite	strong	
+Factory	TIM1_ETR	---	Memory	0x5253	1	readWrite	strong	
+Factory	TIM1_IER	---	Memory	0x5254	1	readWrite	strong	
+Factory	TIM1_SR1	---	Memory	0x5255	1	readWrite	strong	
+Factory	TIM1_SR2	---	Memory	0x5256	1	readWrite	strong	
+Factory	TIM1_EGR	---	Memory	0x5257	1	readWrite	strong	
+Factory	TIM1_CCMR1	---	Memory	0x5258	1	readWrite	strong	
+Factory	TIM1_CCMR2	---	Memory	0x5259	1	readWrite	strong	
+Factory	TIM1_CCMR3	---	Memory	0x525a	1	readWrite	strong	
+Factory	TIM1_CCMR4	---	Memory	0x525b	1	readWrite	strong	
+Factory	TIM1_CCER1	---	Memory	0x525c	1	readWrite	strong	
+Factory	TIM1_CCER2	---	Memory	0x525d	1	readWrite	strong	
+Factory	TIM1_CNTRH	---	Memory	0x525e	1	readWrite	strong	
+Factory	TIM1_CNTRL	---	Memory	0x525f	1	readWrite	strong	
+Factory	TIM1_PSCRH	---	Memory	0x5260	1	readWrite	strong	
+Factory	TIM1_PSCRL	---	Memory	0x5261	1	readWrite	strong	
+Factory	TIM1_ARRH	---	Memory	0x5262	1	readWrite	strong	
+Factory	TIM1_ARRL	---	Memory	0x5263	1	readWrite	strong	
+Factory	TIM1_RCR	---	Memory	0x5264	1	readWrite	strong	
+Factory	TIM1_CCR1H	---	Memory	0x5265	1	readWrite	strong	
+Factory	TIM1_CCR1L	---	Memory	0x5266	1	readWrite	strong	
+Factory	TIM1_CCR2H	---	Memory	0x5267	1	readWrite	strong	
+Factory	TIM1_CCR2L	---	Memory	0x5268	1	readWrite	strong	
+Factory	TIM1_CCR3H	---	Memory	0x5269	1	readWrite	strong	
+Factory	TIM1_CCR3L	---	Memory	0x526a	1	readWrite	strong	
+Factory	TIM1_CCR4H	---	Memory	0x526b	1	readWrite	strong	
+Factory	TIM1_CCR4L	---	Memory	0x526c	1	readWrite	strong	
+Factory	TIM1_BKR	---	Memory	0x526d	1	readWrite	strong	
+Factory	TIM1_DTR	---	Memory	0x526e	1	readWrite	strong	
+Factory	TIM1_OISR	---	Memory	0x526f	1	readWrite	strong	
+Factory	TIM2_CR1	---	Memory	0x5300	1	readWrite	strong	
+Factory	TIM2_IER	---	Memory	0x5303	1	readWrite	strong	
+Factory	TIM2_SR1	---	Memory	0x5304	1	readWrite	strong	
+Factory	TIM2_SR2	---	Memory	0x5305	1	readWrite	strong	
+Factory	TIM2_EGR	---	Memory	0x5306	1	readWrite	strong	
+Factory	TIM2_CCMR1	---	Memory	0x5307	1	readWrite	strong	
+Factory	TIM2_CCMR2	---	Memory	0x5308	1	readWrite	strong	
+Factory	TIM2_CCMR3	---	Memory	0x5309	1	readWrite	strong	
+Factory	TIM2_CCER1	---	Memory	0x530a	1	readWrite	strong	
+Factory	TIM2_CCER2	---	Memory	0x530b	1	readWrite	strong	
+Factory	TIM2_CNTRH	---	Memory	0x530c	1	readWrite	strong	
+Factory	TIM2_CNTRL	---	Memory	0x530d	1	readWrite	strong	
+Factory	TIM2_PSCR	---	Memory	0x530e	1	readWrite	strong	
+Factory	TIM2_ARRH	---	Memory	0x530f	1	readWrite	strong	
+Factory	TIM2_ARRL	---	Memory	0x5310	1	readWrite	strong	
+Factory	TIM2_CCR1H	---	Memory	0x5311	1	readWrite	strong	
+Factory	TIM2_CCR1L	---	Memory	0x5312	1	readWrite	strong	
+Factory	TIM2_CCR2H	---	Memory	0x5313	1	readWrite	strong	
+Factory	TIM2_CCR2L	---	Memory	0x5314	1	readWrite	strong	
+Factory	TIM2_CCR3H	---	Memory	0x5315	1	readWrite	strong	
+Factory	TIM2_CCR3L	---	Memory	0x5316	1	readWrite	strong	
+Factory	TIM4_CR1	---	Memory	0x5340	1	readWrite	strong	
+Factory	TIM4_IER	---	Memory	0x5343	1	readWrite	strong	
+Factory	TIM4_SR	---	Memory	0x5344	1	readWrite	strong	
+Factory	TIM4_EGR	---	Memory	0x5345	1	readWrite	strong	
+Factory	TIM4_CNTR	---	Memory	0x5346	1	readWrite	strong	
+Factory	TIM4_PSCR	---	Memory	0x5347	1	readWrite	strong	
+Factory	TIM4_ARR	---	Memory	0x5348	1	readWrite	strong	
+Factory	ADC_DB0RH	---	Memory	0x53e0	1	readWrite	strong	
+Factory	ADC_DB0RL	---	Memory	0x53e1	1	readWrite	strong	
+Factory	ADC_DB1RH	---	Memory	0x53e2	1	readWrite	strong	
+Factory	ADC_DB1RL	---	Memory	0x53e3	1	readWrite	strong	
+Factory	ADC_DB2RH	---	Memory	0x53e4	1	readWrite	strong	
+Factory	ADC_DB2RL	---	Memory	0x53e5	1	readWrite	strong	
+Factory	ADC_DB3RH	---	Memory	0x53e6	1	readWrite	strong	
+Factory	ADC_DB3RL	---	Memory	0x53e7	1	readWrite	strong	
+Factory	ADC_DB4RH	---	Memory	0x53e8	1	readWrite	strong	
+Factory	ADC_DB4RL	---	Memory	0x53e9	1	readWrite	strong	
+Factory	ADC_DB5RH	---	Memory	0x53ea	1	readWrite	strong	
+Factory	ADC_DB5RL	---	Memory	0x53eb	1	readWrite	strong	
+Factory	ADC_DB6RH	---	Memory	0x53ec	1	readWrite	strong	
+Factory	ADC_DB6RL	---	Memory	0x53ed	1	readWrite	strong	
+Factory	ADC_DB7RH	---	Memory	0x53ee	1	readWrite	strong	
+Factory	ADC_DB7RL	---	Memory	0x53ef	1	readWrite	strong	
+Factory	ADC_DB8RH	---	Memory	0x53f0	1	readWrite	strong	
+Factory	ADC_DB8RL	---	Memory	0x53f1	1	readWrite	strong	
+Factory	ADC_DB9RH	---	Memory	0x53f2	1	readWrite	strong	
+Factory	ADC_DB9RL	---	Memory	0x53f3	1	readWrite	strong	
+Factory	ADC_CSR	---	Memory	0x5400	1	readWrite	strong	
+Factory	ADC_CR1	---	Memory	0x5401	1	readWrite	strong	
+Factory	ADC_CR2	---	Memory	0x5402	1	readWrite	strong	
+Factory	ADC_CR3	---	Memory	0x5403	1	readWrite	strong	
+Factory	ADC_DRH	---	Memory	0x5404	1	readWrite	strong	
+Factory	ADC_DRL	---	Memory	0x5405	1	readWrite	strong	
+Factory	ADC_TDRH	---	Memory	0x5406	1	readWrite	strong	
+Factory	ADC_TDRL	---	Memory	0x5407	1	readWrite	strong	
+Factory	ADC_HTRH	---	Memory	0x5408	1	readWrite	strong	
+Factory	ADC_HTRL	---	Memory	0x5409	1	readWrite	strong	
+Factory	ADC_LTRH	---	Memory	0x540a	1	readWrite	strong	
+Factory	ADC_LTRL	---	Memory	0x540b	1	readWrite	strong	
+Factory	ADC_AWSRH	---	Memory	0x540c	1	readWrite	strong	
+Factory	ADC_AWSRL	---	Memory	0x540d	1	readWrite	strong	
+Factory	ADC_AWCRH	---	Memory	0x540e	1	readWrite	strong	
+Factory	ADC_AWCRL	---	Memory	0x540f	1	readWrite	strong	
+Factory	CPU_A	---	Memory	0x7f00	1	readWrite	strong	
+Factory	CPU_PCE	---	Memory	0x7f01	1	readWrite	strong	
+Factory	CPU_PCH	---	Memory	0x7f02	1	readWrite	strong	
+Factory	CPU_PCL	---	Memory	0x7f03	1	readWrite	strong	
+Factory	CPU_XH	---	Memory	0x7f04	1	readWrite	strong	
+Factory	CPU_XL	---	Memory	0x7f05	1	readWrite	strong	
+Factory	CPU_YH	---	Memory	0x7f06	1	readWrite	strong	
+Factory	CPU_YL	---	Memory	0x7f07	1	readWrite	strong	
+Factory	CPU_SPH	---	Memory	0x7f08	1	readWrite	strong	
+Factory	CPU_SPL	---	Memory	0x7f09	1	readWrite	strong	
+Factory	CPU_CCR	---	Memory	0x7f0a	1	readWrite	strong	
+Factory	CPU_CFG_GCR	---	Memory	0x7f60	1	readWrite	strong	
+Factory	SWIM_CSR	---	Memory	0x7f80	1	readWrite	strong	
+Factory	DM_BK1RE	---	Memory	0x7f90	1	readWrite	strong	
+Factory	DM_BK1RH	---	Memory	0x7f91	1	readWrite	strong	
+Factory	DM_BK1RL	---	Memory	0x7f92	1	readWrite	strong	
+Factory	DM_BK2RE	---	Memory	0x7f93	1	readWrite	strong	
+Factory	DM_BK2RH	---	Memory	0x7f94	1	readWrite	strong	
+Factory	DM_BK2RL	---	Memory	0x7f95	1	readWrite	strong	
+Factory	DM_CR1	---	Memory	0x7f96	1	readWrite	strong	
+Factory	DM_CR2	---	Memory	0x7f97	1	readWrite	strong	
+Factory	DM_CSR1	---	Memory	0x7f98	1	readWrite	strong	
+Factory	DM_CSR2	---	Memory	0x7f99	1	readWrite	strong	
+Factory	DM_ENFCTR	---	Memory	0x7f9a	1	readWrite	strong	
+Factory	OPT0	---	Memory	0x4800	1	readWrite	strong	
+Factory	OPT1	---	Memory	0x4801	1	readWrite	strong	
+Factory	NOPT1	---	Memory	0x4802	1	readWrite	strong	
+Factory	OPT2	---	Memory	0x4803	1	readWrite	strong	
+Factory	NOPT2	---	Memory	0x4804	1	readWrite	strong	
+Factory	OPT4	---	Memory	0x4807	1	readWrite	strong	
+Factory	NOPT4	---	Memory	0x4808	1	readWrite	strong	
+Factory	OPT5	---	Memory	0x4809	1	readWrite	strong	
+Factory	NOPT5	---	Memory	0x480a	1	readWrite	strong	
+Factory	OPT3	---	Memory	0x4805	1	readWrite	strong	
+Factory	NOPT3	---	Memory	0x4806	1	readWrite	strong	

@@ -3,17 +3,20 @@
 INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
   // Check line state
-  if ((GPIOD->IDR & (1U << 6)) == (1 << 6))
+  if ((GPIOD->IDR & (1U << 5)) == (1 << 5))
   { // Rising edge
     uint16_t _cnt_val = 0x00U;
     _cnt_val = TIM1->CNTRH << 8;
     _cnt_val |= TIM1->CNTRL;
+    xBreak.u16Counter = _cnt_val;
     xBreak.break_fsm = detect_rise;
+    vConfigLIN();
   }
   else
   { // Falling edge
-    TIM1->CNTRH = 0x00U;
     TIM1->CNTRL = 0x00U;
+    TIM1->CNTRH = 0x00U;
+    TIM1->CR1|=TIM1_CR1_CEN;
     xBreak.break_fsm = increment;
   }
 }
