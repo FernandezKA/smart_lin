@@ -7,6 +7,8 @@ struct Break xBreak;
 extern uint32_t BAUDRATE;
 enum Receive_FSM eLinReceive;
 struct lin_packet lin_rec;
+enum mode curr_mode = work; 
+FIFO uart_rx, uart_tx;
 
 int SystemInit(void)
 {
@@ -15,16 +17,61 @@ int SystemInit(void)
   UART_Init(9600U);
   TIM1_Init();
   IRQ_Init();
+  GetReset(&uart_rx);
+  GetReset(&uart_tx);
   return 0;
 }
 
 void main(void)
 {
+  bool cmd_receive = false;
   SystemInit();
+  curr_mode = GetDevMode();
+  enum cmd curr_cmd = undef;
+  (curr_mode == config) ? (config_uart()) : (config_lin());
   while (1)
   {
-    //TODO: ADD RECEIVE FROM SOFT USART
+    if(GetSize(&uart_rx) != 0x00U){ //receive new data
+        switch(curr_mode){
+          case work:
     
+            break;
+    
+          case config:
+            curr_cmd = get_command(Pull(&uart_rx));
+            if(!cmd_receive){
+              if(undef != curr_cmd){
+                cmd_receive = true;
+                switch(curr_cmd){
+                case dev_info:
+                    get_dev_info(&uart_tx);
+                  break;
+                  
+                case read_config:
+                  
+                  break;
+                  
+                case write_config:
+                  
+                  break;
+                }
+              }
+              else{
+                cmd_receive = false;
+              }
+            }
+            break;
+      }
+    }
+    
+    //Transmit data on IRQ
+    if(GetSize(&uart_tx) != 0x00U){
+      UART1->CR2 |= UART1_CR2_TIEN;
+      UART1->DR = Pull(&uart_tx);
+    }
+    else{
+      UART1->CR2 &= ~UART1_CR2_TIEN;
+    }
     
     //Switch state on receive fsm 
     if (xBreak.break_fsm == detect_rise)
@@ -50,3 +97,10 @@ void main(void)
 
   };
 }
+
+#ifdef USE_FULL_ASSERT
+void assert_failed(u8 *file, u32 line)
+{
+  return;
+}
+#endif

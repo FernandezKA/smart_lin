@@ -17,7 +17,7 @@ void LIN_Init(void){
 }
 
 void PORT_Init(void){
-  GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
+  //GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION //REPLACE ON LIN_CONFIG
   EXTI->CR1 |= (1U<<7 | 1U<<6); //RISE AND FALL DETECTION ON PORTB 
 }
 
@@ -29,4 +29,14 @@ void TIM1_Init(void){
   TIM1->CR1|=TIM1_CR1_OPM;
   TIM1->PSCRL = (uint8_t)(((F_CPU)/9600U) & 0xFF);
   TIM1->PSCRH = (uint8_t) ((((F_CPU)/9600U) & 0xFF00) >> 8);
+}
+
+void config_uart(void){
+  GPIOD->CR2 &= ~(1U<<5); //Disable external IRQ
+  UART1->CR2 |= UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN;
+}
+
+void config_lin(void){
+  UART1->CR2 &= ~(UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN);
+  GPIOD->CR2 |= (1U<<5);
 }

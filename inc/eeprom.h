@@ -7,7 +7,6 @@
 #define EEPROM_START_PACKET ((uint32_t) 0x004040)
 #define EEPROM_END_PACKET ((uint32_t) 0x004280)
 
-#define COUNT_PACKET 20U
 
 struct edges{
   uint8_t edges_low[8U];

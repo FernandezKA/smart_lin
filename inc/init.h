@@ -14,5 +14,8 @@ void TIM1_Init(void);
 
 void IRQ_Init(void);
 
+void config_uart(void);
+
+void config_lin(void);
 
 #endif

@@ -23,15 +23,20 @@ INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 
 INTERRUPT_HANDLER(UART1_TX_IRQHandler, 17)
 {
-  while (1)
-  {
-  };
+  if(GetSize(&uart_tx) == 0x01U){
+    UART1->DR = Pull(&uart_tx);
+    UART1->CR2 &= ~UART1_CR2_TIEN;
+  }
+  else{
+    UART1->DR = Pull(&uart_tx);
+  }
 }
 
 INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
 {
   //Clear status flags
   UART1->SR = 0x00U;
+  Push(&uart_rx, UART1->DR);
   //Get action on FSM receive
-  bLinPacketReceive(UART1->DR, &eLinReceive, &lin_rec);
+  //bLinPacketReceive(UART1->DR, &eLinReceive, &lin_rec);
 }
