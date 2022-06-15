@@ -1,5 +1,7 @@
 #include "communication.h"
 #include "eeprom.h"
+#include "init.h"
+
 
 uint8_t configArray[CONFIG_SIZE];
 
@@ -50,6 +52,14 @@ bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data){
   }
 }
 
+void get_send_config(uint8_t* pData){
+  if(read_config_packet(pData)){
+    for(uint16_t i = 0; i < CONFIG_SIZE; ++i){
+      send_byte(pData[i]);
+    }
+  }
+}
+
 void send_ack(void)
 {
   send_byte(0x55U);
@@ -79,20 +89,20 @@ bool check_crc(uint8_t rCRC, uint8_t* pData, uint16_t size){
   return (rCRC == get_crc(pData, size));
 }
 
-void get_send_config(uint8_t* pData, uint16_t size){
-  if(read_config_packet(pData)){
-    for(uint16_t i = 0; i < CONFIG_SIZE; ++i){
-      send_byte(pData[i]);
-    }
-  }
-}
-
 void print(char* pData){
   char last = 0x00U, curr = 0x00U;
   uint8_t index = 0x00U;
   while((last != 0x0A && curr != 0x0D) || (last != 0x0D && curr != 0x0A)){
-    send_byte(pData[index]);
+    last = curr;
+    curr = pData[index++];
+    send_byte(curr);
   }
 }
 
-
+void upd_config(void)
+{
+  uint16_t baud = 0x00U;
+  baud = (FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t) *3U) << 8);
+  baud |=  FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t) * 4U);
+  set_baud(baud);
+}

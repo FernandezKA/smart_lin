@@ -40,3 +40,9 @@ void config_lin(void){
   UART1->CR2 &= ~(UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN);
   GPIOD->CR2 |= (1U<<5);
 }
+
+void set_baud(uint16_t _baud){
+  uint16_t prescaler = F_CPU/_baud;
+  UART1->BRR1 = (prescaler & 0xFF0) >> 4;
+  UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
+}

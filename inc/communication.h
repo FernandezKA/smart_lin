@@ -17,6 +17,7 @@ enum cmd{
   write_config = 0x60U, 
   undef
 };
+
 enum cmd get_command(uint8_t _data);
 
 enum mode GetDevMode(void);
@@ -24,6 +25,10 @@ enum mode GetDevMode(void);
 void get_dev_info(struct FIFO_STR* fifo);
 
 bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data);
+
+void get_send_config(uint8_t* pData);
+
+void upd_config(void);
 
 void send_ack(void);
 

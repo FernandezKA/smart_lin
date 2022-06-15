@@ -18,4 +18,5 @@ void config_uart(void);
 
 void config_lin(void);
 
+void set_baud(uint16_t _baud);
 #endif

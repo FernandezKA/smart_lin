@@ -54,13 +54,19 @@ void main(void)
                   break;
                   
                 case read_config:
-                  
+                  if(read_config_packet(configArray)){
+                    get_send_config(configArray);
+                  }
+                  else{
+                    print("Config. not exist\n\r");
+                  }
                   break;
                   
                 case write_config:
                   if(get_receive_config(configArray, &tmp_arr_index, Pull(&uart_tx))){ //Received packet, wait CRC
                     if(check_crc(Pull(&uart_tx), configArray, tmp_arr_index)){ //CRC is valid
                       write_config_packet(configArray, tmp_arr_index);
+                      upd_config(); 
                     }
                     else{
                       print("Invalid CRC\n\r");
