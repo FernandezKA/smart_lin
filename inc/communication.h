@@ -19,13 +19,11 @@ enum cmd{
 };
 enum cmd get_command(uint8_t _data);
 
-bool config_receive(uint8_t* pArray, uint8_t _data);
-
 enum mode GetDevMode(void);
 
 void get_dev_info(struct FIFO_STR* fifo);
 
-bool get_receive_config(uint8_t* pData, uint8_t* index, uint8_t Data);
+bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data);
 
 void send_ack(void);
 
@@ -33,7 +31,10 @@ void send_nack(void);
 
 void send_byte(uint8_t data);
 
-uint8_t get_crc(uint8_t* pData, uint8_t size);
+uint8_t get_crc(uint8_t* pData, uint16_t size);
 
-bool check_crc(uint8_t rCRC, uint8_t* pData, uint8_t size);
+bool check_crc(uint8_t rCRC, uint8_t* pData, uint16_t size);
+
+void print(char* pData);
+
 #endif

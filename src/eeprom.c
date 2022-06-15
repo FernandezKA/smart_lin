@@ -45,3 +45,23 @@ bool read_pid_filter(uint8_t* pList)
   }
   return true;
 }
+
+void write_config_packet(uint8_t* pData, uint16_t size){
+  FLASH_Unlock(FLASH_MEMTYPE_DATA);
+  for(uint16_t i = 0; i < size; ++i){
+    FLASH_ProgramByte(EEPROM_START_PACKET + sizeof(uint8_t), pData[i]);
+  }
+  FLASH_Lock(FLASH_MEMTYPE_DATA);
+}
+
+bool read_config_packet(uint8_t* pData){
+  if(0xFF == FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t))){
+    return false;
+  }
+  else{
+    for(uint16_t i = 0; i < CONFIG_SIZE; ++i){
+      pData[i] = FLASH_ReadByte(EEPROM_START_PACKET + sizeof(uint8_t) * i);
+    }
+    return true;
+  }
+}

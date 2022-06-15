@@ -39,4 +39,8 @@ bool read_pid_slave(uint8_t* pList);
 
 bool read_pid_filter(uint8_t* pList);
 
+void write_config_packet(uint8_t* pData, uint16_t size);
+
+bool read_config_packet(uint8_t* pData);
+
 #endif

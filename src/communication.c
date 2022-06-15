@@ -39,7 +39,7 @@ void get_dev_info(FIFO* fifo){
   }
 }
 
-bool get_receive_config(uint8_t* pData, uint8_t* index, uint8_t Data){
+bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data){
   if(*index < CONFIG_SIZE){
     pData[(*index)++] = Data;
     return false;
@@ -67,7 +67,7 @@ void send_byte(uint8_t data){
   UART1->DR = data;
 }
 
-uint8_t get_crc(uint8_t* pData, uint8_t size){
+uint8_t get_crc(uint8_t* pData, uint16_t size){
   uint8_t crc = 0xFFU;
   for(uint8_t i = 0; i < size; ++i){
     crc ^= pData[i];
@@ -75,8 +75,24 @@ uint8_t get_crc(uint8_t* pData, uint8_t size){
   return crc;
 }
 
-bool check_crc(uint8_t rCRC, uint8_t* pData, uint8_t size){
+bool check_crc(uint8_t rCRC, uint8_t* pData, uint16_t size){
   return (rCRC == get_crc(pData, size));
+}
+
+void get_send_config(uint8_t* pData, uint16_t size){
+  if(read_config_packet(pData)){
+    for(uint16_t i = 0; i < CONFIG_SIZE; ++i){
+      send_byte(pData[i]);
+    }
+  }
+}
+
+void print(char* pData){
+  char last = 0x00U, curr = 0x00U;
+  uint8_t index = 0x00U;
+  while((last != 0x0A && curr != 0x0D) || (last != 0x0D && curr != 0x0A)){
+    send_byte(pData[index]);
+  }
 }
 
 

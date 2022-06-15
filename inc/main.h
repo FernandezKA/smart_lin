@@ -17,7 +17,7 @@
 #include "packet_parser.h"
 #include "communication.h"
 #include "fifo.h"
-
+#include "eeprom.h"
 
 INTERRUPT void EXTI_PORTD_IRQHandler(void);
 INTERRUPT void UART1_TX_IRQHandler(void); /* UART1 TX */

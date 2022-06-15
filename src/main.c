@@ -22,12 +22,18 @@ int SystemInit(void)
   return 0;
 }
 
+static inline void reset_state_cmd(bool* _cmd, enum cmd* _ecmd){
+  *_cmd = false; 
+  *_ecmd = undef;
+}
+
 void main(void)
 {
   bool cmd_receive = false;
   SystemInit();
   curr_mode = GetDevMode();
   enum cmd curr_cmd = undef;
+  uint16_t tmp_arr_index = 0x00U;
   (curr_mode == config) ? (config_uart()) : (config_lin());
   while (1)
   {
@@ -52,12 +58,20 @@ void main(void)
                   break;
                   
                 case write_config:
-                  
+                  if(get_receive_config(configArray, &tmp_arr_index, Pull(&uart_tx))){ //Received packet, wait CRC
+                    if(check_crc(Pull(&uart_tx), configArray, tmp_arr_index)){ //CRC is valid
+                      write_config_packet(configArray, tmp_arr_index);
+                    }
+                    else{
+                      print("Invalid CRC\n\r");
+                    }
+                    reset_state_cmd(&cmd_receive, &curr_cmd);
+                  }
                   break;
                 }
               }
               else{
-                cmd_receive = false;
+                reset_state_cmd(&cmd_receive, &curr_cmd);
               }
             }
             break;
