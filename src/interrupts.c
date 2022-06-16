@@ -23,8 +23,9 @@ INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 
 INTERRUPT_HANDLER(UART1_TX_IRQHandler, 17)
 {
-  if(GetSize(&uart_tx) == 0x01U){
-    UART1->DR = Pull(&uart_tx);
+  UART1->SR = 0x00U;
+  if(GetSize(&uart_tx) == 0x00U){
+    //GetReset(&uart_tx);
     UART1->CR2 &= ~UART1_CR2_TIEN;
   }
   else{

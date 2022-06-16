@@ -4,13 +4,15 @@
 uint8_t Pull(FIFO *fifo)
 {
   fifo->isFull = false;
-  uint8_t u8Data = fifo->u8Data[fifo->u8Tail++];
+  uint8_t _u8Data;
+  _u8Data = fifo->u8Data[fifo->u8Tail++];
   if (fifo->u8Tail == fifo->u8Head)
   {
     fifo->isEmpty = true;
-    fifo->u8Head = fifo->u8Tail = 0x00U;
+    fifo->u8Head = 0x00U;
+    fifo->u8Tail = 0x00U;
   }
-  return u8Data;
+  return _u8Data;
 }
 //This function put new data into fifo
 void Push(FIFO *fifo, uint8_t data)

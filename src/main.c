@@ -34,23 +34,29 @@ void main(void)
   curr_mode = GetDevMode();
   enum cmd curr_cmd = undef;
   uint16_t tmp_arr_index = 0x00U;
+  uint8_t tmp_data;
   (curr_mode == config) ? (config_uart()) : (config_lin());
   while (1)
   {
     if(GetSize(&uart_rx) != 0x00U){ //receive new data
-        switch(curr_mode){
+        switch(curr_mode){ //For received lin packets
           case work:
     
             break;
     
           case config:
-            curr_cmd = get_command(Pull(&uart_rx));
             if(!cmd_receive){
+              curr_cmd = get_command(Pull(&uart_rx));
               if(undef != curr_cmd){
-                cmd_receive = true;
+                  cmd_receive = true;
+              }
+            }
+            else{
                 switch(curr_cmd){
                 case dev_info:
                     get_dev_info(&uart_tx);
+                    reset_state_cmd(&cmd_receive, &curr_cmd);
+                    GetReset(&uart_rx);
                   break;
                   
                 case read_config:
@@ -60,25 +66,35 @@ void main(void)
                   else{
                     print("Config. not exist\n\r");
                   }
+                  reset_state_cmd(&cmd_receive, &curr_cmd);
+                  GetReset(&uart_rx);
                   break;
                   
                 case write_config:
-                  if(get_receive_config(configArray, &tmp_arr_index, Pull(&uart_tx))){ //Received packet, wait CRC
-                    if(check_crc(Pull(&uart_tx), configArray, tmp_arr_index)){ //CRC is valid
+                  tmp_data = Pull(&uart_rx);
+                  if(get_receive_config(configArray, &tmp_arr_index, tmp_data)){ //Received packet, wait CRC
+                      GetReset(&uart_rx);
+                      send_nack();
+                      print("wait crc\n\r");
+                      while(GetSize(&uart_rx) == 0x00){
+                        asm("nop");
+                      }
+                      tmp_data = Pull(&uart_rx);//Receive CRC
+                    if(check_crc(tmp_data, configArray, tmp_arr_index)){ //CRC is valid
                       write_config_packet(configArray, tmp_arr_index);
-                      upd_config(); 
+                      //upd_config(); 
+                      print("Load complete\n\r");
+                      reset_state_cmd(&cmd_receive, &curr_cmd);
                     }
                     else{
                       print("Invalid CRC\n\r");
                     }
                     reset_state_cmd(&cmd_receive, &curr_cmd);
+                    tmp_arr_index = 0x00U;
+                    GetReset(&uart_rx);
                   }
                   break;
                 }
-              }
-              else{
-                reset_state_cmd(&cmd_receive, &curr_cmd);
-              }
             }
             break;
       }
@@ -88,9 +104,6 @@ void main(void)
     if(GetSize(&uart_tx) != 0x00U){
       UART1->CR2 |= UART1_CR2_TIEN;
       UART1->DR = Pull(&uart_tx);
-    }
-    else{
-      UART1->CR2 &= ~UART1_CR2_TIEN;
     }
     
     //Switch state on receive fsm 

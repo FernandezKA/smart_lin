@@ -6,7 +6,7 @@
 
 #define HAT_SIZE    ((uint8_t) 8U)
 #define PACKET_SIZE ((uint8_t) 24U)
-#define COUNT_PACKET 10U
+#define COUNT_PACKET 2U
 #define CONFIG_SIZE ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
 
 extern uint8_t configArray[CONFIG_SIZE];

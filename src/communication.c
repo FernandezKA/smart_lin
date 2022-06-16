@@ -42,7 +42,7 @@ void get_dev_info(FIFO* fifo){
 }
 
 bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data){
-  if(*index < CONFIG_SIZE){
+  if(*index != CONFIG_SIZE - 1U){
     pData[(*index)++] = Data;
     return false;
   }
@@ -50,6 +50,7 @@ bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data){
     pData[*index] = Data;
     return true;
   }
+
 }
 
 void get_send_config(uint8_t* pData){
@@ -71,7 +72,7 @@ void send_nack(void)
 }
 
 void send_byte(uint8_t data){
-  while((UART1->SR && UART1_SR_TXE) != UART1_SR_TXE){
+  while((UART1->SR & UART1_SR_TXE) != UART1_SR_TXE){
     asm("nop");
   }
   UART1->DR = data;
@@ -92,7 +93,7 @@ bool check_crc(uint8_t rCRC, uint8_t* pData, uint16_t size){
 void print(char* pData){
   char last = 0x00U, curr = 0x00U;
   uint8_t index = 0x00U;
-  while((last != 0x0A && curr != 0x0D) || (last != 0x0D && curr != 0x0A)){
+  while(!(last == '\n' && curr == '\r') && !(last == '\r' && curr == '\n')){
     last = curr;
     curr = pData[index++];
     send_byte(curr);
