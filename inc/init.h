@@ -12,6 +12,8 @@ void PORT_Init(void);
 
 void TIM1_Init(void);
 
+void TIM4_Init(void);
+
 void IRQ_Init(void);
 
 void config_uart(void);

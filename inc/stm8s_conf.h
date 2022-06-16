@@ -33,6 +33,7 @@
 #define EXTI_PORTD_IRQ 
 #define UART1_TX_IRQ 
 #define UART1_RX_IRQ
+#define TIM4_UPD_OVF_IRQ
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"

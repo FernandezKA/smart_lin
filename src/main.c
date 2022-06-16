@@ -16,6 +16,7 @@ int SystemInit(void)
   PORT_Init();
   UART_Init(9600U);
   TIM1_Init();
+  TIM4_Init();
   IRQ_Init();
   GetReset(&uart_rx);
   GetReset(&uart_tx);

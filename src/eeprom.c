@@ -52,6 +52,7 @@ void write_config_packet(uint8_t* pData, uint16_t size)
   for(uint16_t i = 0; i <= size; ++i){
     FLASH_ProgramByte(EEPROM_START_PACKET + i, pData[i]);
   }
+  FLASH_ProgramByte(EEPROM_INFO + 1U, 0xFF);//Get set configure flag 
   FLASH_Lock(FLASH_MEMTYPE_DATA);
 }
 

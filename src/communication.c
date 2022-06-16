@@ -37,7 +37,8 @@ void get_dev_info(FIFO* fifo){
   uint8_t _dev_info[8U];
   read_dev_info(_dev_info);
   for(uint8_t i = 0; i < 0x08U; ++i){
-    Push(fifo, _dev_info[i]);
+    //Push(fifo, _dev_info[i]);
+    send_byte(_dev_info[i]);
   }
 }
 

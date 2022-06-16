@@ -1,5 +1,7 @@
 #include "main.h"
 
+uint32_t led_div = 0x00U;
+
 INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
   // Check line state
@@ -41,3 +43,15 @@ INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
   //Get action on FSM receive
   //bLinPacketReceive(UART1->DR, &eLinReceive, &lin_rec);
 }
+
+INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
+{
+  if(led_div == 100000){
+    led_div = 0x00U;
+    LED_PORT->ODR^= LED_PIN;
+  }
+  else{
+    led_div++;
+  }
+}
+

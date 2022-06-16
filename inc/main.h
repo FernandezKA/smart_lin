@@ -8,7 +8,8 @@
 
 #define MODE_PORT GPIOD
 #define MODE_PIN ((uint8_t) (1U<<3))
-
+#define LED_PORT GPIOB
+#define LED_PIN  (1U<<5)
 #include "stm8s_conf.h"
 #include <stdbool.h>
 
@@ -26,6 +27,8 @@ INTERRUPT void UART1_RX_IRQHandler(void); /* UART1 RX */
 extern uint32_t BAUDRATE;
 extern struct lin_packet lin_rec;
 extern enum Receive_FSM eLinReceive;
+
+extern uint32_t led_div;
 
 enum mode{
   config, 

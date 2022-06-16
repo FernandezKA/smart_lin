@@ -19,6 +19,7 @@ void LIN_Init(void){
 void PORT_Init(void){
   //GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION //REPLACE ON LIN_CONFIG
   EXTI->CR1 |= (1U<<7 | 1U<<6); //RISE AND FALL DETECTION ON PORTB 
+  LED_PORT->DDR|=LED_PIN;
 }
 
 void IRQ_Init(void){
@@ -29,6 +30,13 @@ void TIM1_Init(void){
   TIM1->CR1|=TIM1_CR1_OPM;
   TIM1->PSCRL = (uint8_t)(((F_CPU)/9600U) & 0xFF);
   TIM1->PSCRH = (uint8_t) ((((F_CPU)/9600U) & 0xFF00) >> 8);
+}
+
+void TIM4_Init(void){
+  TIM4->PSCR |=(1U<<2 | 1U<<1 | 1U<<0); //PSCR 32768
+  TIM4->ARR = 0xFFU;
+  TIM4->IER|=TIM4_IER_UIE;
+  TIM4->CR1|=TIM4_CR1_CEN;
 }
 
 void config_uart(void){
