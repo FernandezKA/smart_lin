@@ -1,6 +1,6 @@
-//Includes
+// Includes
 #include "fifo.h"
-//This function get data from fifo
+// This function get data from fifo
 uint8_t Pull(FIFO *fifo)
 {
   fifo->isFull = false;
@@ -14,7 +14,7 @@ uint8_t Pull(FIFO *fifo)
   }
   return _u8Data;
 }
-//This function put new data into fifo
+// This function put new data into fifo
 void Push(FIFO *fifo, uint8_t data)
 {
   if (fifo->u8Head - fifo->u8Tail == FIFO_LENGTH)
@@ -28,21 +28,26 @@ void Push(FIFO *fifo, uint8_t data)
   }
 }
 
-uint8_t GetSize(FIFO* fifo){
-  if(fifo->u8Head > fifo->u8Tail){
+uint8_t GetSize(FIFO *fifo)
+{
+  if (fifo->u8Head > fifo->u8Tail)
+  {
     return fifo->u8Head - fifo->u8Tail;
   }
-  else{
+  else
+  {
     return 0;
   }
 }
 
-void GetReset(FIFO* fifo){
+void GetReset(FIFO *fifo)
+{
   fifo->isEmpty = true;
   fifo->isFull = false;
-  for(uint8_t i = 0; i < FIFO_LENGTH; ++i){
+  for (uint8_t i = 0; i < FIFO_LENGTH; ++i)
+  {
     fifo->u8Data[i] = 0x00U;
   }
-  fifo ->u8Head = 0x00U;
-  fifo ->u8Tail = 0x00U;
+  fifo->u8Head = 0x00U;
+  fifo->u8Tail = 0x00U;
 }

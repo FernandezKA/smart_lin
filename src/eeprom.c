@@ -1,68 +1,85 @@
 #include "eeprom.h"
+#include "filters.h"
 
-bool read_dev_info(uint8_t* pList){
+bool read_dev_info(uint8_t *pList)
+{
   bool status = false;
-  if(FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)) != 0xFF){
+  if (FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)) != 0xFF)
+  {
     status = true;
-    for(uint8_t i = 0; i < 0x08U; ++i){
-      pList[i] = FLASH_ReadByte(EEPROM_INFO +sizeof(uint8_t) * i);
+    for (uint8_t i = 0; i < 0x08U; ++i)
+    {
+      pList[i] = FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t) * i);
     }
   }
   return status;
 }
 
-void write_dev_info(uint8_t* pList)
+void write_dev_info(uint8_t *pList)
 {
   FLASH_Unlock(FLASH_MEMTYPE_DATA);
-  for(uint8_t i = 0; i < 0x08; ++i){
+  for (uint8_t i = 0; i < 0x08; ++i)
+  {
     FLASH_ProgramByte(EEPROM_INFO + sizeof(uint8_t), pList[i]);
   }
   FLASH_Lock(FLASH_MEMTYPE_DATA);
 }
 
-bool read_pid_slave(uint8_t* pList)
+void read_packet(uint8_t *pSlave, uint8_t *pFilter)
 {
-  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
-    if(FLASH_ReadByte(EEPROM_START_PACKET + (sizeof(uint8_t) * i) * PACKET_SIZE + 1U) != 0x01){ //Read byte RL_TYPE (Next from PID)
-      pList[i] = 0x00U;
-    }
-    else{ //If it's 0x01 type of packet, add to list with PID
-      pList[i] = FLASH_ReadByte(EEPROM_START_PACKET + (sizeof(uint8_t) * i)   );
+  uint8_t tmp_packet[PACKET_SIZE];
+  //Read all of existing packets
+  for (uint8_t i = 0; i < COUNT_PACKET; ++i)
+  {
+    //TODO: read packet to array, then parse it
+    get_packet(i, tmp_packet);
+    switch (get_check_packet_type(tmp_packet))
+    {
+    case pckt_pid_slave:
+      add_to_array(pSlave, i, tmp_packet[1]);
+      break;
+
+    case pckt_pid_filters:
+      add_to_array(pFilter, i, tmp_packet[1]);
+      break;
+
+    case pckt_undef:
+      asm("nop"); // Skip this index
+      break;
     }
   }
-  return true;
 }
 
-bool read_pid_filter(uint8_t* pList)
+void get_packet(uint8_t index, uint8_t *packet)
 {
-  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
-    if(FLASH_ReadByte(EEPROM_START_PACKET + sizeof(uint8_t) * i + 1U) != 0x02){ //Read byte RL_TYPE (Next from PID)
-      pList[i] = 0x00U;
-    }
-    else{ //If it's 0x01 type of packet, add to list with PID
-      pList[i] = FLASH_ReadByte(EEPROM_START_PACKET + sizeof(uint8_t) * i);
-    }
+  uint32_t base_addr = EEPROM_START_PACKET + index * PACKET_SIZE;
+  for (uint8_t i = 0; i < PACKET_SIZE; ++i)
+  {
+    packet[i] = FLASH_ReadByte(base_addr + i);
   }
-  return true;
 }
 
-void write_config_packet(uint8_t* pData, uint16_t size)
+void write_config_packet(uint8_t *pData, uint16_t size)
 {
   FLASH_Unlock(FLASH_MEMTYPE_DATA);
-  for(uint16_t i = 0; i <= size; ++i){
+  for (uint16_t i = 0; i <= size; ++i)
+  {
     FLASH_ProgramByte(EEPROM_START_PACKET + i, pData[i]);
   }
-  FLASH_ProgramByte(EEPROM_INFO + 1U, 0xFF);//Get set configure flag 
+  FLASH_ProgramByte(EEPROM_INFO + 1U, 0xFF); // Get set configure flag
   FLASH_Lock(FLASH_MEMTYPE_DATA);
 }
 
-bool read_config_packet(uint8_t* pData)
+bool read_config_packet(uint8_t *pData)
 {
-  if(0x00 == FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t))){
+  if (0x00 == FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)))
+  {
     return false;
   }
-  else{
-    for(uint16_t i = 0; i < CONFIG_SIZE; ++i){
+  else
+  {
+    for (uint16_t i = 0; i < CONFIG_SIZE; ++i)
+    {
       pData[i] = FLASH_ReadByte(EEPROM_START_PACKET + sizeof(uint8_t) * i);
     }
     return true;

@@ -28,19 +28,19 @@ struct slave_packet{
   uint8_t diskr_out;
   uint8_t CRC;
 };
-
+//Receive config. file
 void get_receive(void);
-
+//Return block with inf. about device
 bool read_dev_info(uint8_t* pList);
-
+//Write block with dev. information
 void write_dev_info(uint8_t* pList);
-
-bool read_pid_slave(uint8_t* pList);
-
-bool read_pid_filter(uint8_t* pList);
-
+//Parse all of data ti the lists of PID (slave + filters)
+void read_packet(uint8_t* pSlave, uint8_t* pFilter);
+//Return packet from config. file
+void get_packet(uint8_t index, uint8_t* packet);
+//Write data of config packet to EEPROM
 void write_config_packet(uint8_t* pData, uint16_t size);
-
+//Read all of data in config. packet
 bool read_config_packet(uint8_t* pData);
 
 #endif

@@ -27,36 +27,36 @@ uint16_t u16GetBAUD(void)
   return u16BAUD;
 }
 
-uint8_t u8GetCRC(struct lin_packet _packet)
+uint8_t u8GetCRC(struct lin _packet)
 {
   static uint32_t _sum = 0x00U;
   static uint8_t CRC = 0x00U;
-  for (uint8_t i = 0; i < _packet.size; ++i)
+  for (uint8_t i = 0; i < _packet.dlc; ++i)
   {
-    _sum += _packet.Data[i];
+    _sum += _packet.data[i];
   }
   CRC = (uint8_t)(_sum & 0xFFU) ^ 0xFFU;
   return CRC;
 }
 
-void vLinPacketClear(struct lin_packet *_packet)
+void vLinPacketClear(struct lin *_packet)
 {
-  _packet->PID = 0x00U;
-  _packet->CRC = 0x00U;
+  _packet->pid = 0x00U;
+  _packet->crc = 0x00U;
   for (uint8_t i = 0; i < 0x08U; ++i)
   {
-    _packet->Data[i] = 0x00U;
+    _packet->data[i] = 0x00U;
   }
-  _packet->CounterDataFrame = 0x00U;
+  _packet->cnt_receive = 0x00U;
 }
 
-uint8_t u8GetSizeDataFrame(struct lin_packet _packet)
+uint8_t u8GetSizeDataFrame(struct lin _packet)
 {
-  if (_packet.PID < 0x20U)
+  if (_packet.pid < 0x20U)
   {
     return 0x02U;
   }
-  else if (_packet.PID < 0x30U)
+  else if (_packet.pid < 0x30U)
   {
     return 0x04U;
   }
@@ -87,10 +87,12 @@ bool bLinCheckBreak(struct Break *_break)
   }
 }
 
-void vConfigLIN(void){
-   GPIOD->CR2 &= ~(1U<<5);//DISABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
+void vConfigLIN(void)
+{
+  GPIOD->CR2 &= ~(1U << 5); // DISABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
 }
 
-void vConfigBreak(void){
-    GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
+void vConfigBreak(void)
+{
+  GPIOD->CR2 |= (1U << 5); // ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
 }

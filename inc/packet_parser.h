@@ -17,7 +17,7 @@ enum Receive_FSM
   completed
 };
 
-bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_packet *_packet);
+bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin *_packet);
 
 /* This part of code used for parse input packed with depend on user defined rules */
 

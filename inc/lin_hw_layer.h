@@ -29,11 +29,11 @@ void vSetBreakLength(uint16_t _BAUD);
 
 uint16_t u16GetBAUD(void);
 
-uint8_t u8GetCRC(struct lin_packet _packet);
+uint8_t u8GetCRC(struct lin _packet);
 
-void vLinPacketClear(struct lin_packet *_packet);
+void vLinPacketClear(struct lin *_packet);
 
-uint8_t u8GetSizeDataFrame(struct lin_packet _packet);
+uint8_t u8GetSizeDataFrame(struct lin _packet);
 
 bool bLinCheckBreak(struct Break* _break);
 

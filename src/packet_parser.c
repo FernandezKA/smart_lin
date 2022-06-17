@@ -2,7 +2,7 @@
 
 extern enum Receive_FSM eLinReceive;
 
-bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_packet *_packet)
+bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin *_packet)
 {
   switch (*_rec_fsm)
   {
@@ -26,20 +26,20 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_pac
 
   case wait_PID:
     // Right now I not detect parity error
-    _packet->PID = _data & 0x3FU;
-    _packet->size = u8GetSizeDataFrame(*_packet);
+    _packet->pid = _data & 0x3FU;
+    _packet->dlc = u8GetSizeDataFrame(*_packet);
     return false;
     break;
 
   case wait_data_frame:
-    if (_packet->CounterDataFrame < _packet->size)
+    if (_packet->cnt_receive < _packet->dlc)
     {
-      _packet->Data[_packet->CounterDataFrame++] = _data;
+      _packet->data[_packet->cnt_receive++] = _data;
     }
     else
     {
-      _packet->Data[_packet->CounterDataFrame++] = _data;
-      _packet->CounterDataFrame = 0x00U;
+      _packet->data[_packet->cnt_receive++] = _data;
+      _packet->cnt_receive = 0x00U;
       *_rec_fsm = wait_CRC;
     }
     return false;
@@ -48,7 +48,7 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin_pac
   case wait_CRC:
     if (u8GetCRC(*_packet) == _data)
     {
-      _packet->CRC = _data;
+      _packet->crc = _data;
       *_rec_fsm = completed;
     }
     else

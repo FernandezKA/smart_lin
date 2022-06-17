@@ -4,11 +4,6 @@
 #include "main.h"
 #include "fifo.h"
 
-#define HAT_SIZE    ((uint8_t) 8U)
-#define PACKET_SIZE ((uint8_t) 24U)
-#define COUNT_PACKET 2U
-#define CONFIG_SIZE ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
-
 extern uint8_t configArray[CONFIG_SIZE];
 
 enum cmd{
@@ -22,7 +17,7 @@ enum cmd get_command(uint8_t _data);
 
 enum mode GetDevMode(void);
 
-void get_dev_info(struct FIFO_STR* fifo);
+void get_dev_info(void);
 
 bool get_receive_config(uint8_t* pData, uint16_t* index, uint8_t Data);
 
