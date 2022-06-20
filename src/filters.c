@@ -64,15 +64,17 @@ void load_slave_packet(uint8_t index, struct lin *packet)
   get_packet(index, tmpArr);
   packet->pid = tmpArr[0];
   packet->dlc = tmpArr[1];
-  for(uint8_t i = 0; i < packet->dlc; ++i){
+  for (uint8_t i = 0; i < packet->dlc; ++i)
+  {
     packet->data[i] = tmpArr[3U + i];
   }
   packet->crc = tmpArr[11U];
   packet->timeout = tmpArr[12U];
 }
 
-void read_all_packets(void){
-  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
-    
+void read_all_packets(void)
+{
+  for (uint8_t i = 0; i < COUNT_PACKET; ++i)
+  {
   }
 }

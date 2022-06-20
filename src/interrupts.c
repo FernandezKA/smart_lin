@@ -1,6 +1,7 @@
 #include "main.h"
 
 uint32_t led_div = 0x00U;
+static bool div_tim2 = false;
 
 INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
@@ -57,4 +58,19 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
   {
     led_div++;
   }
+}
+
+INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
+{
+  if(curr_mode == work){
+     LED_PORT->ODR ^= LED_PIN; 
+  }
+  
+  if(div_tim2){
+   queue_handler(&lin_queue); 
+   if(curr_mode == config){
+     LED_PORT->ODR ^= LED_PIN;
+   }
+  }
+  div_tim2 = ~div_tim2;
 }

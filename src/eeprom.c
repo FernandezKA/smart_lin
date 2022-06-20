@@ -28,10 +28,10 @@ void write_dev_info(uint8_t *pList)
 void read_packet(uint8_t *pSlave, uint8_t *pFilter)
 {
   uint8_t tmp_packet[PACKET_SIZE];
-  //Read all of existing packets
+  // Read all of existing packets
   for (uint8_t i = 0; i < COUNT_PACKET; ++i)
   {
-    //TODO: read packet to array, then parse it
+    // TODO: read packet to array, then parse it
     get_packet(i, tmp_packet);
     switch (get_check_packet_type(tmp_packet))
     {

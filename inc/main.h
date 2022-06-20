@@ -15,6 +15,7 @@
 #define MODE_PIN ((uint8_t) (1U<<3))
 #define LED_PORT GPIOB
 #define LED_PIN  (1U<<5)
+#define LED_ACT (1U << 6)
 #include "stm8s_conf.h"
 #include <stdbool.h>
 
@@ -22,6 +23,7 @@
 #include "lin_hw_layer.h"
 #include "packet_parser.h"
 #include "communication.h"
+#include "queue_lin.h"
 #include "filters.h"
 #include "fifo.h"
 #include "eeprom.h"
@@ -45,5 +47,6 @@ enum mode{
 extern struct lin rec_lin, tr_lin;
 extern enum mode curr_mode; 
 extern struct FIFO_STR uart_rx, uart_tx;
+extern struct queue_lin lin_queue;
 
 #endif

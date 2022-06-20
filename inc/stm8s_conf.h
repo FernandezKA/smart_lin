@@ -34,6 +34,7 @@
 #define UART1_TX_IRQ 
 #define UART1_RX_IRQ
 #define TIM4_UPD_OVF_IRQ
+#define TIM2_UPD_OVF_BRK_IRQ
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"

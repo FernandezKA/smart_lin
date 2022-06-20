@@ -13,8 +13,8 @@ void vSetBAUD(uint16_t _BAUD)
 
   uint16_t USART_DIV = F_CPU / _BAUD;
   // Set baudrate
-  LIN_UART->BRR1 = (uint8_t)((USART_DIV >> 8) & 0xFF);
   LIN_UART->BRR2 = (uint8_t)(((uint8_t)(USART_DIV & 0xF000) >> 8U) | (USART_DIV & 0x0F));
+  LIN_UART->BRR1 |= (uint8_t)((USART_DIV >> 8) & 0xFF);
 }
 
 void vSetBreakLength(uint16_t _BAUD)
@@ -23,7 +23,6 @@ void vSetBreakLength(uint16_t _BAUD)
 
 uint16_t u16GetBAUD(void)
 {
-
   return u16BAUD;
 }
 
@@ -95,4 +94,30 @@ void vConfigLIN(void)
 void vConfigBreak(void)
 {
   GPIOD->CR2 |= (1U << 5); // ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION
+}
+
+void get_send_lin_packet(struct lin *packet)
+{
+  UART1->CR3 |= UART1_CR3_LINEN;
+  UART1->CR2 |= UART1_CR2_SBK;
+  // THIS PART OF CODE MAY BE UNWORKED!!!
+  // UART1->CR4|=UART1_CR4_LBDIEN;
+  send_byte(LIN_SYNCH);
+  send_byte(packet->pid);
+  for (uint8_t i = 0; i < packet->dlc; ++i)
+  {
+    send_byte(packet->data[i]);
+  }
+  send_byte(packet->crc);
+}
+
+void get_send_data_frame(struct lin *packet)
+{
+  UART1->CR3 &= ~UART1_CR3_LINEN;
+  UART1->CR2 &= ~UART1_CR2_SBK;
+  for (uint8_t i = 0; i < packet->dlc; ++i)
+  {
+    send_byte(packet->data[i]);
+  }
+  send_byte(packet->crc);
 }

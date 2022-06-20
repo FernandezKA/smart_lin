@@ -2,7 +2,7 @@
 #define _lin_hw_layer_h_
 
 #define LIN_UART UART1
-
+#define LIN_SYNCH ((uint8_t) 0x55U)
 #include "main.h"
 
 // Extern user variables
@@ -40,5 +40,13 @@ bool bLinCheckBreak(struct Break* _break);
 void vConfigBreak(void);
 
 void vConfigLIN(void);
+
+void get_send_lin_packet(struct lin* packet);
+
+void get_send_data_frame(struct lin* packet);
+
+//Queue for send
+
+
 
 #endif

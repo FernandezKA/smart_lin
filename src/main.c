@@ -2,8 +2,6 @@
 #include "main.h"
 #include "init.h"
 
-
-
 // User global variables
 struct Break xBreak;
 extern uint32_t BAUDRATE;
@@ -12,6 +10,7 @@ enum mode curr_mode = work;
 FIFO uart_rx, uart_tx;
 struct lin lin_rec;
 struct lin lin_tr;
+struct queue_lin lin_queue;
 
 int SystemInit(void)
 {
@@ -19,6 +18,7 @@ int SystemInit(void)
   PORT_Init();
   UART_Init(9600U);
   TIM1_Init();
+  TIM2_Init();
   // TIM4_Init();
   IRQ_Init();
   GetReset(&uart_rx);
@@ -40,7 +40,8 @@ void main(void)
   uint16_t tmp_arr_index = 0x00U;
   uint8_t tmp_data;
   (curr_mode == config) ? (config_uart()) : (config_lin());
-  if(curr_mode == work){ //Upd list with PIDs
+  if (curr_mode == work)
+  { // Upd list with PIDs
     read_packet(pid_slave_array, pid_filters_array);
   }
   while (1)
@@ -55,17 +56,17 @@ void main(void)
           2. check pid of lin packet
           3. if pid compare is equal - get send_slave or get filter_action
           */
-           
+
         break;
 
       case config:
-      /*
-        In this case loaded config with parameters for work of dev
-        Exist commands:
-          1. 0x40 0x00 - get out info about device
-          2. 0x50 0x00 - read configuration
-          3. 0x60 + configuration packets - write configuration
-      */
+        /*
+          In this case loaded config with parameters for work of dev
+          Exist commands:
+            1. 0x40 0x00 - get out info about device
+            2. 0x50 0x00 - read configuration
+            3. 0x60 + configuration packets - write configuration
+        */
         if (!cmd_receive)
         {
           curr_cmd = get_command(Pull(&uart_rx));
@@ -154,17 +155,24 @@ void main(void)
       }
     }
     // Lin packet received
+    /* This FSM state on fully receive lin packet, check PID on list with SLAVE&&FILTERS
+        then get action. If PID exist on 2 lists, used first finded value. */
     if (eLinReceive == completed)
     {
       static uint8_t ex_pid_slave_ind, ex_pid_filter_ind;
-      if(search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind)){
+      // Slave action
+      if (search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind))
+      {
         load_slave_packet(ex_pid_slave_ind, &lin_rec);
+        if(!queue_add_packet(&lin_rec, &lin_queue)){
+          print("Queue is fully now!\n\r");
+        }
       }
-      else if(search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind)){
-
+      else if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind))
+      {
       }
-      else{
-        
+      else
+      {
       }
     }
     // Check receive lin FSM state for complete packet
