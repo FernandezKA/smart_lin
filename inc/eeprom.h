@@ -7,27 +7,6 @@
 #define EEPROM_START_PACKET ((uint32_t) 0x004040)
 #define EEPROM_END_PACKET ((uint32_t) 0x004280)
 
-
-struct edges{
-  uint8_t edges_low[8U];
-  uint8_t edges_high[8U];
-};
-
-struct filer{
-  uint8_t PID;
-  uint8_t DLC;
-  uint8_t DATA[8U];
-  uint8_t CRC;
-  uint8_t timeout;
-};
-
-struct slave_packet{
-  uint8_t PID;
-  uint8_t DLC;
-  struct edges _edge[8U];
-  uint8_t diskr_out;
-  uint8_t CRC;
-};
 //Receive config. file
 void get_receive(void);
 //Return block with inf. about device

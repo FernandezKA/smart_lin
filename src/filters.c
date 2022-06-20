@@ -63,7 +63,7 @@ void load_slave_packet(uint8_t index, struct lin *packet)
   uint8_t tmpArr[PACKET_SIZE];
   get_packet(index, tmpArr);
   packet->pid = tmpArr[0];
-  packet->dlc = tmpArr[1];
+  packet->dlc = tmpArr[2];
   for (uint8_t i = 0; i < packet->dlc; ++i)
   {
     packet->data[i] = tmpArr[3U + i];
@@ -72,9 +72,38 @@ void load_slave_packet(uint8_t index, struct lin *packet)
   packet->timeout = tmpArr[12U];
 }
 
-void read_all_packets(void)
+void load_filter_packet(uint8_t index, struct filter *packet)
 {
-  for (uint8_t i = 0; i < COUNT_PACKET; ++i)
+  uint8_t tmpArr[PACKET_SIZE];
+  get_packet(index, tmpArr);
+  packet->pid = tmpArr[0];
+  // tmpArr[1] reserved for type
+  packet->dlc = tmpArr[2];
+  for (uint8_t i = 2; i < 16 + 2; i += 2)
   {
+    packet->edges_low[i] = tmpArr[i];
+    packet->edges_high[i] = tmpArr[i + 1];
   }
+  (tmpArr[18U] == 0x00) ? (packet->btn_state = false) : (packet->btn_state = true);
+  packet->timeout = tmpArr[19U];
+}
+
+bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter, bool btn_state)
+{
+  bool rules_trig = true;
+  rules_trig &= (packet_lin->data[0] >= packet_filter->edges_low[0]);
+  rules_trig &= (packet_lin->data[1] >= packet_filter->edges_low[1]);
+  rules_trig &= (packet_lin->data[2] >= packet_filter->edges_low[2]);
+  rules_trig &= (packet_lin->data[3] >= packet_filter->edges_low[3]);
+  rules_trig &= (packet_lin->data[4] >= packet_filter->edges_low[4]);
+  rules_trig &= (packet_lin->data[5] >= packet_filter->edges_low[5]);
+  rules_trig &= (packet_lin->data[6] >= packet_filter->edges_low[6]);
+  rules_trig &= (packet_lin->data[7] >= packet_filter->edges_low[7]);
+  rules_trig &= (packet_filter->btn_state == btn_state);
+  return rules_trig;
+}
+
+bool get_btn0_state(void)
+{
+  return btn_0;
 }

@@ -4,14 +4,11 @@
 #include "main.h"
 #include "fifo.h"
 
+#define CPU_ID_BEGIN ((uint32_t) 0x4865U) 
+#define CPU_ID_END  ((uint32_t) 0x4870U)
+
 extern uint8_t configArray[CONFIG_SIZE];
 
-enum cmd{
-  dev_info = 0x40U, 
-  read_config = 0x50U, 
-  write_config = 0x60U, 
-  undef
-};
 
 enum cmd get_command(uint8_t _data);
 
@@ -36,5 +33,7 @@ uint8_t get_crc(uint8_t* pData, uint16_t size);
 bool check_crc(uint8_t rCRC, uint8_t* pData, uint16_t size);
 
 void print(char* pData);
+
+void print_cpu_id(void);
 
 #endif

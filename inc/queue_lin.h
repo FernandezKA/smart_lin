@@ -5,13 +5,6 @@
 
 #define QUEUE_LIN_SIZE 0x05U
 
-struct queue_lin{
-  uint8_t timeout[QUEUE_LIN_SIZE];
-  struct lin packets[QUEUE_LIN_SIZE];
-  bool is_sended[QUEUE_LIN_SIZE];
-  uint8_t count_added;
-};
-
 void queue_clear(struct queue_lin* xQue);
 
 bool queue_handler(struct queue_lin* xQue);

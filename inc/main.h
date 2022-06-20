@@ -3,19 +3,25 @@
 
 #define MAX_SIZE_DATA_FRAME 0x08U
 
-#define HAT_SIZE    ((uint8_t) 8U)
-#define PACKET_SIZE ((uint8_t) 24U)
-#define COUNT_PACKET 2U
-#define CONFIG_SIZE ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
+#define HAT_SIZE        ((uint8_t) 8U)
+#define PACKET_SIZE     ((uint8_t) 24U)
+#define COUNT_PACKET    2U
+#define CONFIG_SIZE     ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
 
 #define F_CPU 16000000U
 #define GET_BITS(x, pos) ((x & (1 << pos)) >> pos)
 
-#define MODE_PORT GPIOD
-#define MODE_PIN ((uint8_t) (1U<<3))
-#define LED_PORT GPIOB
-#define LED_PIN  (1U<<5)
-#define LED_ACT (1U << 6)
+#define MODE_PORT       GPIOD
+#define LED_PORT        GPIOB
+#define UART_PORT       GPIOD
+#define BTN_PORT        GPIOC
+
+#define MODE_PIN        (1U<<3)
+#define LED_PIN         (1U<<5)
+#define LED_ACT         (1U<<4)
+#define BTN_0           (1U<<7)
+#define BTN_1           (1U<<6)
+
 #include "stm8s_conf.h"
 #include <stdbool.h>
 
@@ -36,6 +42,8 @@ extern uint32_t BAUDRATE;
 extern struct lin lin_rec;
 extern struct lin lin_tr;
 extern enum Receive_FSM eLinReceive;
+extern bool btn_0;
+extern bool btn_1;
 
 extern uint32_t led_div;
 

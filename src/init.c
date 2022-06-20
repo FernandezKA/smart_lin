@@ -22,8 +22,11 @@ void LIN_Init(void)
 void PORT_Init(void)
 {
   // GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION //REPLACE ON LIN_CONFIG
-  EXTI->CR1 |= (1U << 7 | 1U << 6); // RISE AND FALL DETECTION ON PORTB
-  LED_PORT->DDR |= LED_PIN | LED_ACT;
+  EXTI->CR1 |= (1U << 7 | 1U << 6); // RISE AND FALL DETECTION ON PORTB (USART)
+  EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC
+  LED_PORT->DDR |= LED_PIN | LED_ACT; //Get pin with led as out push-pull
+  BTN_PORT->CR1|=BTN_0 | BTN_1; //Get pull-up pins with buttons
+  MODE_PORT -> CR1 |= MODE_PIN; //Get pull-up pin for select dev. run mode 
 }
 
 void IRQ_Init(void)
@@ -38,13 +41,14 @@ void TIM1_Init(void)
   TIM1->PSCRH = (uint8_t)((((F_CPU) / 9600U) & 0xFF00) >> 8);
 }
 
-void TIM2_Init(void){
-  
+void TIM2_Init(void)
+{
+
   TIM2->PSCR = 0x0FU;
-  TIM2->ARRH = (uint8_t) (244U << 8);
-  TIM2->ARRL = (uint8_t) (244U);
-  TIM2->IER|= TIM2_IER_UIE;
-  TIM2->CR1|=TIM2_CR1_CEN;
+  TIM2->ARRH = (uint8_t)(244U << 8);
+  TIM2->ARRL = (uint8_t)(244U);
+  TIM2->IER |= TIM2_IER_UIE;
+  TIM2->CR1 |= TIM2_CR1_CEN;
 }
 
 void TIM4_Init(void)

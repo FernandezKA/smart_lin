@@ -123,3 +123,13 @@ void upd_config(void)
   baud |= FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t) * 4U);
   set_baud(baud);
 }
+
+void print_cpu_id(void)
+{
+  for (uint32_t i = CPU_ID_BEGIN; i <= CPU_ID_END; ++i)
+  {
+    send_byte(FLASH_ReadByte(i));
+  }
+  send_byte('\n');
+  send_byte('\r');
+}

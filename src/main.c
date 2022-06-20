@@ -11,6 +11,8 @@ FIFO uart_rx, uart_tx;
 struct lin lin_rec;
 struct lin lin_tr;
 struct queue_lin lin_queue;
+struct filter loaded_filter;
+bool btn_0 = false, btn_1 = false;
 
 int SystemInit(void)
 {
@@ -19,7 +21,6 @@ int SystemInit(void)
   UART_Init(9600U);
   TIM1_Init();
   TIM2_Init();
-  // TIM4_Init();
   IRQ_Init();
   GetReset(&uart_rx);
   GetReset(&uart_tx);
@@ -33,19 +34,24 @@ static inline void reset_state_cmd(bool *_cmd, enum cmd *_ecmd)
 }
 void main(void)
 {
-  bool cmd_receive = false;
   SystemInit();
+  //Variables init.
+  static bool cmd_receive = false;
   curr_mode = GetDevMode();
   enum cmd curr_cmd = undef;
   uint16_t tmp_arr_index = 0x00U;
   uint8_t tmp_data;
+  //Get select update
   (curr_mode == config) ? (config_uart()) : (config_lin());
+  //Update list of exisiting PID from EEPROM config. file
   if (curr_mode == work)
-  { // Upd list with PIDs
+  {
     read_packet(pid_slave_array, pid_filters_array);
   }
+  
   while (1)
   {
+    //Check new bytes in FIFO ring buffer 
     if (GetSize(&uart_rx) != 0x00U)
     { // receive new data
       switch (curr_mode)
@@ -56,7 +62,6 @@ void main(void)
           2. check pid of lin packet
           3. if pid compare is equal - get send_slave or get filter_action
           */
-
         break;
 
       case config:
@@ -80,19 +85,29 @@ void main(void)
           switch (curr_cmd)
           {
           case dev_info:
-            get_dev_info();
+            // get_dev_info();
+            print("Lin smart device v. 0.1 \n\r");
+            print("2022-06-20\n\r");
+            print_cpu_id();
             reset_state_cmd(&cmd_receive, &curr_cmd);
             GetReset(&uart_rx);
             break;
 
           case read_config:
-            if (read_config_packet(configArray))
+            if (FLASH_ReadByte(EEPROM_START_PACKET) == 0x00)
             {
-              get_send_config(configArray);
+              print("Reading forbidden\n\r");
             }
             else
             {
-              print("Config. not exist\n\r");
+              if (read_config_packet(configArray))
+              {
+                get_send_config(configArray);
+              }
+              else
+              {
+                print("Config. not exist\n\r");
+              }
             }
             reset_state_cmd(&cmd_receive, &curr_cmd);
             GetReset(&uart_rx);
@@ -132,14 +147,14 @@ void main(void)
       }
     }
 
-    // Transmit data on IRQ
+    // Transmit data on IRQ with ring buffer 
     if (GetSize(&uart_tx) != 0x00U)
     {
       UART1->CR2 |= UART1_CR2_TIEN;
       UART1->DR = Pull(&uart_tx);
     }
 
-    // Switch state on receive fsm
+    // Switch state on lin receive fsm
     if (xBreak.break_fsm == detect_rise)
     {
       if (bLinCheckBreak(&xBreak))
@@ -164,15 +179,26 @@ void main(void)
       if (search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind))
       {
         load_slave_packet(ex_pid_slave_ind, &lin_rec);
-        if(!queue_add_packet(&lin_rec, &lin_queue)){
-          print("Queue is fully now!\n\r");
+        if (!queue_add_packet(&lin_rec, &lin_queue))
+        {
+          print("The queue for lin packets to be sent is now full!\n\r");
         }
       }
       else if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind))
       {
+        load_filter_packet(ex_pid_filter_ind, &loaded_filter);
+        if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
+        {
+          print("Rules trig\n\r");
+        }
+        else
+        {
+          print("Received packet isn't valid for current rules\n\r");
+        }
       }
       else
       {
+        print("Current PID not exist\n\r");
       }
     }
     // Check receive lin FSM state for complete packet

@@ -30,6 +30,7 @@
 #define __STM8S_CONF_H
 
 //User IRQ definitions
+#define EXTI_PORTC_IRQ 
 #define EXTI_PORTD_IRQ 
 #define UART1_TX_IRQ 
 #define UART1_RX_IRQ
