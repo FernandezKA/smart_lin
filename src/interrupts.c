@@ -61,8 +61,14 @@ INTERRUPT_HANDLER(UART1_TX_IRQHandler, 17)
 INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
 {
   // Clear status flags
-  UART1->SR = 0x00U;
-  Push(&uart_rx, UART1->DR);
+  if((UART1->CR4 & UART1_CR4_LBDF) == UART1_CR4_LBDF){
+    eLinReceive = wait_synch;
+    UART1->CR4 &= ~UART1_CR4_LBDF;
+  }
+  if((UART1->SR & UART1_SR_RXNE) == UART1_SR_RXNE){
+    Push(&uart_rx, UART1->DR);
+    UART1->SR = 0x00U;
+  }
   if(curr_mode == work){
     action_uart_timeout = 0x04U;
   }

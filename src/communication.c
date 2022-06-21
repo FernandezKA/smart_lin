@@ -7,7 +7,7 @@ uint8_t configArray[CONFIG_SIZE];
 enum mode GetDevMode(void)
 {
   enum mode _mode;
-  (((MODE_PORT->IDR) & MODE_PIN) == MODE_PIN) ? (_mode = config) : (_mode = work);
+  (((MODE_PORT->IDR) & MODE_PIN) != MODE_PIN) ? (_mode = config) : (_mode = work);
   return _mode;
 }
 

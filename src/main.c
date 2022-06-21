@@ -22,8 +22,8 @@ int SystemInit(void)
   CLK_Init();
   PORT_Init();
   UART_Init(9600U);
-  TIM1_Init();
-  TIM2_Init();
+  //TIM1_Init();
+  //TIM2_Init();
   IRQ_Init();
   GetReset(&uart_rx);
   GetReset(&uart_tx);
@@ -47,10 +47,10 @@ void main(void)
   //Get select update
   (curr_mode == config) ? (config_uart()) : (config_lin());
   //Update list of exisiting PID from EEPROM config. file
-  if (curr_mode == work)
-  {
-    read_packet(pid_slave_array, pid_filters_array);
-  }
+//  if (curr_mode == work)
+//  {
+//    read_packet(pid_slave_array, pid_filters_array);
+//  }
   
   while (1)
   {
@@ -65,6 +65,7 @@ void main(void)
           2. check pid of lin packet
           3. if pid compare is equal - get send_slave or get filter_action
           */
+        bLinPacketReceive(Pull(&uart_rx),&eLinReceive,&lin_rec);
         break;
 
       case config:
@@ -155,22 +156,6 @@ void main(void)
     {
       UART1->CR2 |= UART1_CR2_TIEN;
       UART1->DR = Pull(&uart_tx);
-    }
-
-    // Switch state on lin receive fsm
-    if (xBreak.break_fsm == detect_rise)
-    {
-      if (bLinCheckBreak(&xBreak))
-      {
-        // switch lin receive fsm state
-        eLinReceive = wait_synch;
-      }
-      else
-      {
-        // Reset break fsm
-        xBreak.break_fsm = wait_fall;
-        eLinReceive = wait_break;
-      }
     }
     // Lin packet received
     /* This FSM state on fully receive lin packet, check PID on list with SLAVE&&FILTERS

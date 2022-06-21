@@ -28,6 +28,7 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin *_p
     // Right now I not detect parity error
     _packet->pid = _data & 0x3FU;
     _packet->dlc = u8GetSizeDataFrame(*_packet);
+    *_rec_fsm = wait_data_frame;
     return false;
     break;
 
