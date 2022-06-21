@@ -54,6 +54,7 @@ struct filter{
   uint8_t edges_high[MAX_SIZE_DATA_FRAME];
   bool btn_state;
   uint8_t timeout;
+  bool remove_after_use;
 };
 
 enum packet_type{

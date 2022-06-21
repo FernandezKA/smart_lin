@@ -91,6 +91,7 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
   }
   if (div_tim2)
   {
+    ++sys_time;
     queue_handler(&lin_queue);
     //Blink with frequency divide by 2
     if (curr_mode == config)

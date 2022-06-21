@@ -12,7 +12,10 @@ struct lin lin_rec;
 struct lin lin_tr;
 struct queue_lin lin_queue;
 struct filter loaded_filter;
-bool btn_0 = false, btn_1 = false;
+bool btn_0 = false;
+bool btn_1 = false;
+uint32_t sys_time = 0x00U;
+uint8_t trig_index = 0x00U;
 
 int SystemInit(void)
 {
@@ -174,31 +177,51 @@ void main(void)
         then get action. If PID exist on 2 lists, used first finded value. */
     if (eLinReceive == completed)
     {
-      static uint8_t ex_pid_slave_ind, ex_pid_filter_ind;
-      // Slave action
-      if (search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind))
-      {
-        load_slave_packet(ex_pid_slave_ind, &lin_rec);
-        if (!queue_add_packet(&lin_rec, &lin_queue))
-        {
-          print("The queue for lin packets to be sent is now full!\n\r");
+      static uint8_t ex_pid_slave_ind, ex_pid_filter_ind, ex_pid_triggered_ind;
+      //Get check PID in existing list 
+      if (search_pid(pid_triggered_array, lin_rec.pid, &ex_pid_triggered_ind)){
+        //TODO: check timeout
+        struct lin sended_packet;
+        if(search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind)){
+          load_slave_packet(ex_pid_slave_ind, &sended_packet);
+          //CHECK time
+          if((uint32_t) sended_packet.timeout < sys_time)
+          {
+            search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind);//Check time and remove flag in filter structure
+            load_filter_packet(ex_pid_slave_ind, &loaded_filter);
+            if(loaded_filter.remove_after_use){
+              get_send_data_frame(&sended_packet);
+              get_remove_pid(pid_filters_array, lin_rec.pid);
+              get_remove_pid(pid_slave_array, lin_rec.pid);
+            }
+            else{
+              get_send_data_frame(&sended_packet);
+            }
+          }
+          else{
+            get_remove_pid(pid_triggered_array, lin_rec.pid);
+          }
         }
+        //If timeout less then sys_time - send packet, else remove it
       }
-      else if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind))
+      // Slave action, check rule
+      else if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind)) //Trigger pid doesnt't exist, check this pid in rules
       {
         load_filter_packet(ex_pid_filter_ind, &loaded_filter);
         if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
         {
-          print("Rules trig\n\r");
+          //print("Rules trig\n\r");
+          get_add_to_trig_list(pid_triggered_array, &trig_index, lin_rec.pid);
         }
         else
         {
-          print("Received packet isn't valid for current rules\n\r");
+          //print("Received packet isn't valid for current rules\n\r");
         }
       }
       else
       {
-        print("Current PID not exist\n\r");
+        //print("Current PID not exist\n\r");
+        asm("nop");
       }
     }
     // Check receive lin FSM state for complete packet

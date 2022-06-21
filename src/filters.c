@@ -2,6 +2,7 @@
 
 uint8_t pid_slave_array[COUNT_PACKET];
 uint8_t pid_filters_array[COUNT_PACKET];
+uint8_t pid_triggered_array[COUNT_PACKET];
 
 enum packet_type get_check_packet_type(uint8_t *pData)
 {
@@ -103,7 +104,28 @@ bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter, bool
   return rules_trig;
 }
 
+void get_add_to_trig_list(uint8_t* pArray, uint8_t* index, uint8_t pid){
+  if(*index < COUNT_PACKET){
+    pArray[(*index)++] = pid;
+  }
+  else{
+    pArray[*index] = pid;//Simple rewrite last cell into array
+  }
+}
+
+void get_remove_pid(uint8_t* pArray, uint8_t pid){
+  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
+    if(pArray[i] == pid){       
+      pArray[i] = 0x00U;
+    }
+  }
+}
+
 bool get_btn0_state(void)
 {
   return btn_0;
+}
+
+bool get_btn1_state(void){
+  return btn_1;
 }

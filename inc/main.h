@@ -56,5 +56,7 @@ extern struct lin rec_lin, tr_lin;
 extern enum mode curr_mode; 
 extern struct FIFO_STR uart_rx, uart_tx;
 extern struct queue_lin lin_queue;
+extern uint32_t sys_time;
+extern uint8_t trig_index;
 
 #endif
