@@ -25,7 +25,7 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin *_p
     break;
 
   case wait_PID:
-    // Right now I not detect parity error
+    // Right now I can't detect parity error
     _packet->pid = _data & 0x3FU;
     _packet->dlc = u8GetSizeDataFrame(*_packet);
     *_rec_fsm = wait_data_frame;
@@ -33,23 +33,24 @@ bool bLinPacketReceive(uint8_t _data, enum Receive_FSM *_rec_fsm, struct lin *_p
     break;
 
   case wait_data_frame:
-    if (_packet->cnt_receive < _packet->dlc)
+    if (_packet->cnt_receive < _packet->dlc - 1U)
     {
       _packet->data[_packet->cnt_receive++] = _data;
     }
     else
     {
       _packet->data[_packet->cnt_receive++] = _data;
-      _packet->cnt_receive = 0x00U;
+      //_packet->cnt_receive = 0x00U;
       *_rec_fsm = wait_CRC;
     }
     return false;
     break;
 
   case wait_CRC:
-    if (u8GetCRC(*_packet) == _data)
+    _packet->crc = _data;
+    if (u8GetCRC(*_packet) == _packet->crc)
     {
-      _packet->crc = _data;
+      //_packet->crc = _data;
       *_rec_fsm = completed;
     }
     else

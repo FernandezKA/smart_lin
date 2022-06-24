@@ -52,7 +52,7 @@ void TIM2_Init(void)
 
 void TIM4_Init(void)
 {
-  TIM4->PSCR |= (1U << 2 | 1U << 1 | 1U << 0); // PSCR 32768
+  TIM4->PSCR |= (1U << 2 | 1U << 1 | 1U << 0); // prescale is 32768
   TIM4->ARR = 0xFFU;
   TIM4->IER |= TIM4_IER_UIE;
   TIM4->CR1 |= TIM4_CR1_CEN;

@@ -283,17 +283,22 @@ Loading object C:\dev\MCU\STM8\smart_lin\Debug\Obj\main.o.
               definition:  uart_tx
               definition:  xBreak
 Loading object C:\dev\MCU\STM8\smart_lin\Debug\Obj\packet_parser.o.
-              reference :  ?b12
-              reference :  ?epilogue_l2
+              reference :  ?b0
+              reference :  ?b2
+              reference :  ?b3
+              reference :  ?b4
+              reference :  ?b5
+              reference :  ?epilogue_l2_w6
               reference :  ?longfarg16_v_w0_a
               reference :  ?mov_w0_w5
-              reference :  ?mov_w7_w5
-              reference :  ?pop_w7
+              reference :  ?mov_w6_w5
               reference :  ?push_l2
-              reference :  ?push_w7
+              reference :  ?push_w6
+              reference :  ?w0
+              reference :  ?w2
               reference :  ?w4
               reference :  ?w5
-              reference :  ?w7
+              reference :  ?w6
               reference :  u8GetCRC
               reference :  u8GetSizeDataFrame
               reference :  vLinPacketClear
@@ -1991,7 +1996,7 @@ Marking from fragment #765 .near_func.text (22 main.o)
   Marking symbol ?b0                              Glb (6 vregs.o)
   Marking symbol eLinReceive                      Glb (162 main.o)
   Marking symbol ?b0                              Glb (6 vregs.o)
-  Marking symbol bLinPacketReceive                Glb (29 packet_parser.o)
+  Marking symbol bLinPacketReceive                Glb (36 packet_parser.o)
     Marking fragment #865 .near_func.text (8 packet_parser.o)
   Marking symbol                                      (104 main.o)
   Marking symbol main::cmd_receive                    (3 main.o)
@@ -2597,25 +2602,21 @@ Marking from fragment #5 .near_func.text (10 communication.o)
 Marking from fragment #769 .tiny.bss (26 main.o)
 Marking from fragment #865 .near_func.text (8 packet_parser.o)
   Marking symbol ?push_l2                         Glb (358 vreg_util.o)
-  Marking symbol ?push_w7                         Glb (367 vreg_util.o)
-    Marking fragment #5392 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking symbol ?b12                             Glb (10 vregs.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
+  Marking symbol ?push_w6                         Glb (366 vreg_util.o)
+  Marking symbol ?b2                              Glb (14 vregs.o)
   Marking symbol ?w4                              Glb (34 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
-  Marking symbol ?mov_w7_w5                       Glb (334 vreg_util.o)
-    Marking fragment #5505 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking symbol ?w7                              Glb (37 vregs.o)
-  Marking symbol ?w7                              Glb (37 vregs.o)
+  Marking symbol ?mov_w6_w5                       Glb (327 vreg_util.o)
+    Marking fragment #5464 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
+  Marking symbol ?w6                              Glb (36 vregs.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
   Marking symbol ?w4                              Glb (34 vregs.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
+  Marking symbol                                      (15 packet_parser.o)
+  Marking symbol ?b2                              Glb (14 vregs.o)
   Marking symbol ?w4                              Glb (34 vregs.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
-  Marking symbol ?pop_w7                          Glb (351 vreg_util.o)
-    Marking fragment #5401 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking symbol ?epilogue_l2                     Glb (252 vreg_util.o)
+  Marking symbol ?epilogue_l2_w6                  Glb (254 vreg_util.o)
   Marking symbol ?w4                              Glb (34 vregs.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
+  Marking symbol ?b2                              Glb (14 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
   Marking symbol ?mov_w0_w5                       Glb (284 vreg_util.o)
     Marking fragment #5430 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
@@ -2623,22 +2624,36 @@ Marking from fragment #865 .near_func.text (8 packet_parser.o)
     Marking fragment #5668 .near_func.text (6 move.o(dlstm8ssn.a))
   Marking symbol u8GetSizeDataFrame               Glb (130 lin_hw_layer.o)
     Marking fragment #633 .near_func.text (15 lin_hw_layer.o)
-  Marking symbol ?w7                              Glb (37 vregs.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
+  Marking symbol ?w0                              Glb (30 vregs.o)
+  Marking symbol ?b3                              Glb (15 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
-  Marking symbol ?w7                              Glb (37 vregs.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
+  Marking symbol ?b4                              Glb (16 vregs.o)
+  Marking symbol ?b5                              Glb (17 vregs.o)
+  Marking symbol ?w2                              Glb (32 vregs.o)
+  Marking symbol ?w2                              Glb (32 vregs.o)
+  Marking symbol ?b3                              Glb (15 vregs.o)
+  Marking symbol ?w2                              Glb (32 vregs.o)
+  Marking symbol ?b2                              Glb (14 vregs.o)
+  Marking symbol ?w0                              Glb (30 vregs.o)
+  Marking symbol ?w5                              Glb (35 vregs.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
+  Marking symbol ?b2                              Glb (14 vregs.o)
   Marking symbol ?mov_w0_w5                       Glb (284 vreg_util.o)
   Marking symbol ?longfarg16_v_w0_a               Glb (34 move.o)
   Marking symbol u8GetCRC                         Glb (129 lin_hw_layer.o)
     Marking fragment #629 .near_func.text (11 lin_hw_layer.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
-  Marking symbol ?b12                             Glb (10 vregs.o)
-  Marking symbol ?w5                              Glb (35 vregs.o)
+  Marking symbol ?b0                              Glb (6 vregs.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
+  Marking symbol ?b0                              Glb (6 vregs.o)
   Marking symbol ?w4                              Glb (34 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
   Marking symbol vLinPacketClear                  Glb (133 lin_hw_layer.o)
     Marking fragment #632 .near_func.text (14 lin_hw_layer.o)
+  Marking symbol                                      (16 packet_parser.o)
+  Marking symbol ?epilogue_l2_w6                  Glb (254 vreg_util.o)
 Marking from fragment #632 .near_func.text (14 lin_hw_layer.o)
   Marking symbol ?w0                              Glb (30 vregs.o)
   Marking symbol ?w0                              Glb (30 vregs.o)
@@ -2684,19 +2699,11 @@ Marking from fragment #5430 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking symbol ?w0                              Glb (30 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
   Marking symbol ?w0                              Glb (30 vregs.o)
-Marking from fragment #5401 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking symbol ?w7                              Glb (37 vregs.o)
-  Marking symbol .near_func.text_18                   (33 vreg_util.o)
-  Marking symbol .near_func.text_18                   (33 vreg_util.o)
-Marking from fragment #5505 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
+Marking from fragment #5464 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking symbol ?w5                              Glb (35 vregs.o)
-  Marking symbol ?w7                              Glb (37 vregs.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
-  Marking symbol ?w7                              Glb (37 vregs.o)
-Marking from fragment #5392 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking symbol ?w7                              Glb (37 vregs.o)
-  Marking symbol .near_func.text_9                    (16 vreg_util.o)
-  Marking symbol .near_func.text_9                    (16 vreg_util.o)
+  Marking symbol ?w6                              Glb (36 vregs.o)
 Marking from fragment #768 .near_func.text (25 main.o)
   Marking symbol ?w5                              Glb (35 vregs.o)
   Marking symbol Pull                             Glb (47 fifo.o)
@@ -4583,8 +4590,6 @@ References #5398 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4883 .debug_frame (22 vreg_util.o(dlstm8ssn.a))
 References #5400 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4885 .debug_frame (26 vreg_util.o(dlstm8ssn.a))
-References #5401 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking fragment #4886 .debug_frame (28 vreg_util.o(dlstm8ssn.a))
 References #5402 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4887 .debug_frame (30 vreg_util.o(dlstm8ssn.a))
 References #5410 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
@@ -4609,6 +4614,8 @@ References #5430 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4910 .debug_frame (76 vreg_util.o(dlstm8ssn.a))
 References #5435 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4915 .debug_frame (86 vreg_util.o(dlstm8ssn.a))
+References #5464 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
+  Marking fragment #4944 .debug_frame (144 vreg_util.o(dlstm8ssn.a))
 References #5473 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4953 .debug_frame (162 vreg_util.o(dlstm8ssn.a))
 References #5474 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
@@ -4627,8 +4634,6 @@ References #5489 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4969 .debug_frame (194 vreg_util.o(dlstm8ssn.a))
 References #5490 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4970 .debug_frame (196 vreg_util.o(dlstm8ssn.a))
-References #5505 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking fragment #4985 .debug_frame (226 vreg_util.o(dlstm8ssn.a))
 References #5385 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4986 .iar.debug_frame (228 vreg_util.o(dlstm8ssn.a))
 References #5389 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
@@ -4637,8 +4642,6 @@ References #5390 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4991 .iar.debug_frame (238 vreg_util.o(dlstm8ssn.a))
 References #5391 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4992 .iar.debug_frame (240 vreg_util.o(dlstm8ssn.a))
-References #5392 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
-  Marking fragment #4993 .iar.debug_frame (242 vreg_util.o(dlstm8ssn.a))
 References #5393 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
   Marking fragment #4994 .iar.debug_frame (244 vreg_util.o(dlstm8ssn.a))
 References #5406 .near_func.text (6 vreg_util.o(dlstm8ssn.a))
@@ -4961,9 +4964,6 @@ Marking from fragment #4875 .iar.debug_frame (7 vreg_util.o(dlstm8ssn.a))
   Marking symbol .iar.debug_frame12                   (7 vreg_util.o)
 Marking from fragment #4876 .iar.debug_frame (8 vreg_util.o(dlstm8ssn.a))
   Marking symbol .iar.debug_frame9                    (6 vreg_util.o)
-Marking from fragment #4993 .iar.debug_frame (242 vreg_util.o(dlstm8ssn.a))
-  Marking symbol .near_func.text_8                    (15 vreg_util.o)
-  Marking symbol .iar.debug_frame7                    (4 vreg_util.o)
 Marking from fragment #4992 .iar.debug_frame (240 vreg_util.o(dlstm8ssn.a))
   Marking symbol .near_func.text_7                    (14 vreg_util.o)
   Marking symbol .iar.debug_frame7                    (4 vreg_util.o)
@@ -4976,9 +4976,6 @@ Marking from fragment #4990 .iar.debug_frame (236 vreg_util.o(dlstm8ssn.a))
 Marking from fragment #4986 .iar.debug_frame (228 vreg_util.o(dlstm8ssn.a))
   Marking symbol .near_func.text6                     (3 vreg_util.o)
   Marking symbol .iar.debug_frame7                    (4 vreg_util.o)
-Marking from fragment #4985 .debug_frame (226 vreg_util.o(dlstm8ssn.a))
-  Marking symbol .debug_frame226                      (235 vreg_util.o)
-  Marking symbol .near_func.text_121                  (234 vreg_util.o)
 Marking from fragment #4970 .debug_frame (196 vreg_util.o(dlstm8ssn.a))
   Marking symbol .debug_frame196                      (205 vreg_util.o)
   Marking symbol .near_func.text_106                  (204 vreg_util.o)
@@ -5006,6 +5003,9 @@ Marking from fragment #4954 .debug_frame (164 vreg_util.o(dlstm8ssn.a))
 Marking from fragment #4953 .debug_frame (162 vreg_util.o(dlstm8ssn.a))
   Marking symbol .debug_frame162                      (171 vreg_util.o)
   Marking symbol .near_func.text_89                   (170 vreg_util.o)
+Marking from fragment #4944 .debug_frame (144 vreg_util.o(dlstm8ssn.a))
+  Marking symbol .debug_frame144                      (153 vreg_util.o)
+  Marking symbol .near_func.text_80                   (152 vreg_util.o)
 Marking from fragment #4915 .debug_frame (86 vreg_util.o(dlstm8ssn.a))
   Marking symbol .debug_frame86                       (95 vreg_util.o)
   Marking symbol .near_func.text_51                   (94 vreg_util.o)
@@ -5042,9 +5042,6 @@ Marking from fragment #4893 .debug_frame (42 vreg_util.o(dlstm8ssn.a))
 Marking from fragment #4887 .debug_frame (30 vreg_util.o(dlstm8ssn.a))
   Marking symbol .debug_frame30                       (34 vreg_util.o)
   Marking symbol .near_func.text_18                   (33 vreg_util.o)
-Marking from fragment #4886 .debug_frame (28 vreg_util.o(dlstm8ssn.a))
-  Marking symbol .debug_frame28                       (32 vreg_util.o)
-  Marking symbol .near_func.text_17                   (31 vreg_util.o)
 Marking from fragment #4885 .debug_frame (26 vreg_util.o(dlstm8ssn.a))
   Marking symbol .debug_frame26                       (30 vreg_util.o)
   Marking symbol .near_func.text_16                   (29 vreg_util.o)
@@ -6633,7 +6630,7 @@ Marking from fragment #800 .iar.debug_line (59 main.o)
   Marking symbol config_uart                      Glb (119 init.o)
   Marking symbol config_lin                       Glb (118 init.o)
   Marking symbol get_remove_pid                   Glb (136 filters.o)
-  Marking symbol bLinPacketReceive                Glb (29 packet_parser.o)
+  Marking symbol bLinPacketReceive                Glb (36 packet_parser.o)
   Marking symbol get_command                      Glb (128 communication.o)
   Marking symbol print                            Glb (133 communication.o)
   Marking symbol print_cpu_id                     Glb (134 communication.o)
@@ -9618,6 +9615,8 @@ Unused fragments:
     ?push_w2
   .near_func.text      6     0xf    0x5
     ?push_w3
+  .near_func.text      6    0x23    0x5
+    ?push_w7
   .near_func.text      6    0x42    0x7
     ?pop_w1
   .near_func.text      6    0x49    0x7
@@ -9626,6 +9625,8 @@ Unused fragments:
     ?pop_w3
   .near_func.text      6    0x5e    0x7
     ?pop_w5
+  .near_func.text      6    0x6c    0x7
+    ?pop_w7
   .near_func.text      6    0x7b   0x18
     ?push_e0
   .near_func.text      6    0x93   0x18
@@ -9714,8 +9715,6 @@ Unused fragments:
     ?mov_w6_w3
   .near_func.text      6   0x29c    0x7
     ?mov_w6_w4
-  .near_func.text      6   0x2a3    0x7
-    ?mov_w6_w5
   .near_func.text      6   0x2aa    0x7
     ?mov_w6_w7
   .near_func.text      6   0x2b1    0x7
@@ -9778,6 +9777,8 @@ Unused fragments:
     ?mov_l3_l2
   .near_func.text      6   0x35f    0x3
     ?mov_e3_e2
+  .near_func.text      6   0x362    0x7
+    ?mov_w7_w5
   .near_func.text      6     0x0   0x10  long.o
     ?neg32_l0_l0
   .near_func.text      6    0x15    0x5
