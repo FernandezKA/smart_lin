@@ -17,13 +17,12 @@ void UART_Init(uint16_t BAUD)
 void LIN_Init(void)
 {
   UART1->CR3 |= UART1_CR3_LINEN;
+  //UART1->CR4 |= UART1_CR4_LBDIEN;
 }
 
 void PORT_Init(void)
 {
-  //GPIOD->CR2 |= (1U<<5);//ENABLE EXTERNAL IRQ FOR UART_TX (RECONFIG ON UART WORK MODE, USED FOR BREAK DETECTION //REPLACE ON LIN_CONFIG
-  //EXTI->CR1 |= (1U << 7 | 1U << 6); // RISE AND FALL DETECTION ON PORTB (USART)
-  EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
+  //EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
   LED_PORT->DDR |= LED_PIN | LED_ACT; //Get pin with led as out push-pull
   BTN_PORT->CR1|=BTN_0 | BTN_1; //Get pull-up pins with buttons
   MODE_PORT -> CR1 |= MODE_PIN; //Get pull-up pin for select dev. run mode 
@@ -60,7 +59,6 @@ void TIM4_Init(void)
 
 void config_uart(void)
 {
-  //GPIOD->CR2 &= ~(1U << 5); // Disable external IRQ
   UART1->CR2 |= UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN;
 }
 

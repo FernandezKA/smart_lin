@@ -1,5 +1,6 @@
 #include "eeprom.h"
 #include "filters.h"
+#include "stdlib.h"
 
 bool read_dev_info(uint8_t *pList)
 {
@@ -27,7 +28,8 @@ void write_dev_info(uint8_t *pList)
 
 void read_packet(uint8_t *pSlave, uint8_t *pFilter)
 {
-  uint8_t tmp_packet[PACKET_SIZE];
+  uint8_t* tmp_packet = malloc(sizeof(uint8_t) * PACKET_SIZE);
+  //uint8_t tmp_packet[PACKET_SIZE];
   // Read all of existing packets
   for (uint8_t i = 0; i < COUNT_PACKET; ++i)
   {
@@ -48,6 +50,7 @@ void read_packet(uint8_t *pSlave, uint8_t *pFilter)
       break;
     }
   }
+  free(tmp_packet);
 }
 
 void get_packet(uint8_t index, uint8_t *packet)
