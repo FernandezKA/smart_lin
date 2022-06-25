@@ -100,7 +100,6 @@ void get_send_lin_packet(struct lin *packet)
 {
   UART1->CR3 |= UART1_CR3_LINEN;
   UART1->CR2 |= UART1_CR2_SBK;
-  // THIS PART OF CODE MAY BE UNWORKED!!!
   // UART1->CR4|=UART1_CR4_LBDIEN;
   send_byte(LIN_SYNCH);
   send_byte(packet->pid);

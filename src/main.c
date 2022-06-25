@@ -35,6 +35,7 @@ static inline void reset_state_cmd(bool *_cmd, enum cmd *_ecmd)
   *_cmd = false;
   *_ecmd = undef;
 }
+
 void main(void)
 {
   SystemInit();
@@ -47,10 +48,10 @@ void main(void)
   //Get select update
   (curr_mode == config) ? (config_uart()) : (config_lin());
   //Update list of exisiting PID from EEPROM config. file
-//  if (curr_mode == work)
-//  {
-//    read_packet(pid_slave_array, pid_filters_array);
-//  }
+  if (curr_mode == work)
+  {
+    read_packet(pid_slave_array, pid_filters_array);
+  }
   
   while (1)
   {

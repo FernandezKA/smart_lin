@@ -8,11 +8,11 @@ enum packet_type get_check_packet_type(uint8_t *pData)
 {
   if (pData[1] == 0x01)
   {
-    return pckt_pid_slave;
+    return pckt_pid_filters;
   }
   else if (pData[1] == 0x02)
   {
-    return pckt_pid_filters;
+    return pckt_pid_slave;
   }
   else
   {
