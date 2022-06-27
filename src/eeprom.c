@@ -73,7 +73,7 @@ void write_config_packet(uint8_t *pData, uint16_t size)
   FLASH_Lock(FLASH_MEMTYPE_DATA);
 }
 
-bool read_config_packet(uint8_t *pData)
+bool read_config_packet(void)
 {
   if (0x00 == FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)))
   {
@@ -83,8 +83,14 @@ bool read_config_packet(uint8_t *pData)
   {
     for (uint16_t i = 0; i < CONFIG_SIZE; ++i)
     {
-      pData[i] = FLASH_ReadByte(EEPROM_START_PACKET + sizeof(uint8_t) * i);
+      //pData[i] = FLASH_ReadByte(EEPROM_START_PACKET + sizeof(uint8_t) * i);
     }
     return true;
   }
+}
+
+void get_write_byte_eeprom(uint8_t _data, uint32_t pAddr){
+  FLASH_Unlock(FLASH_MEMTYPE_DATA);
+  FLASH_ProgramByte(pAddr, _data);
+  FLASH_Lock(FLASH_MEMTYPE_DATA);
 }

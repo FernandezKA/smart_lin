@@ -20,6 +20,9 @@ void get_packet(uint8_t index, uint8_t* packet);
 //Write data of config packet to EEPROM
 void write_config_packet(uint8_t* pData, uint16_t size);
 //Read all of data in config. packet
-bool read_config_packet(uint8_t* pData);
+bool read_config_packet(void);
+//Write single byte to eeprom 
+void get_write_byte_eeprom(uint8_t _data, uint32_t pAddr);
+
 
 #endif

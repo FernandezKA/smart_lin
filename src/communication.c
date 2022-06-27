@@ -2,7 +2,7 @@
 #include "eeprom.h"
 #include "init.h"
 
-uint8_t configArray[CONFIG_SIZE];
+//uint8_t configArray[CONFIG_SIZE];
 
 enum mode GetDevMode(void)
 {
@@ -45,27 +45,31 @@ void get_dev_info(void)
   }
 }
 
-bool get_receive_config(uint8_t *pData, uint16_t *index, uint8_t Data)
+bool get_receive_config(uint16_t *index, uint8_t Data)
 {
   if (*index != CONFIG_SIZE - 1U)
   {
-    pData[(*index)++] = Data;
+    //TODO: rewrite adding to eeprom without heap 
+    get_write_byte_eeprom(Data, ((*index)++) + EEPROM_START_PACKET);
+    //pData[(*index)++] = Data;
     return false;
   }
   else
   {
-    pData[*index] = Data;
+    //pData[*index] = Data;
+    get_write_byte_eeprom(Data, (*index) + EEPROM_START_PACKET);
     return true;
   }
 }
 
-void get_send_config(uint8_t *pData)
+void get_send_config(void)
 {
-  if (read_config_packet(pData))
+  if (read_config_packet())
   {
     for (uint16_t i = 0; i < CONFIG_SIZE; ++i)
     {
-      send_byte(pData[i]);
+      send_byte(FLASH_ReadByte(i + EEPROM_START_PACKET));
+      //send_byte(pData[i]);
     }
   }
 }
@@ -89,19 +93,19 @@ void send_byte(uint8_t data)
   UART1->DR = data;
 }
 
-uint8_t get_crc(uint8_t *pData, uint16_t size)
+uint8_t get_crc(uint16_t size)
 {
   uint8_t crc = 0xFFU;
   for (uint8_t i = 0; i < size; ++i)
   {
-    crc ^= pData[i];
+    crc ^= FLASH_ReadByte(EEPROM_START_PACKET + i);
   }
   return crc;
 }
 
-bool check_crc(uint8_t rCRC, uint8_t *pData, uint16_t size)
+bool check_crc(uint8_t rCRC, uint16_t size)
 {
-  return (rCRC == get_crc(pData, size));
+  return (rCRC == get_crc(size));
 }
 
 void print(char *pData)

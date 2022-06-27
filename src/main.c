@@ -105,9 +105,9 @@ void main(void)
             }
             else
             {
-              if (read_config_packet(configArray))
+              if (read_config_packet())
               {
-                get_send_config(configArray);
+                get_send_config();
               }
               else
               {
@@ -120,7 +120,7 @@ void main(void)
 
           case write_config:
             tmp_data = Pull(&uart_rx);
-            if (get_receive_config(configArray, &tmp_arr_index, tmp_data))
+            if (get_receive_config(&tmp_arr_index, tmp_data))
             { // Received packet, wait CRC
               GetReset(&uart_rx);
               send_nack();
@@ -130,15 +130,16 @@ void main(void)
                 asm("nop");
               }
               tmp_data = Pull(&uart_rx); // Receive CRC
-              if (check_crc(tmp_data, configArray, tmp_arr_index))
+              if (check_crc(tmp_data, tmp_arr_index))
               { // CRC is valid
-                write_config_packet(configArray, tmp_arr_index);
+                //write_config_packet(configArray, tmp_arr_index);
                 // upd_config();
                 print("Load complete\n\r");
                 reset_state_cmd(&cmd_receive, &curr_cmd);
               }
               else
               {
+                //TODO: Add erase memory
                 print("Invalid CRC\n\r");
               }
               reset_state_cmd(&cmd_receive, &curr_cmd);
