@@ -91,6 +91,7 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
 
 INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
 {
+  TIM2->SR1 = 0x00U;
   if (curr_mode == work)
   {
     LED_PORT->ODR ^= LED_PIN;
