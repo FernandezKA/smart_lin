@@ -4,7 +4,7 @@
 #include "stm8s_flash.h"
 
 #define EEPROM_INFO ((uint32_t) 0x004000)
-#define EEPROM_START_PACKET ((uint32_t) 0x004040)
+#define EEPROM_START_PACKET ((uint32_t) 0x004000)
 #define EEPROM_END_PACKET ((uint32_t) 0x004280)
 
 //Receive config. file

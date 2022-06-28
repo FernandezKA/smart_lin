@@ -36,4 +36,6 @@ void print(char* pData);
 
 void print_cpu_id(void);
 
+void from_hex_to_string(uint8_t data);
+
 #endif

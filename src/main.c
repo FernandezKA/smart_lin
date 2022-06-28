@@ -92,7 +92,8 @@ void main(void)
           case dev_info:
             // get_dev_info();
             print("Lin smart device v. 0.1 \n\r");
-            print("2022-06-20\n\r");
+            print("Release date: 2022-06-20\n\r");
+            print("CPU ID: ");
             print_cpu_id();
             reset_state_cmd(&cmd_receive, &curr_cmd);
             GetReset(&uart_rx);
@@ -101,7 +102,7 @@ void main(void)
           case read_config:
             if (FLASH_ReadByte(EEPROM_START_PACKET) == 0x00)
             {
-              print("Reading forbidden\n\r");
+              print("ERROR: Reading forbidden\n\r");
             }
             else
             {
@@ -111,7 +112,7 @@ void main(void)
               }
               else
               {
-                print("Config. not exist\n\r");
+                print("ERROR: Configuration array not loaded\n\r");
               }
             }
             reset_state_cmd(&cmd_receive, &curr_cmd);
@@ -124,7 +125,7 @@ void main(void)
             { // Received packet, wait CRC
               GetReset(&uart_rx);
               send_nack();
-              print("wait crc\n\r");
+              print("Wait crc\n\r");
               while (GetSize(&uart_rx) == 0x00)
               {
                 asm("nop");
@@ -140,7 +141,7 @@ void main(void)
               else
               {
                 //TODO: Add erase memory
-                print("Invalid CRC\n\r");
+                print("ERROR: Invalid CRC\n\r");
               }
               reset_state_cmd(&cmd_receive, &curr_cmd);
               tmp_arr_index = 0x00U;
@@ -159,7 +160,7 @@ void main(void)
       UART1->CR2 |= UART1_CR2_TIEN;
       UART1->DR = Pull(&uart_tx);
     }
-    // Lin packet received
+    // Lin packet received  
     /* This FSM state on fully receive lin packet, check PID on list with SLAVE&&FILTERS
         then get action. If PID exist on 2 lists, used first finded value. */
     if (eLinReceive == completed)

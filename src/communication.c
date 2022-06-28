@@ -110,13 +110,16 @@ bool check_crc(uint8_t rCRC, uint16_t size)
 
 void print(char *pData)
 {
-  char last = 0x00U, curr = 0x00U;
+//  char last = 0x00U, curr = 0x00U;
   uint8_t index = 0x00U;
-  while (!(last == '\n' && curr == '\r') && !(last == '\r' && curr == '\n'))
-  {
-    last = curr;
-    curr = pData[index++];
-    send_byte(curr);
+//  while (!(last == '\n' && curr == '\r') && !(last == '\r' && curr == '\n'))
+//  {
+//    last = curr;
+//    curr = pData[index++];
+//    send_byte(curr);
+//  }
+  while(index < 0xFF & pData[index] != '\0'){
+    send_byte(pData[index++]);
   }
 }
 
@@ -132,8 +135,16 @@ void print_cpu_id(void)
 {
   for (uint32_t i = CPU_ID_BEGIN; i <= CPU_ID_END; ++i)
   {
-    send_byte(FLASH_ReadByte(i));
+    from_hex_to_string(FLASH_ReadByte(i));
   }
   send_byte('\n');
   send_byte('\r');
+}
+
+void from_hex_to_string(uint8_t data){
+  uint8_t first_digit = 0x00U, second_digit = 0x00U;
+  first_digit = ((data & 0xF0) >> 4) + '0';
+  second_digit = ((data & 0x0F) + '0');
+  send_byte(first_digit); 
+  send_byte(second_digit);
 }
