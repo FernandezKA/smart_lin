@@ -143,6 +143,7 @@ void main(void)
               {
                 //TODO: Add erase memory
                 print("ERROR: Invalid CRC\n\r");
+                get_erase_eeprom();
               }
               reset_state_cmd(&cmd_receive, &curr_cmd);
               tmp_arr_index = 0x00U;

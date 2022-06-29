@@ -103,3 +103,11 @@ void get_write_byte_eeprom(uint8_t _data, uint32_t pAddr){
   FLASH_ProgramByte(pAddr, _data);
   FLASH_Lock(FLASH_MEMTYPE_DATA);
 }
+
+void get_erase_eeprom(void){
+  FLASH_Unlock(FLASH_MEMTYPE_DATA);
+  for(uint32_t i = EEPROM_START_PACKET; i < EEPROM_END_PACKET; ++i){
+   FLASH_EraseByte(i); 
+  }
+  FLASH_Lock(FLASH_MEMTYPE_DATA);
+}

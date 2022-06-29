@@ -23,6 +23,7 @@ void write_config_packet(uint8_t* pData, uint16_t size);
 bool read_config_packet(void);
 //Write single byte to eeprom 
 void get_write_byte_eeprom(uint8_t _data, uint32_t pAddr);
-
+//Erase all of erase memory
+void get_erase_eeprom(void);
 
 #endif
