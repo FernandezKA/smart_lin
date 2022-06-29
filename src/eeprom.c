@@ -5,12 +5,12 @@
 bool read_dev_info(uint8_t *pList)
 {
   bool status = false;
-  if (FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)) != 0xFF)
+  if (FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)) != 0xFFU)
   {
     status = true;
     for (uint8_t i = 0; i < 0x08U; ++i)
     {
-      pList[i] = FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t) * i);
+      pList[i] = FLASH_ReadByte(EEPROM_INFO + (uint32_t)(sizeof(uint8_t) * i));
     }
   }
   return status;
@@ -19,7 +19,7 @@ bool read_dev_info(uint8_t *pList)
 void write_dev_info(uint8_t *pList)
 {
   FLASH_Unlock(FLASH_MEMTYPE_DATA);
-  for (uint8_t i = 0; i < 0x08; ++i)
+  for (uint8_t i = 0U; i < 0x08U; ++i)
   {
     FLASH_ProgramByte(EEPROM_INFO + sizeof(uint8_t), pList[i]);
   }
@@ -28,7 +28,9 @@ void write_dev_info(uint8_t *pList)
 
 void read_packet(uint8_t *pSlave, uint8_t *pFilter)
 {
-  uint8_t* tmp_packet = malloc(sizeof(uint8_t) * PACKET_SIZE);
+  static uint8_t* tmp_packet = NULL;
+  tmp_packet = malloc(sizeof(uint8_t) * PACKET_SIZE);
+  if(tmp_packet != NULL){
   //uint8_t tmp_packet[PACKET_SIZE];
   // Read all of existing packets
   for (uint8_t i = 0; i < COUNT_PACKET; ++i)
@@ -46,11 +48,18 @@ void read_packet(uint8_t *pSlave, uint8_t *pFilter)
       break;
 
     case pckt_undef:
-      asm("nop"); // Skip this index
+      //asm("nop"); // Skip this index
+      break;
+    default: 
+      
       break;
     }
   }
   free(tmp_packet);
+  }
+  else{
+    print("ERROR: Memory can't be allocated\n\r");
+  }
 }
 
 void get_packet(uint8_t index, uint8_t *packet)
@@ -75,7 +84,7 @@ void write_config_packet(uint8_t *pData, uint16_t size)
 
 bool read_config_packet(void)
 {
-  if (0x00 == FLASH_ReadByte(EEPROM_INFO + sizeof(uint8_t)))
+  if (0x00U == FLASH_ReadByte(EEPROM_INFO + (uint32_t) (sizeof(uint8_t))))
   {
     return false;
   }

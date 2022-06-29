@@ -2,7 +2,7 @@
 
 uint32_t led_div = 0x00U;
 static bool div_tim2 = false;
-static uint8_t action_uart_timeout = 0x00U;
+uint8_t action_uart_timeout = 0x00U;
 
 INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
@@ -69,9 +69,7 @@ INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
     Push(&uart_rx, UART1->DR);
     UART1->SR = 0x00U;
   }
-  if(curr_mode == work){
-    action_uart_timeout = 0x04U;
-  }
+  action_uart_timeout = 0x02U;
   // Get action on FSM receive
   // bLinPacketReceive(UART1->DR, &eLinReceive, &lin_rec);
 }
@@ -114,6 +112,5 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
   else{
     LED_PORT -> ODR &= ~LED_ACT;
   }
-  
   div_tim2 = ~div_tim2;
 }

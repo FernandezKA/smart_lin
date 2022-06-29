@@ -8,9 +8,10 @@ void CLK_Init(void)
 
 void UART_Init(uint16_t BAUD)
 {
-  uint16_t prescaler = F_CPU / BAUD;
-  UART1->BRR1 = (prescaler & 0xFF0) >> 4;
-  UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
+//  uint16_t prescaler = F_CPU / BAUD;
+//  UART1->BRR1 = (prescaler & 0xFF0) >> 4;
+//  UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
+  set_baud(BAUD);
   UART1->CR2 |= UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN;
 }
 
@@ -36,8 +37,8 @@ void IRQ_Init(void)
 void TIM1_Init(void)
 {
   TIM1->CR1 |= TIM1_CR1_OPM;
-  TIM1->PSCRL = (uint8_t)(((F_CPU) / 9600U) & 0xFF);
-  TIM1->PSCRH = (uint8_t)((((F_CPU) / 9600U) & 0xFF00) >> 8);
+  TIM1->PSCRL = (uint8_t)(((F_CPU) / 9600U) & 0xFFU);
+  TIM1->PSCRH = (uint8_t)((((F_CPU) / 9600U) & 0xFF00U) >> 8);
 }
 
 void TIM2_Init(void)
@@ -70,7 +71,15 @@ void config_lin(void)
 
 void set_baud(uint16_t _baud)
 {
-  uint16_t prescaler = F_CPU / _baud;
+  static uint16_t prescaler = 0x00U;
+  if(_baud != 0x00U){
+    prescaler = (uint16_t) (F_CPU / _baud);
+  }
+  else{
+    prescaler = (uint16_t) (F_CPU / 9600U);
+  }
   UART1->BRR1 = (prescaler & 0xFF0) >> 4;
   UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
+//  UART1->BRR1 = (uint8_t) (prescaler & 0xFF0U) >> 4;
+//  UART1->BRR2 |= (uint8_t) (((prescaler & 0xF000U) >> 4) | (prescaler & 0x0FU));
 }

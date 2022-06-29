@@ -44,6 +44,7 @@ extern struct lin lin_tr;
 extern enum Receive_FSM eLinReceive;
 extern bool btn_0;
 extern bool btn_1;
+extern uint8_t action_uart_timeout;
 
 extern uint32_t led_div;
 

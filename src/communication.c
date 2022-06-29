@@ -118,7 +118,7 @@ void print(char *pData)
 //    curr = pData[index++];
 //    send_byte(curr);
 //  }
-  while(index < 0xFF & pData[index] != '\0'){
+  while(index < 0xFFU & pData[index] != '\0'){
     send_byte(pData[index++]);
   }
 }

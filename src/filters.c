@@ -6,11 +6,11 @@ uint8_t pid_triggered_array[COUNT_PACKET];
 
 enum packet_type get_check_packet_type(uint8_t *pData)
 {
-  if (pData[1] == 0x01)
+  if (pData[1] == 0x01U)
   {
     return pckt_pid_filters;
   }
-  else if (pData[1] == 0x02)
+  else if (pData[1] == 0x02U)
   {
     return pckt_pid_slave;
   }
@@ -22,7 +22,7 @@ enum packet_type get_check_packet_type(uint8_t *pData)
 
 bool get_check_pid(uint8_t _pid)
 {
-  if (_pid > 0x00 && _pid <= 0x3F)
+  if (_pid > 0x00U && _pid <= 0x3FU)
   {
     return true;
   }
@@ -80,12 +80,12 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->pid = tmpArr[0];
   // tmpArr[1] reserved for type
   packet->dlc = tmpArr[2];
-  for (uint8_t i = 2; i < 16 + 2; i += 2)
+  for (uint8_t i = 2U; i < 16U + 2U; i += 2U)
   {
     packet->edges_low[i] = tmpArr[i];
-    packet->edges_high[i] = tmpArr[i + 1];
+    packet->edges_high[i] = tmpArr[i + 1U];
   }
-  (tmpArr[18U] == 0x00) ? (packet->btn_state = false) : (packet->btn_state = true);
+  (tmpArr[18U] == 0x00U) ? (packet->btn_state = false) : (packet->btn_state = true);
   packet->timeout = tmpArr[19U];
 }
 

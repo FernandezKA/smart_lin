@@ -11,10 +11,16 @@ void vSetBAUD(uint16_t _BAUD)
 #error hw uart for lin not selected
 #endif
 
-  uint16_t USART_DIV = F_CPU / _BAUD;
+  static uint16_t USART_DIV = 0x00U;
+  if(_BAUD != 0x00U){
+    USART_DIV = (uint16_t) F_CPU / _BAUD;
+  }
+  else{
+    USART_DIV = (uint16_t) F_CPU / 9600U;
+  }
   // Set baudrate
-  LIN_UART->BRR2 = (uint8_t)(((uint8_t)(USART_DIV & 0xF000) >> 8U) | (USART_DIV & 0x0F));
-  LIN_UART->BRR1 |= (uint8_t)((USART_DIV >> 8) & 0xFF);
+  LIN_UART->BRR2 = (uint8_t)(((uint8_t)(USART_DIV & 0xF000U) >> 8U) | (uint8_t)(USART_DIV & 0x0FU));
+  LIN_UART->BRR1 |= (uint8_t)((USART_DIV >> 8U) & 0xFFU);
 }
 
 void vSetBreakLength(uint16_t _BAUD)

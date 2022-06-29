@@ -17,7 +17,7 @@ bool btn_1 = false;
 uint32_t sys_time = 0x00U;
 uint8_t trig_index = 0x00U;
 
-int SystemInit(void)
+void SystemInit(void)
 {
   CLK_Init();
   PORT_Init();
@@ -27,7 +27,7 @@ int SystemInit(void)
   IRQ_Init();
   GetReset(&uart_rx);
   GetReset(&uart_tx);
-  return 0;
+  //return 0;
 }
 
 static inline void reset_state_cmd(bool *_cmd, enum cmd *_ecmd)
@@ -53,7 +53,7 @@ void main(void)
     read_packet(pid_slave_array, pid_filters_array);
   }
   
-  while (1)
+  while (true)
   {
     //Check new bytes in FIFO ring buffer 
     if (GetSize(&uart_rx) != 0x00U)
@@ -90,7 +90,7 @@ void main(void)
           switch (curr_cmd)
           {
           case dev_info:
-            // get_dev_info();
+            //get_dev_info();
             print("Lin smart device v. 0.1 \n\r");
             print("Release date: 2022-06-20\n\r");
             print("CPU ID: ");
@@ -120,13 +120,14 @@ void main(void)
             break;
 
           case write_config:
+            if(action_uart_timeout == 0x00){
             tmp_data = Pull(&uart_rx);
             if (get_receive_config(&tmp_arr_index, tmp_data))
             { // Received packet, wait CRC
               GetReset(&uart_rx);
               send_nack();
               print("Wait crc\n\r");
-              while (GetSize(&uart_rx) == 0x00)
+              while (GetSize(&uart_rx) == 0x00U)
               {
                 asm("nop");
               }
@@ -148,8 +149,13 @@ void main(void)
               GetReset(&uart_rx);
             }
             break;
+            }
           }
         }
+        break;
+        
+      default:
+        
         break;
       }
     }
@@ -209,12 +215,12 @@ void main(void)
       else
       {
         //print("Current PID not exist\n\r");
-        asm("nop");
+        //asm("nop");
       }
     }
     // Check receive lin FSM state for complete packet
-  };
-}
+  }
+} 
 
 #ifdef USE_FULL_ASSERT
 void assert_failed(u8 *file, u32 line)
