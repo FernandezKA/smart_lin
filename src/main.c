@@ -197,8 +197,11 @@ void main(void)
             }
           }
           else{
-            get_remove_pid(pid_triggered_array, lin_rec.pid);
+            
           }
+          get_remove_pid(pid_triggered_array, lin_rec.pid);
+          vLinPacketClear(&lin_rec);
+          eLinReceive = wait_break;
         }
         //If timeout less then sys_time - send packet, else remove it
       }
@@ -218,6 +221,8 @@ void main(void)
       }
       else
       {
+        vLinPacketClear(&lin_rec);
+        eLinReceive = wait_break;
         //print("Current PID not exist\n\r");
         //asm("nop");
       }
