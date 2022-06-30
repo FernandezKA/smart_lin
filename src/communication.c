@@ -104,6 +104,11 @@ uint8_t get_crc(uint16_t size)
   {
     crc ^= FLASH_ReadByte(EEPROM_START_PACKET + i);
   }
+//#ifndef RELEASE
+//  print("Calculated CRC: ");
+//  from_hex_to_string(crc);
+//  print("\n\r");
+//#endif
   return crc;
 }
 

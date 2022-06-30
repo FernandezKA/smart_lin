@@ -1,13 +1,13 @@
 ###############################################################################
 #
-# IAR ELF Linker V3.11.1.207 for STM8                     30/Jun/2022  10:41:54
+# IAR ELF Linker V3.11.1.207 for STM8                     30/Jun/2022  10:55:26
 # Copyright 2010-2019 IAR Systems AB.
 #
 #    Output file  =  C:\dev\MCU\STM8\smart_lin\Debug\Exe\SPL_STM8S_template.out
 #    Map file     =  
 #        C:\dev\MCU\STM8\smart_lin\Debug\List\SPL_STM8S_template.map
 #    Command line =  
-#        -f C:\Users\Admin\AppData\Local\Temp\EWEDE.tmp
+#        -f C:\Users\Admin\AppData\Local\Temp\EW724E.tmp
 #        (C:\dev\MCU\STM8\smart_lin\Debug\Obj\communication.o
 #        C:\dev\MCU\STM8\smart_lin\Debug\Obj\eeprom.o
 #        C:\dev\MCU\STM8\smart_lin\Debug\Obj\fifo.o
@@ -156,43 +156,43 @@ No sections matched the following patterns:
     .tiny.data       inited   0x000010     0x1  main.o [1]
                             - 0x000011     0x1
 
-"P1", part 2 of 2:                        0xdc
+"P1", part 2 of 2:                        0xe4
   .tiny.bss          zero     0x000011    0x4c  main.o [1]
-  .tiny.bss          zero     0x00005d    0x24  main.o [1]
-  .tiny.bss          zero     0x000081    0x24  main.o [1]
-  .tiny.bss          zero     0x0000a5    0x15  main.o [1]
-  .tiny.bss          zero     0x0000ba     0xd  main.o [1]
-  .tiny.bss          zero     0x0000c7     0x4  interrupts.o [1]
-  .tiny.bss          zero     0x0000cb     0x4  lin_hw_layer.o [1]
-  .tiny.bss          zero     0x0000cf     0x4  main.o [1]
-  .tiny.bss          zero     0x0000d3     0x3  main.o [1]
-  .tiny.bss          zero     0x0000d6     0x2  eeprom.o [1]
-  .tiny.bss          zero     0x0000d8     0x2  filters.o [1]
-  .tiny.bss          zero     0x0000da     0x2  filters.o [1]
-  .tiny.bss          zero     0x0000dc     0x2  filters.o [1]
-  .tiny.bss          zero     0x0000de     0x2  init.o [1]
-  .tiny.bss          zero     0x0000e0     0x2  xgetmemchunk.o [4]
-  .tiny.bss          zero     0x0000e2     0x1  interrupts.o [1]
-  .tiny.bss          zero     0x0000e3     0x1  interrupts.o [1]
-  .tiny.bss          zero     0x0000e4     0x1  lin_hw_layer.o [1]
-  .tiny.bss          zero     0x0000e5     0x1  main.o [1]
-  .tiny.bss          zero     0x0000e6     0x1  main.o [1]
-  .tiny.bss          zero     0x0000e7     0x1  main.o [1]
-  .tiny.bss          zero     0x0000e8     0x1  main.o [1]
-  .tiny.bss          zero     0x0000e9     0x1  main.o [1]
-  .tiny.bss          zero     0x0000ea     0x1  main.o [1]
-  .tiny.bss          zero     0x0000eb     0x1  main.o [1]
-  .tiny.bss          zero     0x0000ec     0x1  main.o [1]
-                            - 0x0000ed    0xdc
+  .tiny.bss          zero     0x00005d    0x28  main.o [1]
+  .tiny.bss          zero     0x000085    0x28  main.o [1]
+  .tiny.bss          zero     0x0000ad    0x15  main.o [1]
+  .tiny.bss          zero     0x0000c2     0xd  main.o [1]
+  .tiny.bss          zero     0x0000cf     0x4  interrupts.o [1]
+  .tiny.bss          zero     0x0000d3     0x4  lin_hw_layer.o [1]
+  .tiny.bss          zero     0x0000d7     0x4  main.o [1]
+  .tiny.bss          zero     0x0000db     0x3  main.o [1]
+  .tiny.bss          zero     0x0000de     0x2  eeprom.o [1]
+  .tiny.bss          zero     0x0000e0     0x2  filters.o [1]
+  .tiny.bss          zero     0x0000e2     0x2  filters.o [1]
+  .tiny.bss          zero     0x0000e4     0x2  filters.o [1]
+  .tiny.bss          zero     0x0000e6     0x2  init.o [1]
+  .tiny.bss          zero     0x0000e8     0x2  xgetmemchunk.o [4]
+  .tiny.bss          zero     0x0000ea     0x1  interrupts.o [1]
+  .tiny.bss          zero     0x0000eb     0x1  interrupts.o [1]
+  .tiny.bss          zero     0x0000ec     0x1  lin_hw_layer.o [1]
+  .tiny.bss          zero     0x0000ed     0x1  main.o [1]
+  .tiny.bss          zero     0x0000ee     0x1  main.o [1]
+  .tiny.bss          zero     0x0000ef     0x1  main.o [1]
+  .tiny.bss          zero     0x0000f0     0x1  main.o [1]
+  .tiny.bss          zero     0x0000f1     0x1  main.o [1]
+  .tiny.bss          zero     0x0000f2     0x1  main.o [1]
+  .tiny.bss          zero     0x0000f3     0x1  main.o [1]
+  .tiny.bss          zero     0x0000f4     0x1  main.o [1]
+                            - 0x0000f5    0xe4
 
 "P2", part 1 of 2:                         0x4
-  .near.bss          zero     0x0000ed     0x4  xxmemxmalloc.o [4]
-                            - 0x0000f1     0x4
+  .near.bss          zero     0x0000f5     0x4  xxmemxmalloc.o [4]
+                            - 0x0000f9     0x4
 
 "P2", part 2 of 2:                       0x100
-  HEAP                        0x0000f1   0x100  <Block>
-    HEAP             uninit   0x0000f1   0x100  <Block tail>
-                            - 0x0001f1   0x100
+  HEAP                        0x0000f9   0x100  <Block>
+    HEAP             uninit   0x0000f9   0x100  <Block tail>
+                            - 0x0001f9   0x100
 
 "A1":                                    0x100
   CSTACK                      0x000300   0x100  <Block>
@@ -322,9 +322,9 @@ No sections matched the following patterns:
           Address   Size
           -------   ----
 Zero (__iar_zero_init2)
-    2 destination ranges, total size 0xe0:
-          0x000011  0xdc
-          0x0000ed   0x4
+    2 destination ranges, total size 0xe8:
+          0x000011  0xe4
+          0x0000f5   0x4
 
 Copy (__iar_copy_init2)
     1 source range, total size 0x1:
@@ -348,13 +348,13 @@ C:\dev\MCU\STM8\smart_lin\Debug\Obj: [1]
     init.o                     142                 2
     interrupts.o               370                 6
     lin_hw_layer.o             260                 5
-    main.o                     723      152      198
+    main.o                     723      152      206
     packet_parser.o            243
     queue_lin.o                131
     stm8s_flash.o              358       52
     stm8s_it.o                  28
     ------------------------------------------------
-    Total:                   3 697      239      219
+    Total:                   3 697      239      227
 
 command line: [2]
     ------------------------------------------------
@@ -390,7 +390,7 @@ dlstm8ssn.a: [4]
 
     Linker created                       22      512
 ----------------------------------------------------
-    Grand Total:             4 910      389      753
+    Grand Total:             4 910      389      761
 
 
 *******************************************************************************
@@ -501,8 +501,8 @@ FLASH_Unlock            0x008dd6   0x3b  Code  Gb  stm8s_flash.o [1]
 GetDevMode              0x009424    0xf  Code  Gb  communication.o [1]
 GetReset                0x00908c   0x29  Code  Gb  fifo.o [1]
 GetSize                 0x009400   0x12  Code  Gb  fifo.o [1]
-HEAP$$Base              0x0000f1          --   Gb  - Linker created -
-HEAP$$Limit             0x0001f1          --   Gb  - Linker created -
+HEAP$$Base              0x0000f9          --   Gb  - Linker created -
+HEAP$$Limit             0x0001f9          --   Gb  - Linker created -
 I2C_IRQHandler          0x0094aa    0x2  Code  Gb  stm8s_it.o [1]
 INTVEC$$Base            0x008000          --   Gb  - Linker created -
 INTVEC$$Limit           0x008080          --   Gb  - Linker created -
@@ -540,10 +540,10 @@ __iar_unhandled_exception
 __iar_zero_init2        0x009274         Code  Gb  init_small.o [4]
 __intvec                0x008000         Data  Gb  interrupt.o [4]
 __low_level_init        0x009489    0x3  Code  Gb  low_level_init.o [4]
-__near_Aldata           0x0000ed    0x4  Data  Gb  xxmemxmalloc.o [4]
+__near_Aldata           0x0000f5    0x4  Data  Gb  xxmemxmalloc.o [4]
 __near_GetMemChunk      0x009347   0x17  Code  Gb  xgetmemchunk.o [4]
 __near_GetMemChunk::start
-                        0x0000e0    0x2  Data  Lc  xgetmemchunk.o [4]
+                        0x0000e8    0x2  Data  Lc  xgetmemchunk.o [4]
 __near_findmem          0x0089b7   0x63  Code  Lc  xxmemxmalloc.o [4]
 _exit                   0x00947e         Code  Gb  cexit.o [4]
 _interrupt_1            0x009494         Code  Gb  stm8s_it.o [1]
@@ -566,18 +566,18 @@ _interrupt_6            0x00949e         Code  Gb  stm8s_it.o [1]
 _interrupt_7            0x0092e3         Code  Gb  interrupts.o [1]
 _interrupt_8            0x008c9c         Code  Gb  interrupts.o [1]
 _interrupt_9            0x0094a0         Code  Gb  stm8s_it.o [1]
-action_uart_timeout     0x0000e3    0x1  Data  Gb  interrupts.o [1]
+action_uart_timeout     0x0000eb    0x1  Data  Gb  interrupts.o [1]
 add_to_array            0x0093da   0x13  Code  Gb  filters.o [1]
 assert_failed           0x0094b0    0x1  Code  Gb  main.o [1]
 bLinPacketReceive       0x008437   0xf3  Code  Gb  packet_parser.o [1]
-btn_0                   0x0000e6    0x1  Data  Gb  main.o [1]
-btn_1                   0x0000e7    0x1  Data  Gb  main.o [1]
+btn_0                   0x0000ee    0x1  Data  Gb  main.o [1]
+btn_1                   0x0000ef    0x1  Data  Gb  main.o [1]
 check_crc               0x009238   0x1e  Code  Gb  communication.o [1]
 config_lin              0x009451    0x9  Code  Gb  init.o [1]
 config_uart             0x009448    0x9  Code  Gb  init.o [1]
 curr_mode               0x000010    0x1  Data  Gb  main.o [1]
-div_tim2                0x0000e2    0x1  Data  Lc  interrupts.o [1]
-eLinReceive             0x0000e5    0x1  Data  Gb  main.o [1]
+div_tim2                0x0000ea    0x1  Data  Lc  interrupts.o [1]
+eLinReceive             0x0000ed    0x1  Data  Gb  main.o [1]
 exit                    0x00948c    0x3  Code  Gb  exit.o [4]
 free                    0x00852a   0xc9  Code  Gb  xxmemxfree.o [4]
 from_hex_to_string      0x0091df   0x22  Code  Gb  communication.o [1]
@@ -595,31 +595,31 @@ get_send_config         0x008ee3   0x32  Code  Gb  communication.o [1]
 get_send_data_frame     0x008d9b   0x3b  Code  Gb  lin_hw_layer.o [1]
 get_send_lin_packet     0x008c56   0x46  Code  Gb  lin_hw_layer.o [1]
 get_write_byte_eeprom   0x009176   0x23  Code  Gb  eeprom.o [1]
-led_div                 0x0000c7    0x4  Data  Gb  interrupts.o [1]
+led_div                 0x0000cf    0x4  Data  Gb  interrupts.o [1]
 lin_queue               0x000011   0x4c  Data  Gb  main.o [1]
-lin_rec                 0x0000ba    0xd  Data  Gb  main.o [1]
+lin_rec                 0x0000c2    0xd  Data  Gb  main.o [1]
 load_filter_packet      0x0086c2   0x9e  Code  Gb  filters.o [1]
 load_slave_packet       0x008954   0x63  Code  Gb  filters.o [1]
-loaded_filter           0x0000a5   0x15  Data  Gb  main.o [1]
+loaded_filter           0x0000ad   0x15  Data  Gb  main.o [1]
 main                    0x008080  0x2ab  Code  Gb  main.o [1]
-main::cmd_receive       0x0000e9    0x1  Data  Lc  main.o [1]
+main::cmd_receive       0x0000f1    0x1  Data  Lc  main.o [1]
 main{4}{5}{23}{24}::ex_pid_filter_ind
-                        0x0000eb    0x1  Data  Lc  main.o [1]
+                        0x0000f3    0x1  Data  Lc  main.o [1]
 main{4}{5}{23}{24}::ex_pid_slave_ind
-                        0x0000ea    0x1  Data  Lc  main.o [1]
+                        0x0000f2    0x1  Data  Lc  main.o [1]
 main{4}{5}{23}{24}::ex_pid_triggered_ind
-                        0x0000ec    0x1  Data  Lc  main.o [1]
+                        0x0000f4    0x1  Data  Lc  main.o [1]
 malloc                  0x008760   0x92  Code  Gb  xxmemxmalloc.o [4]
-pid_filters_array       0x0000da    0x2  Data  Gb  filters.o [1]
-pid_slave_array         0x0000d8    0x2  Data  Gb  filters.o [1]
-pid_triggered_array     0x0000dc    0x2  Data  Gb  filters.o [1]
+pid_filters_array       0x0000e2    0x2  Data  Gb  filters.o [1]
+pid_slave_array         0x0000e0    0x2  Data  Gb  filters.o [1]
+pid_triggered_array     0x0000e4    0x2  Data  Gb  filters.o [1]
 print                   0x008ce1   0x41  Code  Gb  communication.o [1]
 print_cpu_id            0x008e7b   0x34  Code  Gb  communication.o [1]
 queue_handler           0x0087f2   0x83  Code  Gb  queue_lin.o [1]
 read_config_packet      0x009256   0x1e  Code  Gb  eeprom.o [1]
 read_packet             0x0088e8   0x6c  Code  Gb  eeprom.o [1]
 read_packet::tmp_packet
-                        0x0000d6    0x2  Data  Lc  eeprom.o [1]
+                        0x0000de    0x2  Data  Lc  eeprom.o [1]
 reset_state_cmd         0x009473    0x6  Code  Lc  main.o [1]
 search_pid              0x009062   0x2a  Code  Gb  filters.o [1]
 send_ack                0x009461    0x6  Code  Gb  communication.o [1]
@@ -627,17 +627,17 @@ send_byte               0x009433    0xc  Code  Gb  communication.o [1]
 send_nack               0x009467    0x6  Code  Gb  communication.o [1]
 send_write_end          0x00946d    0x6  Code  Gb  communication.o [1]
 set_baud                0x008e11   0x36  Code  Gb  init.o [1]
-set_baud::prescaler     0x0000de    0x2  Data  Lc  init.o [1]
-sys_time                0x0000cf    0x4  Data  Gb  main.o [1]
-trig_index              0x0000e8    0x1  Data  Gb  main.o [1]
+set_baud::prescaler     0x0000e6    0x2  Data  Lc  init.o [1]
+sys_time                0x0000d7    0x4  Data  Gb  main.o [1]
+trig_index              0x0000f0    0x1  Data  Gb  main.o [1]
 u8GetCRC                0x008c0d   0x49  Code  Gb  lin_hw_layer.o [1]
-u8GetCRC::CRC           0x0000e4    0x1  Data  Lc  lin_hw_layer.o [1]
-u8GetCRC::_sum          0x0000cb    0x4  Data  Lc  lin_hw_layer.o [1]
+u8GetCRC::CRC           0x0000ec    0x1  Data  Lc  lin_hw_layer.o [1]
+u8GetCRC::_sum          0x0000d3    0x4  Data  Lc  lin_hw_layer.o [1]
 u8GetSizeDataFrame      0x009330   0x17  Code  Gb  lin_hw_layer.o [1]
-uart_rx                 0x00005d   0x24  Data  Gb  main.o [1]
-uart_tx                 0x000081   0x24  Data  Gb  main.o [1]
+uart_rx                 0x00005d   0x28  Data  Gb  main.o [1]
+uart_tx                 0x000085   0x28  Data  Gb  main.o [1]
 vLinPacketClear         0x009199   0x23  Code  Gb  lin_hw_layer.o [1]
-xBreak                  0x0000d3    0x3  Data  Gb  main.o [1]
+xBreak                  0x0000db    0x3  Data  Gb  main.o [1]
 
 
 [1] = C:\dev\MCU\STM8\smart_lin\Debug\Obj
@@ -647,7 +647,7 @@ xBreak                  0x0000d3    0x3  Data  Gb  main.o [1]
 
   4 910 bytes of readonly  code memory
     389 bytes of readonly  data memory
-    753 bytes of readwrite data memory
+    761 bytes of readwrite data memory
 
 Errors: none
 Warnings: none

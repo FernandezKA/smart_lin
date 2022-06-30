@@ -3,7 +3,7 @@
 //Includes
 #include "main.h"
 //User definitions
-#define FIFO_LENGTH 32U
+#define FIFO_LENGTH 36U
 //Variable declaration
 struct FIFO_STR
 {
