@@ -64,8 +64,9 @@ INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
   if((UART1->CR4 & UART1_CR4_LBDF) == UART1_CR4_LBDF){
     eLinReceive = wait_synch;
     UART1->CR4 &= ~UART1_CR4_LBDF;
+    return;
   }
-  if((UART1->SR & UART1_SR_RXNE) == UART1_SR_RXNE){
+  else if((UART1->SR & UART1_SR_RXNE) == UART1_SR_RXNE){
     Push(&uart_rx, UART1->DR);
     UART1->SR = 0x00U;
   }

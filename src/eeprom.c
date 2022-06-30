@@ -40,11 +40,11 @@ void read_packet(uint8_t *pSlave, uint8_t *pFilter)
     switch (get_check_packet_type(tmp_packet))
     {
     case pckt_pid_slave:
-      add_to_array(pSlave, i, tmp_packet[1]);
+      add_to_array(pSlave, i, tmp_packet[0]);
       break;
 
     case pckt_pid_filters:
-      add_to_array(pFilter, i, tmp_packet[1]);
+      add_to_array(pFilter, i, tmp_packet[0]);
       break;
 
     case pckt_undef:
@@ -64,7 +64,7 @@ void read_packet(uint8_t *pSlave, uint8_t *pFilter)
 
 void get_packet(uint8_t index, uint8_t *packet)
 {
-  uint32_t base_addr = EEPROM_START_PACKET + index * PACKET_SIZE;
+  uint32_t base_addr = EEPROM_START_PACKET + HAT_SIZE + index * PACKET_SIZE;
   for (uint8_t i = 0; i < PACKET_SIZE; ++i)
   {
     packet[i] = FLASH_ReadByte(base_addr + i);

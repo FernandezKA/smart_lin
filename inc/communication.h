@@ -28,6 +28,8 @@ void send_nack(void);
 
 void send_byte(uint8_t data);
 
+void send_write_end(void);
+
 uint8_t get_crc(uint16_t size);
 
 bool check_crc(uint8_t rCRC, uint16_t size);

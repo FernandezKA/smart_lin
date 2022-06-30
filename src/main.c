@@ -123,25 +123,24 @@ void main(void)
             if(action_uart_timeout == 0x00){
             tmp_data = Pull(&uart_rx);
             if (get_receive_config(&tmp_arr_index, tmp_data))
-            { // Received packet, wait CRC
+            { /* Received packet, wait CRC*/
               GetReset(&uart_rx);
               send_nack();
-              print("Wait crc\n\r");
-              while (GetSize(&uart_rx) == 0x00U)
+              /*print("Wait crc\n\r");*/
+              while (GetSize(&uart_rx) == 0x00U) /*Wait receive CRC into this loop. Data is loaded in FIFO buffer from IRQ*/
               {
                 asm("nop");
               }
-              tmp_data = Pull(&uart_rx); // Receive CRC
+              tmp_data = Pull(&uart_rx); /* Receive CRC */
               if (check_crc(tmp_data, tmp_arr_index))
-              { // CRC is valid
-                //write_config_packet(configArray, tmp_arr_index);
-                // upd_config();
-                print("Load complete\n\r");
+              { /* CRC is valid */
+                /*print("Load complete\n\r");*/
+                send_ack();
                 reset_state_cmd(&cmd_receive, &curr_cmd);
               }
               else
               {
-                //TODO: Add erase memory
+                /* TODO: Add erase memory */
                 print("ERROR: Invalid CRC\n\r");
                 get_erase_eeprom();
               }
@@ -149,6 +148,11 @@ void main(void)
               tmp_arr_index = 0x00U;
               GetReset(&uart_rx);
             }
+            
+            if(GetSize(&uart_rx) == 0x00U && tmp_arr_index != 0x00U){ /*At timeout after all of data is parsed, send wr_end signal, where say, so next data can be receiving into device*/
+              send_write_end();
+            }
+            
             break;
             }
           }
@@ -161,13 +165,12 @@ void main(void)
       }
     }
 
-    // Transmit data on IRQ with ring buffer 
+    /*Transmit data on IRQ with ring buffer */
     if (GetSize(&uart_tx) != 0x00U)
     {
       UART1->CR2 |= UART1_CR2_TIEN;
       UART1->DR = Pull(&uart_tx);
     }
-    // Lin packet received  
     /* This FSM state on fully receive lin packet, check PID on list with SLAVE&&FILTERS
         then get action. If PID exist on 2 lists, used first finded value. */
     if (eLinReceive == completed)

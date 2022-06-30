@@ -84,6 +84,10 @@ void send_nack(void)
   send_byte(0xAAU);
 }
 
+void send_write_end(void){
+  send_byte(0x65U);
+}
+
 void send_byte(uint8_t data)
 {
   while ((UART1->SR & UART1_SR_TXE) != UART1_SR_TXE)

@@ -36,6 +36,7 @@ uint8_t u8GetCRC(struct lin _packet)
 {
   static uint32_t _sum = 0x00U;
   static uint8_t CRC = 0x00U;
+  _sum = 0x00U;
   for (uint8_t i = 0; i < _packet.dlc; ++i)
   {
     _sum += _packet.data[i];

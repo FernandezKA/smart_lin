@@ -82,6 +82,7 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->dlc = tmpArr[2];
   for (uint8_t i = 2U; i < 16U + 2U; i += 2U)
   {
+    /*WARNING: Can be out from array range*/
     packet->edges_low[i] = tmpArr[i];
     packet->edges_high[i] = tmpArr[i + 1U];
   }
@@ -94,12 +95,12 @@ bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter, bool
   bool rules_trig = true;
   rules_trig &= (packet_lin->data[0] >= packet_filter->edges_low[0]);
   rules_trig &= (packet_lin->data[1] >= packet_filter->edges_low[1]);
-  rules_trig &= (packet_lin->data[2] >= packet_filter->edges_low[2]);
-  rules_trig &= (packet_lin->data[3] >= packet_filter->edges_low[3]);
-  rules_trig &= (packet_lin->data[4] >= packet_filter->edges_low[4]);
-  rules_trig &= (packet_lin->data[5] >= packet_filter->edges_low[5]);
-  rules_trig &= (packet_lin->data[6] >= packet_filter->edges_low[6]);
-  rules_trig &= (packet_lin->data[7] >= packet_filter->edges_low[7]);
+//  rules_trig &= (packet_lin->data[2] >= packet_filter->edges_low[2]);
+//  rules_trig &= (packet_lin->data[3] >= packet_filter->edges_low[3]);
+//  rules_trig &= (packet_lin->data[4] >= packet_filter->edges_low[4]);
+//  rules_trig &= (packet_lin->data[5] >= packet_filter->edges_low[5]);
+//  rules_trig &= (packet_lin->data[6] >= packet_filter->edges_low[6]);
+//  rules_trig &= (packet_lin->data[7] >= packet_filter->edges_low[7]);
   rules_trig &= (packet_filter->btn_state == btn_state);
   return rules_trig;
 }
