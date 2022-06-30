@@ -1843,6 +1843,10 @@ Marking from fragment #503 .near_func.text (16 interrupts.o)
   Marking symbol action_uart_timeout              Glb (93 interrupts.o)
   Marking symbol action_uart_timeout              Glb (93 interrupts.o)
   Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
   Marking symbol ?pop_l1                          Glb (341 vreg_util.o)
   Marking symbol ?pop_l0                          Glb (340 vreg_util.o)
 Marking from fragment #778 .near_func.text (9 queue_lin.o)
@@ -3303,6 +3307,10 @@ Marking from fragment #503 .near_func.text (16 interrupts.o) init:always
   Marking symbol curr_mode                        Glb (132 main.o)
   Marking symbol action_uart_timeout              Glb (93 interrupts.o)
   Marking symbol action_uart_timeout              Glb (93 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
+  Marking symbol div_tim2                             (3 interrupts.o)
   Marking symbol div_tim2                             (3 interrupts.o)
   Marking symbol ?pop_l1                          Glb (341 vreg_util.o)
   Marking symbol ?pop_l0                          Glb (340 vreg_util.o)
@@ -7921,7 +7929,7 @@ Unused fragments:
     write_config_packet
   .near_func.text     12     0x0   0x12  filters.o
     get_check_pid
-  .near_func.text     14     0x0    0x5
+  .near_func.text     14     0x0    0x7
     get_next_cell
   .near_func.text     22     0x0    0x3
     get_btn1_state

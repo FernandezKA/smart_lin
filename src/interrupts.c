@@ -113,5 +113,6 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
   else{
     LED_PORT -> ODR &= ~LED_ACT;
   }
-  div_tim2 = ~div_tim2;
+  (div_tim2) ? (div_tim2 = false) : (div_tim2 = true);
+  /*div_tim2 = ~div_tim2;*/
 }
