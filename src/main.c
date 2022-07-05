@@ -10,7 +10,7 @@ enum mode curr_mode = work;
 FIFO uart_rx, uart_tx;
 struct lin lin_rec;
 struct lin lin_tr;
-struct queue_lin lin_queue;
+//struct queue_lin lin_queue;
 struct filter loaded_filter;
 bool btn_0 = false;
 bool btn_1 = false;
@@ -92,7 +92,7 @@ void main(void)
           case dev_info:
             //get_dev_info();
             print("Lin smart device v. 0.1 \n\r");
-            print("Release date: 2022-06-20\n\r");
+            print("Release date: 2022-07-05\n\r");
             print("CPU ID: ");
             print_cpu_id();
             reset_state_cmd(&cmd_receive, &curr_cmd);
@@ -120,40 +120,19 @@ void main(void)
             break;
 
           case write_config:
-            if(action_uart_timeout == 0x00){
-            tmp_data = Pull(&uart_rx);
-            if (get_receive_config(&tmp_arr_index, tmp_data))
-            { /* Received packet, wait CRC*/
-              GetReset(&uart_rx);
-              send_nack();
-              /*print("Wait crc\n\r");*/
-              while (GetSize(&uart_rx) == 0x00U) /*Wait receive CRC into this loop. Data is loaded in FIFO buffer from IRQ*/
-              {
-                asm("nop");
+            if(GetSize(&uart_rx) == 24U){ //Get part of config array (1 packet)
+              while(GetSize(&uart_rx) != 0x00U){
+                tmp_data = Pull(&uart_rx);
+                if (get_receive_config(&tmp_arr_index, tmp_data))
+                {//wait CRC, then check it
+                  asm("nop");
+                }
+                else{//New byte is writed, 
+                  asm("nop");
+                }
               }
-              tmp_data = Pull(&uart_rx); /* Receive CRC */
-              if (check_crc(tmp_data, tmp_arr_index))
-              { /* CRC is valid */
-                /*print("Load complete\n\r");*/
-                send_ack();
-                reset_state_cmd(&cmd_receive, &curr_cmd);
-              }
-              else
-              {
-                /* TODO: Add erase memory */
-                print("ERROR: Invalid CRC\n\r");
-                get_erase_eeprom();
-              }
-              reset_state_cmd(&cmd_receive, &curr_cmd);
-              tmp_arr_index = 0x00U;
-              GetReset(&uart_rx);
-            }
-            
-            if(GetSize(&uart_rx) == 0x00U && tmp_arr_index != 0x00U){ /*At timeout after all of data is parsed, send wr_end signal, where say, so next data can be receiving into device*/
               send_write_end();
-            }
-            
-            break;
+              break;
             }
           }
         }

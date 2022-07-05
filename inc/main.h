@@ -3,9 +3,9 @@
 
 #define MAX_SIZE_DATA_FRAME 0x08U
 
-#define HAT_SIZE        ((uint8_t) 8U)
+#define HAT_SIZE        ((uint8_t) 24U)
 #define PACKET_SIZE     ((uint8_t) 24U)
-#define COUNT_PACKET    2U
+#define COUNT_PACKET    20U
 #define CONFIG_SIZE     ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
 
 #define F_CPU 16000000U
