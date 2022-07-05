@@ -20,6 +20,8 @@ bool get_receive_config(uint16_t* index, uint8_t Data);
 
 void get_send_config(void);
 
+void get_erase_config(void);
+
 void upd_config(void);
 
 void send_ack(void);

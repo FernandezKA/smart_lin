@@ -25,6 +25,8 @@ enum cmd get_command(uint8_t _data)
     break;
 
   case 0x60U:
+    get_erase_config();
+    send_write_end();
     _cmd = write_config;
     break;
 
@@ -100,15 +102,14 @@ void send_byte(uint8_t data)
 uint8_t get_crc(uint16_t size)
 {
   uint8_t crc = 0xFFU;
-  for (uint8_t i = 0; i < size; ++i)
-  {
-    crc ^= FLASH_ReadByte(EEPROM_START_PACKET + i);
+  uint16_t length = size;
+  uint32_t index = EEPROM_START_PACKET;
+  while(length--){
+    crc^=FLASH_ReadByte(index++);
+    for(uint8_t i = 0; i < 8U; ++i){
+      crc = crc & 0x80 ? (crc << 1) ^ 0x31 : crc << 1;
+    }
   }
-//#ifndef RELEASE
-//  print("Calculated CRC: ");
-//  from_hex_to_string(crc);
-//  print("\n\r");
-//#endif
   return crc;
 }
 
@@ -152,8 +153,20 @@ void print_cpu_id(void)
 
 void from_hex_to_string(uint8_t data){
   uint8_t first_digit = 0x00U, second_digit = 0x00U;
-  first_digit = ((data & 0xF0) >> 4) + '0';
-  second_digit = ((data & 0x0F) + '0');
+  //first_digit = ((data & 0xF0) >> 4) + '0';
+  (((data & 0xF0) >> 4) > 0x0AU) ? (first_digit = (((data & 0xF0) >> 4)%0x0A) + 'A') : (first_digit = ((data & 0xF0) >> 4) + '0');
+  ((data & 0x0F) > 0x0AU) ? (second_digit = ((data & 0x0F)%0x0A) + 'A') : (second_digit = (data & 0x0F) + '0');
+  //second_digit = ((data & 0x0F) + '0');
   send_byte(first_digit); 
   send_byte(second_digit);
 }
+
+void get_erase_config(void)
+{
+  FLASH_Unlock(FLASH_MEMTYPE_DATA);
+  for(uint16_t i = 0; i < CONFIG_SIZE; ++i){
+    FLASH_EraseByte(EEPROM_START_PACKET + (uint32_t) i);
+  }
+  FLASH_Lock(FLASH_MEMTYPE_DATA);
+}
+

@@ -125,7 +125,15 @@ void main(void)
                 tmp_data = Pull(&uart_rx);
                 if (get_receive_config(&tmp_arr_index, tmp_data))
                 {//wait CRC, then check it
-                  asm("nop");
+                  send_write_end();
+                  print("Wait CRC\n\r");
+                  while(GetSize(&uart_rx) == 0x00U){
+                    asm("nop");//Wait CRC in polling mode
+                  }
+                  print("Calculated CRC: ");
+                  uint8_t cCRC = 0x00U;
+                  cCRC = get_crc(CONFIG_SIZE);
+                  from_hex_to_string(cCRC);
                 }
                 else{//New byte is writed, 
                   asm("nop");
