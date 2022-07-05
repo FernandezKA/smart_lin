@@ -153,10 +153,8 @@ void print_cpu_id(void)
 
 void from_hex_to_string(uint8_t data){
   uint8_t first_digit = 0x00U, second_digit = 0x00U;
-  //first_digit = ((data & 0xF0) >> 4) + '0';
-  (((data & 0xF0) >> 4) > 0x0AU) ? (first_digit = (((data & 0xF0) >> 4)%0x0A) + 'A') : (first_digit = ((data & 0xF0) >> 4) + '0');
-  ((data & 0x0F) > 0x0AU) ? (second_digit = ((data & 0x0F)%0x0A) + 'A') : (second_digit = (data & 0x0F) + '0');
-  //second_digit = ((data & 0x0F) + '0');
+  (((data & 0xF0) >> 4) >= 0x0AU) ? (first_digit = (((data & 0xF0) >> 4)%0x0A) + 'A') : (first_digit = ((data & 0xF0) >> 4) + '0');
+  ((data & 0x0F) >= 0x0AU) ? (second_digit = ((data & 0x0F)%0x0A) + 'A') : (second_digit = (data & 0x0F) + '0');
   send_byte(first_digit); 
   send_byte(second_digit);
 }
