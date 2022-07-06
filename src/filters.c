@@ -107,7 +107,19 @@ bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter, bool
 }
 
 void get_add_to_trig_list(uint8_t* pArray, uint8_t* index, uint8_t pid){
-  if(*index < COUNT_PACKET){
+  bool isEmpty = true;
+  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
+    if(pArray[i] != 0x00U){
+     isEmpty = false; 
+     break;
+    }
+  }
+  
+  if(isEmpty){
+    *index = 0x00U;
+  }
+  
+  if(*index < COUNT_PACKET - 1U){
     pArray[(*index)++] = pid;
   }
   else{

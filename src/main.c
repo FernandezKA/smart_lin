@@ -10,25 +10,26 @@ enum mode curr_mode = work;
 FIFO uart_rx, uart_tx;
 struct lin lin_rec;
 struct lin lin_tr;
-//struct queue_lin lin_queue;
+// struct queue_lin lin_queue;
 struct filter loaded_filter;
 bool btn_0 = false;
 bool btn_1 = false;
 uint32_t sys_time = 0x00U;
 uint8_t trig_index = 0x00U;
 bool isCRC = false;
+static uint8_t ex_pid_slave_ind, ex_pid_filter_ind, ex_pid_triggered_ind;
 
 void SystemInit(void)
 {
   CLK_Init();
   PORT_Init();
   UART_Init(9600U);
-  //TIM1_Init();
+  // TIM1_Init();
   TIM2_Init();
   IRQ_Init();
   GetReset(&uart_rx);
   GetReset(&uart_tx);
-  //return 0;
+  // return 0;
 }
 
 static inline void reset_state_cmd(bool *_cmd, enum cmd *_ecmd)
@@ -40,23 +41,23 @@ static inline void reset_state_cmd(bool *_cmd, enum cmd *_ecmd)
 void main(void)
 {
   SystemInit();
-  //Variables init.
+  // Variables init.
   static bool cmd_receive = false;
   curr_mode = GetDevMode();
   enum cmd curr_cmd = undef;
   uint16_t tmp_arr_index = 0x00U;
   uint8_t tmp_data;
-  //Get select update
+  // Get select update
   (curr_mode == config) ? (config_uart()) : (config_lin());
-  //Update list of exisiting PID from EEPROM config. file
+  // Update list of exisiting PID from EEPROM config. file
   if (curr_mode == work)
   {
     read_packet(pid_slave_array, pid_filters_array);
   }
-  
+
   while (true)
   {
-    //Check new bytes in FIFO ring buffer 
+    // Check new bytes in FIFO ring buffer
     if (GetSize(&uart_rx) != 0x00U)
     { // receive new data
       switch (curr_mode)
@@ -67,7 +68,7 @@ void main(void)
           2. check pid of lin packet
           3. if pid compare is equal - get send_slave or get filter_action
           */
-        bLinPacketReceive(Pull(&uart_rx),&eLinReceive,&lin_rec);
+        bLinPacketReceive(Pull(&uart_rx), &eLinReceive, &lin_rec);
         break;
 
       case config:
@@ -91,7 +92,7 @@ void main(void)
           switch (curr_cmd)
           {
           case dev_info:
-            //get_dev_info();
+            // get_dev_info();
             print("Lin smart device v. 0.1 \n\r");
             print("Release date: 2022-07-05\n\r");
             print("CPU ID: ");
@@ -122,27 +123,32 @@ void main(void)
 
           case write_config:
             isCRC = false;
-            if(GetSize(&uart_rx) == 24U){ //Get part of config array (1 packet)
-              while(GetSize(&uart_rx) != 0x00U){
+            if (GetSize(&uart_rx) == 24U)
+            { // Get part of config array (1 packet)
+              while (GetSize(&uart_rx) != 0x00U)
+              {
                 tmp_data = Pull(&uart_rx);
                 if (get_receive_config(&tmp_arr_index, tmp_data))
-                {//wait CRC, then check it
+                { // wait CRC, then check it
                   send_write_end();
-                  //print("Wait CRC\n\r");
-                  while(GetSize(&uart_rx) == 0x00U){
-                    asm("nop");//Wait CRC in polling mode
+                  // print("Wait CRC\n\r");
+                  while (GetSize(&uart_rx) == 0x00U)
+                  {
+                    asm("nop"); // Wait CRC in polling mode
                   }
-                  //print("Calculated CRC: ");
+                  // print("Calculated CRC: ");
                   uint8_t cCRC = 0x00U;
                   cCRC = get_crc(CONFIG_SIZE);
-                  if(Pull(&uart_rx) == cCRC){
-                    //CRC is valid
+                  if (Pull(&uart_rx) == cCRC)
+                  {
+                    // CRC is valid
                     get_write_byte_eeprom(cCRC, EEPROM_START_PACKET + CONFIG_SIZE);
                     print("Download complete\n\r");
                     isCRC = true;
                   }
-                  else{
-                    //CRC is invalid
+                  else
+                  {
+                    // CRC is invalid
                     get_erase_config();
                     print("Download error\n\r");
                     isCRC = true;
@@ -150,23 +156,25 @@ void main(void)
                   GetReset(&uart_rx);
                   reset_state_cmd(&cmd_receive, &curr_cmd);
                   tmp_arr_index = 0x00U;
-                  //from_hex_to_string(cCRC);
+                  // from_hex_to_string(cCRC);
                 }
-                else{//New byte is writed, 
+                else
+                { // New byte is writed,
                   asm("nop");
                 }
-              }              
-              if(!isCRC){
-              send_write_end();
+              }
+              if (!isCRC)
+              {
+                send_write_end();
               }
               break;
             }
           }
         }
         break;
-        
+
       default:
-        
+
         break;
       }
     }
@@ -181,64 +189,72 @@ void main(void)
         then get action. If PID exist on 2 lists, used first finded value. */
     if (eLinReceive == completed)
     {
-      static uint8_t ex_pid_slave_ind, ex_pid_filter_ind, ex_pid_triggered_ind;
-      //Get check PID in existing list 
-      if (search_pid(pid_triggered_array, lin_rec.pid, &ex_pid_triggered_ind)){
-        //TODO: check timeout
-        struct lin sended_packet;
-        if(search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind)){
-          load_slave_packet(ex_pid_slave_ind, &sended_packet);
-          //CHECK time
-          if((uint32_t) sended_packet.timeout < sys_time)
-          {
-            search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind);//Check time and remove flag in filter structure
-            load_filter_packet(ex_pid_slave_ind, &loaded_filter);
-            if(loaded_filter.remove_after_use){
-              get_send_data_frame(&sended_packet);
-              get_remove_pid(pid_filters_array, lin_rec.pid);
-              get_remove_pid(pid_slave_array, lin_rec.pid);
-            }
-            else{
-              get_send_data_frame(&sended_packet);
-            }
-          }
-          else{
-            
-          }
-          get_remove_pid(pid_triggered_array, lin_rec.pid);
-          vLinPacketClear(&lin_rec);
-          eLinReceive = wait_break;
-        }
-        //If timeout less then sys_time - send packet, else remove it
-      }
-      // Slave action, check rule
-      else if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind)) //Trigger pid doesnt't exist, check this pid in rules
+      // Get check PID in existing list
+      //  Slave action, check rule
+      if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind)) // Trigger pid doesnt't exist, check this pid in rules
       {
         load_filter_packet(ex_pid_filter_ind, &loaded_filter);
-        //if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
+        // if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
         if (get_check_filter(&lin_rec, &loaded_filter, true))
         {
-          //print("Rules trig\n\r");
+          // print("Rules trig\n\r");
           get_add_to_trig_list(pid_triggered_array, &trig_index, lin_rec.pid);
           vLinPacketClear(&lin_rec);
           eLinReceive = wait_break;
         }
         else
         {
-          //print("Received packet isn't valid for current rules\n\r");
+          // print("Received packet isn't valid for current rules\n\r");
         }
       }
       else
       {
         vLinPacketClear(&lin_rec);
         eLinReceive = wait_break;
-        //print("Current PID not exist\n\r");
-        //asm("nop");
+        // print("Current PID not exist\n\r");
+        // asm("nop");
       }
     }
     // Check receive lin FSM state for complete packet
+
+    // Check responce for PID request from master device
+    if (wait_data_frame == eLinReceive)
+    {
+      if (search_pid(pid_triggered_array, lin_rec.pid, &ex_pid_triggered_ind))
+      {
+        // TODO: check timeout
+        struct lin sended_packet;
+        if (search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind))
+        {
+          load_slave_packet(ex_pid_slave_ind, &sended_packet);
+          // CHECK time
+          if ((uint32_t)sended_packet.timeout < sys_time)
+          {
+            search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind); // Check time and remove flag in filter structure
+            load_filter_packet(ex_pid_slave_ind, &loaded_filter);
+            if (loaded_filter.remove_after_use)
+            {
+              get_send_data_frame(&sended_packet);
+              get_remove_pid(pid_filters_array, lin_rec.pid);
+              get_remove_pid(pid_slave_array, lin_rec.pid);
+            }
+            else
+            {
+              get_send_data_frame(&sended_packet);
+            }
+          }
+          else
+          {
+          }
+          get_remove_pid(pid_triggered_array, lin_rec.pid);
+          vLinPacketClear(&lin_rec);
+          eLinReceive = wait_break;
+        }
+        // If timeout less then sys_time - send packet, else remove it
+      }
+    }
   }
-} 
+}
 
 #ifdef USE_FULL_ASSERT
 void assert_failed(u8 *file, u32 line)
