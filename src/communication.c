@@ -68,7 +68,7 @@ void get_send_config(void)
 {
   if (read_config_packet())
   {
-    for (uint16_t i = 0; i < CONFIG_SIZE; ++i)
+    for (uint16_t i = 0; i <= CONFIG_SIZE; ++i)
     {
       send_byte(FLASH_ReadByte(i + EEPROM_START_PACKET));
       //send_byte(pData[i]);

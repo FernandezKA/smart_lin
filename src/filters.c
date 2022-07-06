@@ -54,6 +54,7 @@ bool search_pid(uint8_t *pArr, uint8_t PID, uint8_t *index)
     {
       state = true;
       *index = i;
+      break;
     }
   }
   return state;
@@ -118,6 +119,7 @@ void get_remove_pid(uint8_t* pArray, uint8_t pid){
   for(uint8_t i = 0; i < COUNT_PACKET; ++i){
     if(pArray[i] == pid){       
       pArray[i] = 0x00U;
+      break;
     }
   }
 }
@@ -129,4 +131,12 @@ bool get_btn0_state(void)
 
 bool get_btn1_state(void){
   return btn_1;
+}
+
+uint8_t get_btn_state(void){
+    uint8_t ret_state = 0x00U;
+    if(get_btn0_state() & get_btn1_state()){
+      ret_state = 0x01U;
+    }
+    return ret_state;
 }

@@ -16,6 +16,7 @@ bool btn_0 = false;
 bool btn_1 = false;
 uint32_t sys_time = 0x00U;
 uint8_t trig_index = 0x00U;
+bool isCRC = false;
 
 void SystemInit(void)
 {
@@ -120,26 +121,44 @@ void main(void)
             break;
 
           case write_config:
+            isCRC = false;
             if(GetSize(&uart_rx) == 24U){ //Get part of config array (1 packet)
               while(GetSize(&uart_rx) != 0x00U){
                 tmp_data = Pull(&uart_rx);
                 if (get_receive_config(&tmp_arr_index, tmp_data))
                 {//wait CRC, then check it
                   send_write_end();
-                  print("Wait CRC\n\r");
+                  //print("Wait CRC\n\r");
                   while(GetSize(&uart_rx) == 0x00U){
                     asm("nop");//Wait CRC in polling mode
                   }
-                  print("Calculated CRC: ");
+                  //print("Calculated CRC: ");
                   uint8_t cCRC = 0x00U;
                   cCRC = get_crc(CONFIG_SIZE);
-                  from_hex_to_string(cCRC);
+                  if(Pull(&uart_rx) == cCRC){
+                    //CRC is valid
+                    get_write_byte_eeprom(cCRC, EEPROM_START_PACKET + CONFIG_SIZE);
+                    print("Download complete\n\r");
+                    isCRC = true;
+                  }
+                  else{
+                    //CRC is invalid
+                    get_erase_config();
+                    print("Download error\n\r");
+                    isCRC = true;
+                  }
+                  GetReset(&uart_rx);
+                  reset_state_cmd(&cmd_receive, &curr_cmd);
+                  tmp_arr_index = 0x00U;
+                  //from_hex_to_string(cCRC);
                 }
                 else{//New byte is writed, 
                   asm("nop");
                 }
-              }
+              }              
+              if(!isCRC){
               send_write_end();
+              }
               break;
             }
           }
@@ -196,10 +215,13 @@ void main(void)
       else if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind)) //Trigger pid doesnt't exist, check this pid in rules
       {
         load_filter_packet(ex_pid_filter_ind, &loaded_filter);
-        if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
+        //if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
+        if (get_check_filter(&lin_rec, &loaded_filter, true))
         {
           //print("Rules trig\n\r");
           get_add_to_trig_list(pid_triggered_array, &trig_index, lin_rec.pid);
+          vLinPacketClear(&lin_rec);
+          eLinReceive = wait_break;
         }
         else
         {
