@@ -235,7 +235,7 @@ void main(void)
             if (loaded_filter.remove_after_use)
             {
               get_send_data_frame(&sended_packet);
-              get_remove_pid(pid_filters_array, lin_rec.pid);
+               //get_remove_pid(pid_filters_array, lin_rec.pid);
               get_remove_pid(pid_slave_array, lin_rec.pid);
             }
             else
@@ -246,7 +246,7 @@ void main(void)
           else
           {
           }
-          get_remove_pid(pid_triggered_array, lin_rec.pid);
+          //get_remove_pid(pid_triggered_array, lin_rec.pid);
           vLinPacketClear(&lin_rec);
           eLinReceive = wait_break;
         }

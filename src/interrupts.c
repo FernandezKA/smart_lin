@@ -91,27 +91,20 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
 INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
 {
   TIM2->SR1 = 0x00U;
-  if (curr_mode == work)
-  {
-    LED_PORT->ODR ^= LED_PIN;
+  if(curr_mode == config){
+    LED_PORT->ODR &= ~LED_PIN;
   }
-  if (div_tim2)
+  else if (curr_mode == work)
   {
-    ++sys_time;
-    //queue_handler(&lin_queue);
-    //Blink with frequency divide by 2
-    if (curr_mode == config)
-    {
-      LED_PORT->ODR ^= LED_PIN;
+    if(action_uart_timeout > 0x00U){
+      action_uart_timeout--;
+      LED_PORT->ODR^=LED_PIN;
     }
-  }
-  
-  if(action_uart_timeout > 0x00U){
-    LED_PORT ->ODR ^= LED_ACT;
-    action_uart_timeout--;
-  }
-  else{
-    LED_PORT -> ODR &= ~LED_ACT;
+    else{
+      if(div_tim2){
+        LED_PORT->ODR^=LED_PIN;
+      }
+    }
   }
   (div_tim2) ? (div_tim2 = false) : (div_tim2 = true);
   /*div_tim2 = ~div_tim2;*/
