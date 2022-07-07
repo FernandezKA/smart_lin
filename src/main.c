@@ -56,7 +56,7 @@ void main(void)
   }
 
   while (true)
-  {
+  {    
     // Check new bytes in FIFO ring buffer
     if (GetSize(&uart_rx) != 0x00U)
     { // receive new data

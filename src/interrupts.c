@@ -70,7 +70,7 @@ INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
     Push(&uart_rx, UART1->DR);
     UART1->SR = 0x00U;
   }
-  action_uart_timeout = 0x02U;
+  action_uart_timeout = 0x0AU;
   // Get action on FSM receive
   // bLinPacketReceive(UART1->DR, &eLinReceive, &lin_rec);
 }
@@ -107,5 +107,4 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
     }
   }
   (div_tim2) ? (div_tim2 = false) : (div_tim2 = true);
-  /*div_tim2 = ~div_tim2;*/
 }
