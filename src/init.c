@@ -26,6 +26,8 @@ void PORT_Init(void)
   //EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
   LED_PORT->DDR |= LED_PIN | LED_ACT; //Get pin with led as out push-pull
   BTN_PORT->CR1|=BTN_0 | BTN_1; //Get pull-up pins with buttons
+  BTN_PORT->CR2|=BTN_0|BTN_1; //ENABLE EXT. IRQ
+  EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
   MODE_PORT -> CR1 |= MODE_PIN; //Get pull-up pin for select dev. run mode 
 }
 

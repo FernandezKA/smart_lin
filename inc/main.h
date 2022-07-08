@@ -29,7 +29,7 @@
 #include "lin_hw_layer.h"
 #include "packet_parser.h"
 #include "communication.h"
-#include "queue_lin.h"
+//#include "queue_lin.h"
 #include "filters.h"
 #include "fifo.h"
 #include "eeprom.h"

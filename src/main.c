@@ -130,15 +130,19 @@ void main(void)
                 tmp_data = Pull(&uart_rx);
                 if (get_receive_config(&tmp_arr_index, tmp_data))
                 { // wait CRC, then check it
+                  
+                  uint8_t cCRC = 0x00U;
+                  cCRC = get_crc(CONFIG_SIZE);
                   send_write_end();
+                  print("\n\r");
+                  from_hex_to_string(cCRC);
                   // print("Wait CRC\n\r");
                   while (GetSize(&uart_rx) == 0x00U)
                   {
                     asm("nop"); // Wait CRC in polling mode
                   }
                   // print("Calculated CRC: ");
-                  uint8_t cCRC = 0x00U;
-                  cCRC = get_crc(CONFIG_SIZE);
+
                   if (Pull(&uart_rx) == cCRC)
                   {
                     // CRC is valid
@@ -195,7 +199,7 @@ void main(void)
       {
         load_filter_packet(ex_pid_filter_ind, &loaded_filter);
         // if (get_check_filter(&lin_rec, &loaded_filter, get_btn0_state()))
-        if (get_check_filter(&lin_rec, &loaded_filter, true))
+        if (get_check_filter(&lin_rec, &loaded_filter))
         {
           // print("Rules trig\n\r");
           get_add_to_trig_list(pid_triggered_array, &trig_index, lin_rec.pid);
@@ -236,7 +240,8 @@ void main(void)
             {
               get_send_data_frame(&sended_packet);
                //get_remove_pid(pid_filters_array, lin_rec.pid);
-              get_remove_pid(pid_slave_array, lin_rec.pid);
+              //get_remove_pid(pid_slave_array, lin_rec.pid);
+              get_remove_pid(pid_triggered_array, lin_rec.pid);
             }
             else
             {

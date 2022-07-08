@@ -22,7 +22,7 @@ void load_slave_packet(uint8_t index, struct lin *packet);
 //Parse packet from array to struct
 void load_filter_packet(uint8_t index, struct filter* packet);
 //This function compare received packet with rules
-bool get_check_filter(struct lin* packet_lin, struct filter* packet_filter, bool btn_state);
+bool get_check_filter(struct lin* packet_lin, struct filter* packet_filter);
 //This function add current PID to list with searched
 void get_add_to_trig_list(uint8_t* pArray, uint8_t* index, uint8_t pid);
 //This function clear pid from array
@@ -30,4 +30,5 @@ void get_remove_pid(uint8_t* pArray, uint8_t pid);
 //This function return current button state
 bool get_btn0_state(void);
 bool get_btn1_state(void);
+bool get_btn_state(uint8_t state);
 #endif

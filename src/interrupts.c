@@ -106,5 +106,10 @@ INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
       }
     }
   }
+  
+  if(div_tim2){
+    ++sys_time;
+  }
+  
   (div_tim2) ? (div_tim2 = false) : (div_tim2 = true);
 }

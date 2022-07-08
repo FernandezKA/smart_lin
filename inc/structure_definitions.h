@@ -40,19 +40,12 @@ struct slave_packet{
   uint8_t CRC;
 };
 
-struct queue_lin{
-  uint8_t timeout[QUEUE_LIN_SIZE];
-  struct lin packets[QUEUE_LIN_SIZE];
-  bool is_sended[QUEUE_LIN_SIZE];
-  uint8_t count_added;
-};
-
 struct filter{
   uint8_t pid;
   uint8_t dlc;
   uint8_t edges_low[MAX_SIZE_DATA_FRAME];
   uint8_t edges_high[MAX_SIZE_DATA_FRAME];
-  bool btn_state;
+  uint8_t btn_state;
   uint8_t timeout;
   bool remove_after_use;
 };

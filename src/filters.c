@@ -81,17 +81,17 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->pid = tmpArr[0];
   // tmpArr[1] reserved for type
   packet->dlc = tmpArr[2];
-  for (uint8_t i = 2U; i < 16U + 2U; i += 2U)
+  
+  for(uint8_t i = 0; i < 8; ++i)
   {
-    /*WARNING: Can be out from array range*/
-    packet->edges_low[i] = tmpArr[i];
-    packet->edges_high[i] = tmpArr[i + 1U];
+    packet->edges_low[i] = tmpArr[2U + 2*i];
+    packet->edges_high[i] = tmpArr[3U + 2*i];
   }
-  (tmpArr[18U] == 0x00U) ? (packet->btn_state = false) : (packet->btn_state = true);
+  packet->btn_state = tmpArr[18U];
   packet->timeout = tmpArr[19U];
 }
 
-bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter, bool btn_state)
+bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter)
 {
   bool rules_trig = true;
   rules_trig &= (packet_lin->data[0] >= packet_filter->edges_low[0]);
@@ -102,7 +102,7 @@ bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter, bool
 //  rules_trig &= (packet_lin->data[5] >= packet_filter->edges_low[5]);
 //  rules_trig &= (packet_lin->data[6] >= packet_filter->edges_low[6]);
 //  rules_trig &= (packet_lin->data[7] >= packet_filter->edges_low[7]);
-  rules_trig &= (packet_filter->btn_state == btn_state);
+  rules_trig &= get_btn_state(packet_filter->btn_state);
   return rules_trig;
 }
 
@@ -145,10 +145,28 @@ bool get_btn1_state(void){
   return btn_1;
 }
 
-uint8_t get_btn_state(void){
-    uint8_t ret_state = 0x00U;
-    if(get_btn0_state() & get_btn1_state()){
-      ret_state = 0x01U;
-    }
-    return ret_state;
+bool get_btn_state(uint8_t state){
+  bool _state = false;
+  switch(state){
+  case 0x00U:
+    _state = true;
+    break;
+    
+  case 0x01U:
+    _state = get_btn0_state();
+    break;
+    
+  case 0x02U:
+    _state = get_btn1_state();
+    break;
+    
+  case 0x03U:
+    _state = get_btn0_state() | get_btn1_state();
+    break;
+    
+  default:
+   _state = false;
+    break;
+  }  
+  return _state;
 }
