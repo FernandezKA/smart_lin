@@ -135,8 +135,8 @@ void main(void)
                   uint8_t cCRC = 0x00U;
                   cCRC = get_crc(CONFIG_SIZE);
                   send_write_end();
-                  print("\n\r");
-                  from_hex_to_string(cCRC);
+                  //print("\n\r");
+                  //from_hex_to_string(cCRC);
                   // print("Wait CRC\n\r");
                   while (GetSize(&uart_rx) == 0x00U)
                   {
