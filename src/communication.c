@@ -66,14 +66,11 @@ bool get_receive_config(uint16_t *index, uint8_t Data)
 
 void get_send_config(void)
 {
-  if (read_config_packet())
-  {
     for (uint16_t i = 0; i <= CONFIG_SIZE; ++i)
     {
       send_byte(FLASH_ReadByte(i + EEPROM_START_PACKET));
       //send_byte(pData[i]);
     }
-  }
 }
 
 void send_ack(void)

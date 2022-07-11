@@ -93,8 +93,8 @@ void main(void)
           {
           case dev_info:
             // get_dev_info();
-            print("Lin smart device v. 0.1 \n\r");
-            print("Release date: 2022-07-05\n\r");
+            print("Lin smart device v. 0.2 \n\r");
+            print("Release date: 2022-07-11\n\r");
             print("CPU ID: ");
             print_cpu_id();
             reset_state_cmd(&cmd_receive, &curr_cmd);
@@ -102,20 +102,21 @@ void main(void)
             break;
 
           case read_config:
-            if (FLASH_ReadByte(EEPROM_START_PACKET) == 0x00)
+            if (FLASH_ReadByte(EEPROM_START_PACKET) == 0x01)
             {
               print("ERROR: Reading forbidden\n\r");
             }
             else
             {
-              if (read_config_packet())
-              {
-                get_send_config();
-              }
-              else
-              {
-                print("ERROR: Configuration array not loaded\n\r");
-              }
+              get_send_config();
+//              if (read_config_packet())
+//              {
+//                get_send_config();
+//              }
+//              else
+//              {
+//                print("ERROR: Configuration array not loaded\n\r");
+//              }
             }
             reset_state_cmd(&cmd_receive, &curr_cmd);
             GetReset(&uart_rx);
@@ -154,6 +155,7 @@ void main(void)
                   {
                     // CRC is invalid
                     get_erase_config();
+                    get_write_byte_eeprom(0x00U, EEPROM_START_PACKET + CONFIG_SIZE);
                     print("Download error\n\r");
                     isCRC = true;
                   }
