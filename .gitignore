@@ -19,3 +19,10 @@ Debug/Obj/.ninja_log
 *.ewd
 *.ewt
 *.eww
+*.bak
+*.txt
+*.xml
+*.map
+*.log
+*.xlsx
+*.sal

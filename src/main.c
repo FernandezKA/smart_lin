@@ -135,8 +135,6 @@ void main(void)
                   uint8_t cCRC = 0x00U;
                   cCRC = get_crc(CONFIG_SIZE);
                   send_write_end();
-                  //print("\n\r");
-                  //from_hex_to_string(cCRC);
                   // print("Wait CRC\n\r");
                   while (GetSize(&uart_rx) == 0x00U)
                   {
@@ -145,7 +143,8 @@ void main(void)
                   // print("Calculated CRC: ");
 
                   if (Pull(&uart_rx) == cCRC)
-                  {
+                  //if (Pull(&uart_rx) == Pull(&uart_rx))
+                  {                      
                     // CRC is valid
                     get_write_byte_eeprom(cCRC, EEPROM_START_PACKET + CONFIG_SIZE);
                     print("Download complete\n\r");
@@ -154,9 +153,11 @@ void main(void)
                   else
                   {
                     // CRC is invalid
+                    print("Download error\n\r");
+                    print("Calculated CRC: ");
+                    from_hex_to_string(cCRC);
                     get_erase_config();
                     get_write_byte_eeprom(0x00U, EEPROM_START_PACKET + CONFIG_SIZE);
-                    print("Download error\n\r");
                     isCRC = true;
                   }
                   GetReset(&uart_rx);
