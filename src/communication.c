@@ -101,7 +101,7 @@ uint8_t get_crc(uint16_t size)
   uint8_t crc = 0xFFU;
   for(uint16_t i = 0; i < size; ++i){
      crc^=FLASH_ReadByte(EEPROM_START_PACKET + (uint32_t) i);
-     for(uint8_t i = 0; i < 8U; ++i){
+     for(uint8_t j = 0; j < 8U; ++j){
       crc = crc & 0x80 ? (crc << 1) ^ 0x31 : crc << 1;
      }
   }
