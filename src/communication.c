@@ -115,14 +115,7 @@ bool check_crc(uint8_t rCRC, uint16_t size)
 
 void print(char *pData)
 {
-//  char last = 0x00U, curr = 0x00U;
   uint8_t index = 0x00U;
-//  while (!(last == '\n' && curr == '\r') && !(last == '\r' && curr == '\n'))
-//  {
-//    last = curr;
-//    curr = pData[index++];
-//    send_byte(curr);
-//  }
   while(index < 0xFFU & pData[index] != '\0'){
     send_byte(pData[index++]);
   }

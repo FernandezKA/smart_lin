@@ -71,7 +71,6 @@ void load_slave_packet(uint8_t index, struct lin *packet)
     packet->data[i] = tmpArr[3U + i];
   }
   packet->crc = tmpArr[11U];
-  packet->timeout = tmpArr[12U];
 }
 
 void load_filter_packet(uint8_t index, struct filter *packet)
@@ -81,14 +80,14 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->pid = tmpArr[0];
   // tmpArr[1] reserved for type
   packet->dlc = tmpArr[2];
-  
   for(uint8_t i = 0; i < 8; ++i)
   {
-    packet->edges_low[i] = tmpArr[2U + 2*i];
-    packet->edges_high[i] = tmpArr[3U + 2*i];
+    packet->edges_low[i] = tmpArr[3U + 2*i];
+    packet->edges_high[i] = tmpArr[4U + 2*i];
   }
-  packet->btn_state = tmpArr[18U];
   packet->timeout = tmpArr[19U];
+  packet->btn_state = tmpArr[20U];
+  packet->remove_after_use = tmpArr[21U];
 }
 
 bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter)

@@ -60,4 +60,6 @@ extern struct queue_lin lin_queue;
 extern uint32_t sys_time;
 extern uint8_t trig_index;
 
+
+void error_handler(void);
 #endif
