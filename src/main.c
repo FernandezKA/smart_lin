@@ -43,6 +43,8 @@ void main(void)
   SystemInit();
   // Variables init.
   static bool cmd_receive = false;
+  //NB: The next string only for tests
+  //curr_mode = config;
   curr_mode = GetDevMode();
   enum cmd curr_cmd = undef;
   uint16_t tmp_arr_index = 0x00U;
@@ -92,9 +94,8 @@ void main(void)
           switch (curr_cmd)
           {
           case dev_info:
-            // get_dev_info();
-            print("Lin smart device v. 0.2 \n\r");
-            print("Release date: 2022-07-11\n\r");
+            print("Lin smart device v. 0.3 \n\r");
+            print("Release date: 2022-07-14\n\r");
             print("CPU ID: ");
             print_cpu_id();
             reset_state_cmd(&cmd_receive, &curr_cmd);
@@ -109,14 +110,6 @@ void main(void)
             else
             {
               get_send_config();
-//              if (read_config_packet())
-//              {
-//                get_send_config();
-//              }
-//              else
-//              {
-//                print("ERROR: Configuration array not loaded\n\r");
-//              }
             }
             reset_state_cmd(&cmd_receive, &curr_cmd);
             GetReset(&uart_rx);
@@ -134,16 +127,18 @@ void main(void)
                   
                   uint8_t cCRC = 0x00U;
                   cCRC = get_crc(CONFIG_SIZE);
+                  GetReset(&uart_rx);
                   send_write_end();
+                  
                   // print("Wait CRC\n\r");
                   while (GetSize(&uart_rx) == 0x00U)
                   {
                     asm("nop"); // Wait CRC in polling mode
                   }
                   // print("Calculated CRC: ");
-
-                  //if (Pull(&uart_rx) == cCRC)
-                  if (Pull(&uart_rx) == Pull(&uart_rx))
+                  /*Warning! At current moment we skmip check CRC*/
+                  if (Pull(&uart_rx) == cCRC)
+                  //if (Pull(&uart_rx) == Pull(&uart_rx))
                   {                      
                     // CRC is valid
                     get_write_byte_eeprom(cCRC, EEPROM_START_PACKET + CONFIG_SIZE);
@@ -278,5 +273,5 @@ void assert_failed(u8 *file, u32 line)
 #endif
 
 void error_handler(void){
-  while(1){};
+  asm("nop");
 }
