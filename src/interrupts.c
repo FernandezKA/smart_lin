@@ -6,14 +6,14 @@ uint8_t action_uart_timeout = 0x00U;
 
 INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
-  if(((BTN_PORT->IDR) & BTN_0) == BTN_0){
+  if(((BTN_PORT->IDR) & BTN_0) != BTN_0){
     btn_0 = true;
   }
   else{
     btn_0 = false;
   }
   
-  if(((BTN_PORT->IDR)&BTN_1) == BTN_1){
+  if(((BTN_PORT->IDR)&BTN_1) != BTN_1){
     btn_1 = true;
   }
   else{
