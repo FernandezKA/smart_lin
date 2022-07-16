@@ -8,6 +8,9 @@
 #define COUNT_PACKET    20U
 #define CONFIG_SIZE     ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
 
+#define BRRH_REG ((uint32_t) 0x4003)
+#define BRRL_REG ((uint32_t) 0x4002)
+
 #define F_CPU 16000000U
 #define GET_BITS(x, pos) ((x & (1 << pos)) >> pos)
 

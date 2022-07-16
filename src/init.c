@@ -67,6 +67,17 @@ void config_uart(void)
 
 void config_lin(void)
 {
+  uint16_t readBaud = 0x00U;
+  readBaud = ((FLASH_ReadByte(BRRH_REG) << 8) & 0xFF00U);
+  readBaud |= (FLASH_ReadByte(BRRL_REG) & 0xFFU);
+  
+  if(readBaud != 0x00U){
+     set_baud(readBaud);
+  }
+  else{
+     set_baud(9600U);
+  }
+  
   UART1->CR2 = (UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN);
   UART1->CR4 |= UART1_CR4_LBDIEN;
 }
