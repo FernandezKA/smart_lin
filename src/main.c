@@ -17,7 +17,9 @@ bool btn_1 = false;
 uint32_t sys_time = 0x00U;
 uint8_t trig_index = 0x00U;
 bool isCRC = false;
-static uint8_t ex_pid_slave_ind, ex_pid_filter_ind, ex_pid_triggered_ind;
+uint8_t ex_pid_slave_ind, ex_pid_filter_ind, ex_pid_triggered_ind;
+uint8_t out_time = 0x00U;
+
 
 void SystemInit(void)
 {
@@ -117,7 +119,7 @@ void main(void)
 
           case write_config:
             isCRC = false;
-            if (GetSize(&uart_rx) == 24U)
+            if (GetSize(&uart_rx) == PACKET_SIZE)
             { // Get part of config array (1 packet)
               while (GetSize(&uart_rx) != 0x00U)
               {
@@ -244,6 +246,7 @@ void main(void)
           {
             search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind); // Check time and remove flag in filter structure
             load_filter_packet(ex_pid_slave_ind, &loaded_filter);
+            //TODO: Add output behaviour!!!
             if (loaded_filter.remove_after_use)
             {
               get_send_data_frame(&sended_packet);

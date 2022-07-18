@@ -12,6 +12,16 @@ enum cmd{
   undef
 };
 
+enum out_state{
+  no_action = 0x00U, 
+  out_0_time= 0x01U, 
+  out_0_en = 0x02U, 
+  out_0_dis = 0x03U, 
+  out_1_time = 0x04U, 
+  out_1_en = 0x05U, 
+  out_1_dis = 0x06U
+};
+
 struct lin{
   uint8_t pid;
   uint8_t dlc;
@@ -48,6 +58,8 @@ struct filter{
   uint8_t btn_state;
   uint8_t timeout;
   bool remove_after_use;
+  enum out_state out_st;
+  uint8_t out_field;
 };
 
 enum packet_type{

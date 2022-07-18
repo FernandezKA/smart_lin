@@ -88,6 +88,8 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->timeout = tmpArr[19U];
   packet->btn_state = tmpArr[20U];
   packet->remove_after_use = tmpArr[21U];
+  packet->out_st = (enum out_state) tmpArr[24U];
+  packet->out_field = tmpArr[25U];  
 }
 
 bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter)

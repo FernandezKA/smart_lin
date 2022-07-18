@@ -3,8 +3,8 @@
 
 #define MAX_SIZE_DATA_FRAME 0x08U
 
-#define HAT_SIZE        ((uint8_t) 24U)
-#define PACKET_SIZE     ((uint8_t) 24U)
+#define HAT_SIZE        ((uint8_t) 27U)
+#define PACKET_SIZE     ((uint8_t) 27U)
 #define COUNT_PACKET    20U
 #define CONFIG_SIZE     ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
 
@@ -48,6 +48,8 @@ extern enum Receive_FSM eLinReceive;
 extern bool btn_0;
 extern bool btn_1;
 extern uint8_t action_uart_timeout;
+extern uint8_t out_time;
+
 
 extern uint32_t led_div;
 
