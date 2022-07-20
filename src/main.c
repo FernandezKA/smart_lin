@@ -19,7 +19,9 @@ uint8_t trig_index = 0x00U;
 bool isCRC = false;
 uint8_t ex_pid_slave_ind, ex_pid_filter_ind, ex_pid_triggered_ind;
 uint8_t out_time = 0x00U;
-
+uint8_t out_timeout_0 = 0x00u;
+uint8_t out_timeout_1 = 0x00u;
+extern bool b_out_time_0 = false, b_out_time_1 = false;
 
 void SystemInit(void)
 {
@@ -45,8 +47,8 @@ void main(void)
   SystemInit();
   // Variables init.
   static bool cmd_receive = false;
-  //NB: The next string only for tests
-  //curr_mode = config;
+  // NB: The next string only for tests
+  // curr_mode = config;
   curr_mode = GetDevMode();
   enum cmd curr_cmd = undef;
   uint16_t tmp_arr_index = 0x00U;
@@ -60,7 +62,7 @@ void main(void)
   }
 
   while (true)
-  {    
+  {
     // Check new bytes in FIFO ring buffer
     if (GetSize(&uart_rx) != 0x00U)
     { // receive new data
@@ -126,12 +128,12 @@ void main(void)
                 tmp_data = Pull(&uart_rx);
                 if (get_receive_config(&tmp_arr_index, tmp_data))
                 { // wait CRC, then check it
-                  
+
                   uint8_t cCRC = 0x00U;
                   cCRC = get_crc(CONFIG_SIZE);
                   GetReset(&uart_rx);
                   send_write_end();
-                  
+
                   // print("Wait CRC\n\r");
                   while (GetSize(&uart_rx) == 0x00U)
                   {
@@ -140,8 +142,8 @@ void main(void)
                   // print("Calculated CRC: ");
                   /*Warning! At current moment we skmip check CRC*/
                   if (Pull(&uart_rx) == cCRC)
-                  //if (Pull(&uart_rx) == Pull(&uart_rx))
-                  {                      
+                  // if (Pull(&uart_rx) == Pull(&uart_rx))
+                  {
                     // CRC is valid
                     get_write_byte_eeprom(cCRC, EEPROM_START_PACKET + CONFIG_SIZE);
                     print("Download complete\n\r");
@@ -233,10 +235,12 @@ void main(void)
         if (search_pid(pid_slave_array, lin_rec.pid, &ex_pid_slave_ind))
         {
           load_slave_packet(ex_pid_slave_ind, &sended_packet);
-          if(search_pid(pid_filters_array, lin_rec.pid, &ex_pid_filter_ind)){
+          if (search_pid(pid_filters_array, lin_rec.pid, &ex_pid_filter_ind))
+          {
             load_filter_packet(ex_pid_filter_ind, &loaded_filter);
           }
-          else{
+          else
+          {
             vLinPacketClear(&lin_rec);
             eLinReceive = wait_break;
             error_handler();
@@ -246,7 +250,8 @@ void main(void)
           {
             search_pid(pid_filters_array, lin_rec.pid, &ex_pid_slave_ind); // Check time and remove flag in filter structure
             load_filter_packet(ex_pid_slave_ind, &loaded_filter);
-            //TODO: Add output behaviour!!!
+            /*WARNING: Untested part of code*/
+            get_out_action(loaded_filter.out_st, loaded_filter.out_field);
             if (loaded_filter.remove_after_use)
             {
               get_send_data_frame(&sended_packet);
@@ -258,7 +263,7 @@ void main(void)
             }
           }
 
-          //get_remove_pid(pid_triggered_array, lin_rec.pid);
+          // get_remove_pid(pid_triggered_array, lin_rec.pid);
           vLinPacketClear(&lin_rec);
           eLinReceive = wait_break;
         }
@@ -275,6 +280,7 @@ void assert_failed(u8 *file, u32 line)
 }
 #endif
 
-void error_handler(void){
+void error_handler(void)
+{
   asm("nop");
 }

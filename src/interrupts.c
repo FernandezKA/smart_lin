@@ -6,21 +6,24 @@ uint8_t action_uart_timeout = 0x00U;
 
 INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
-  if(((BTN_PORT->IDR) & BTN_0) != BTN_0){
+  if (((BTN_PORT->IDR) & BTN_0) != BTN_0)
+  {
     btn_0 = true;
   }
-  else{
+  else
+  {
     btn_0 = false;
   }
-  
-  if(((BTN_PORT->IDR)&BTN_1) != BTN_1){
+
+  if (((BTN_PORT->IDR) & BTN_1) != BTN_1)
+  {
     btn_1 = true;
   }
-  else{
+  else
+  {
     btn_1 = false;
   }
 }
-
 
 INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
@@ -61,12 +64,14 @@ INTERRUPT_HANDLER(UART1_TX_IRQHandler, 17)
 INTERRUPT_HANDLER(UART1_RX_IRQHandler, 18)
 {
   // Clear status flags
-  if((UART1->CR4 & UART1_CR4_LBDF) == UART1_CR4_LBDF){
+  if ((UART1->CR4 & UART1_CR4_LBDF) == UART1_CR4_LBDF)
+  {
     eLinReceive = wait_synch;
     UART1->CR4 &= ~UART1_CR4_LBDF;
     return;
   }
-  else if((UART1->SR & UART1_SR_RXNE) == UART1_SR_RXNE){
+  else if ((UART1->SR & UART1_SR_RXNE) == UART1_SR_RXNE)
+  {
     Push(&uart_rx, UART1->DR);
     UART1->SR = 0x00U;
   }
@@ -80,7 +85,7 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
   if (led_div == 20000U)
   {
     led_div = 0x00U;
-    //LED_PORT->ODR ^= LED_PIN;
+    // LED_PORT->ODR ^= LED_PIN;
   }
   else
   {
@@ -91,25 +96,56 @@ INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23)
 INTERRUPT_HANDLER(TIM2_UPD_OVF_BRK_IRQHandler, 13)
 {
   TIM2->SR1 = 0x00U;
-  if(curr_mode == config){
+  if (curr_mode == config)
+  {
     LED_PORT->ODR &= ~LED_PIN;
   }
   else if (curr_mode == work)
   {
-    if(action_uart_timeout > 0x00U){
+    if (action_uart_timeout > 0x00U)
+    {
       action_uart_timeout--;
-      LED_PORT->ODR^=LED_PIN;
+      LED_PORT->ODR ^= LED_PIN;
     }
-    else{
-      if(div_tim2){
-        LED_PORT->ODR^=LED_PIN;
+    else
+    {
+      if (div_tim2)
+      {
+        LED_PORT->ODR ^= LED_PIN;
       }
     }
   }
-  
-  if(div_tim2){
+
+  if (div_tim2)
+  {
     ++sys_time;
+    /*Parser for timeouts*/
+    if (out_timeout_0 == 0x00u)
+    {
+      if (b_out_time_0)
+      {
+        b_out_time_0 = false;
+        OUT_PORT->ODR &= ~(OUT_0);
+      }
+    }
+    else
+    {
+      out_timeout_0--;
+    }
+
+    if (out_timeout_1 == 0x00u)
+    {
+      if (b_out_time_1)
+      {
+        b_out_time_1 = false;
+        OUT_PORT->ODR &= ~OUT_1;
+      }
+    }
+    else
+    {
+      out_timeout_1--;
+    }
   }
-  
+
   (div_tim2) ? (div_tim2 = false) : (div_tim2 = true);
 }

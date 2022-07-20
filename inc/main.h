@@ -3,27 +3,30 @@
 
 #define MAX_SIZE_DATA_FRAME 0x08U
 
-#define HAT_SIZE        ((uint8_t) 27U)
-#define PACKET_SIZE     ((uint8_t) 27U)
-#define COUNT_PACKET    20U
-#define CONFIG_SIZE     ((uint8_t) HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
+#define HAT_SIZE ((uint8_t)27U)
+#define PACKET_SIZE ((uint8_t)27U)
+#define COUNT_PACKET 20U
+#define CONFIG_SIZE ((uint8_t)HAT_SIZE + PACKET_SIZE * COUNT_PACKET)
 
-#define BRRH_REG ((uint32_t) 0x4003)
-#define BRRL_REG ((uint32_t) 0x4002)
+#define BRRH_REG ((uint32_t)0x4003)
+#define BRRL_REG ((uint32_t)0x4002)
 
 #define F_CPU 16000000U
 #define GET_BITS(x, pos) ((x & (1 << pos)) >> pos)
 
-#define MODE_PORT       GPIOD
-#define LED_PORT        GPIOB
-#define UART_PORT       GPIOD
-#define BTN_PORT        GPIOC
+#define MODE_PORT GPIOD
+#define LED_PORT GPIOB
+#define UART_PORT GPIOD
+#define BTN_PORT GPIOC
+#define OUT_PORT GPIOC
 
-#define MODE_PIN        (1U<<3)
-#define LED_PIN         (1U<<5)
-#define LED_ACT         (1U<<4)
-#define BTN_0           (1U<<7)
-#define BTN_1           (1U<<6)
+#define MODE_PIN (1U << 3)
+#define LED_PIN (1U << 5)
+#define LED_ACT (1U << 4)
+#define BTN_0 (1U << 7)
+#define BTN_1 (1U << 6)
+#define OUT_0 (1U << 3)
+#define OUT_1 (1U << 4)
 
 #include "stm8s_conf.h"
 #include <stdbool.h>
@@ -50,21 +53,23 @@ extern bool btn_1;
 extern uint8_t action_uart_timeout;
 extern uint8_t out_time;
 
-
 extern uint32_t led_div;
 
-enum mode{
-  config, 
+enum mode
+{
+  config,
   work
 };
 
 extern struct lin rec_lin, tr_lin;
-extern enum mode curr_mode; 
+extern enum mode curr_mode;
 extern struct FIFO_STR uart_rx, uart_tx;
 extern struct queue_lin lin_queue;
 extern uint32_t sys_time;
 extern uint8_t trig_index;
-
+extern uint8_t out_timeout_0;
+extern uint8_t out_timeout_1;
+extern bool b_out_time_0, b_out_time_1; 
 
 void error_handler(void);
 #endif

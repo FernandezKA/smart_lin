@@ -80,16 +80,16 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->pid = tmpArr[0];
   // tmpArr[1] reserved for type
   packet->dlc = tmpArr[2];
-  for(uint8_t i = 0; i < 8; ++i)
+  for (uint8_t i = 0; i < 8; ++i)
   {
-    packet->edges_low[i] = tmpArr[3U + 2*i];
-    packet->edges_high[i] = tmpArr[4U + 2*i];
+    packet->edges_low[i] = tmpArr[3U + 2 * i];
+    packet->edges_high[i] = tmpArr[4U + 2 * i];
   }
   packet->timeout = tmpArr[19U];
   packet->btn_state = tmpArr[20U];
   packet->remove_after_use = tmpArr[21U];
-  packet->out_st = (enum out_state) tmpArr[24U];
-  packet->out_field = tmpArr[25U];  
+  packet->out_st = (enum out_state)tmpArr[24U];
+  packet->out_field = tmpArr[25U];
 }
 
 bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter)
@@ -97,40 +97,49 @@ bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter)
   bool rules_trig = true;
   rules_trig &= (packet_lin->data[0] >= packet_filter->edges_low[0]);
   rules_trig &= (packet_lin->data[1] >= packet_filter->edges_low[1]);
-//  rules_trig &= (packet_lin->data[2] >= packet_filter->edges_low[2]);
-//  rules_trig &= (packet_lin->data[3] >= packet_filter->edges_low[3]);
-//  rules_trig &= (packet_lin->data[4] >= packet_filter->edges_low[4]);
-//  rules_trig &= (packet_lin->data[5] >= packet_filter->edges_low[5]);
-//  rules_trig &= (packet_lin->data[6] >= packet_filter->edges_low[6]);
-//  rules_trig &= (packet_lin->data[7] >= packet_filter->edges_low[7]);
+  //  rules_trig &= (packet_lin->data[2] >= packet_filter->edges_low[2]);
+  //  rules_trig &= (packet_lin->data[3] >= packet_filter->edges_low[3]);
+  //  rules_trig &= (packet_lin->data[4] >= packet_filter->edges_low[4]);
+  //  rules_trig &= (packet_lin->data[5] >= packet_filter->edges_low[5]);
+  //  rules_trig &= (packet_lin->data[6] >= packet_filter->edges_low[6]);
+  //  rules_trig &= (packet_lin->data[7] >= packet_filter->edges_low[7]);
   rules_trig &= get_btn_state(packet_filter->btn_state);
   return rules_trig;
 }
 
-void get_add_to_trig_list(uint8_t* pArray, uint8_t* index, uint8_t pid){
+void get_add_to_trig_list(uint8_t *pArray, uint8_t *index, uint8_t pid)
+{
   bool isEmpty = true;
-  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
-    if(pArray[i] != 0x00U){
-     isEmpty = false; 
-     break;
+  for (uint8_t i = 0; i < COUNT_PACKET; ++i)
+  {
+    if (pArray[i] != 0x00U)
+    {
+      isEmpty = false;
+      break;
     }
   }
-  
-  if(isEmpty){
+
+  if (isEmpty)
+  {
     *index = 0x00U;
   }
-  
-  if(*index < COUNT_PACKET - 1U){
+
+  if (*index < COUNT_PACKET - 1U)
+  {
     pArray[(*index)++] = pid;
   }
-  else{
-    pArray[*index] = pid;//Simple rewrite last cell into array
+  else
+  {
+    pArray[*index] = pid; // Simple rewrite last cell into array
   }
 }
 
-void get_remove_pid(uint8_t* pArray, uint8_t pid){
-  for(uint8_t i = 0; i < COUNT_PACKET; ++i){
-    if(pArray[i] == pid){       
+void get_remove_pid(uint8_t *pArray, uint8_t pid)
+{
+  for (uint8_t i = 0; i < COUNT_PACKET; ++i)
+  {
+    if (pArray[i] == pid)
+    {
       pArray[i] = 0x00U;
       break;
     }
@@ -142,32 +151,78 @@ bool get_btn0_state(void)
   return btn_0;
 }
 
-bool get_btn1_state(void){
+bool get_btn1_state(void)
+{
   return btn_1;
 }
 
-bool get_btn_state(uint8_t state){
+bool get_btn_state(uint8_t state)
+{
   bool _state = false;
-  switch(state){
+  switch (state)
+  {
   case 0x00U:
     _state = true;
     break;
-    
+
   case 0x01U:
     _state = get_btn0_state();
     break;
-    
+
   case 0x02U:
     _state = get_btn1_state();
     break;
-    
+
   case 0x03U:
     _state = get_btn0_state() | get_btn1_state();
     break;
-    
+
   default:
-   _state = false;
+    _state = false;
     break;
-  }  
+  }
   return _state;
+}
+
+void get_out_action(enum out_state state, uint8_t timeout_value)
+{
+  switch (state)
+  {
+  case no_action:
+    asm("nop"); /*only for debug*/
+    break;
+
+  case out_0_time:
+    OUT_PORT->ODR |= OUT_0;
+    out_timeout_0 = timeout_value;
+    b_out_time_0 = true;
+    // TODO: Add timeput (general variable)
+    break;
+
+  case out_0_en:
+    OUT_PORT->ODR |= OUT_0;
+    break;
+
+  case out_1_dis:
+    OUT_PORT->ODR &= ~OUT_0;
+    break;
+
+  case out_1_time:
+    OUT_PORT->ODR |= OUT_1;
+    out_timeout_1 = timeout_value;
+    b_out_time_1 = true;
+    break;
+
+  case out_1_en:
+    OUT_PORT->ODR |= OUT_1;
+    break;
+
+  case out_1_dis:
+    OUT_PORT->ODR &= ~OUT_1;
+    break;
+
+  default:
+    OUT_PORT -> ODR &= ~(OUT_0 |  OUT_1);
+    break;
+  }
 }

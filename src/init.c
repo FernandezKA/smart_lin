@@ -8,9 +8,9 @@ void CLK_Init(void)
 
 void UART_Init(uint16_t BAUD)
 {
-//  uint16_t prescaler = F_CPU / BAUD;
-//  UART1->BRR1 = (prescaler & 0xFF0) >> 4;
-//  UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
+  //  uint16_t prescaler = F_CPU / BAUD;
+  //  UART1->BRR1 = (prescaler & 0xFF0) >> 4;
+  //  UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
   set_baud(BAUD);
   UART1->CR2 |= UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN;
 }
@@ -18,17 +18,20 @@ void UART_Init(uint16_t BAUD)
 void LIN_Init(void)
 {
   UART1->CR3 |= UART1_CR3_LINEN;
-  //UART1->CR4 |= UART1_CR4_LBDIEN;
+  // UART1->CR4 |= UART1_CR4_LBDIEN;
 }
 
 void PORT_Init(void)
 {
-  //EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
-  LED_PORT->DDR |= LED_PIN | LED_ACT; //Get pin with led as out push-pull
-  BTN_PORT->CR1|=BTN_0 | BTN_1; //Get pull-up pins with buttons
-  BTN_PORT->CR2|=BTN_0|BTN_1; //ENABLE EXT. IRQ
-  EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
-  MODE_PORT -> CR1 |= MODE_PIN; //Get pull-up pin for select dev. run mode 
+  // EXTI->CR1 |= (1U << 5 | 1U << 4); //RISING AND FALLING EDGE ON PORTC for buttons
+  LED_PORT->DDR |= LED_PIN | LED_ACT; // Get pin with led as out push-pull
+  BTN_PORT->CR1 |= BTN_0 | BTN_1;     // Get pull-up pins with buttons
+  BTN_PORT->CR2 |= BTN_0 | BTN_1;     // ENABLE EXT. IRQ
+  EXTI->CR1 |= (1U << 5 | 1U << 4);   // RISING AND FALLING EDGE ON PORTC for buttons
+  MODE_PORT->CR1 |= MODE_PIN;         // Get pull-up pin for select dev. run mode
+
+  OUT_PORT->DDR |= (OUT_0 | OUT_1);
+  OUT_PORT->CR1 |= (OUT_0 | OUT_1); // Set work mode Push-pull
 }
 
 void IRQ_Init(void)
@@ -70,14 +73,16 @@ void config_lin(void)
   uint16_t readBaud = 0x00U;
   readBaud = ((FLASH_ReadByte(BRRH_REG) << 8) & 0xFF00U);
   readBaud |= (FLASH_ReadByte(BRRL_REG) & 0xFFU);
-  
-  if(readBaud != 0x00U){
-     set_baud(readBaud);
+
+  if (readBaud != 0x00U)
+  {
+    set_baud(readBaud);
   }
-  else{
-     set_baud(9600U);
+  else
+  {
+    set_baud(9600U);
   }
-  
+
   UART1->CR2 = (UART1_CR2_RIEN | UART1_CR2_REN | UART1_CR2_TEN);
   UART1->CR4 |= UART1_CR4_LBDIEN;
 }
@@ -85,14 +90,14 @@ void config_lin(void)
 void set_baud(uint16_t _baud)
 {
   static uint16_t prescaler = 0x00U;
-  if(_baud != 0x00U){
-    prescaler = (uint16_t) (F_CPU / _baud);
+  if (_baud != 0x00U)
+  {
+    prescaler = (uint16_t)(F_CPU / _baud);
   }
-  else{
-    prescaler = (uint16_t) (F_CPU / 9600U);
+  else
+  {
+    prescaler = (uint16_t)(F_CPU / 9600U);
   }
   UART1->BRR1 = (prescaler & 0xFF0) >> 4;
   UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
-//  UART1->BRR1 = (uint8_t) (prescaler & 0xFF0U) >> 4;
-//  UART1->BRR2 |= (uint8_t) (((prescaler & 0xF000U) >> 4) | (prescaler & 0x0FU));
 }
