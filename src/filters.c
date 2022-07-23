@@ -88,8 +88,8 @@ void load_filter_packet(uint8_t index, struct filter *packet)
   packet->timeout = tmpArr[19U];
   packet->btn_state = tmpArr[20U];
   packet->remove_after_use = tmpArr[21U];
-  packet->out_st = (enum out_state)tmpArr[24U];
-  packet->out_field = tmpArr[25U];
+  packet->out_st = (enum out_state)tmpArr[22U];
+  packet->out_field = tmpArr[23U];
 }
 
 bool get_check_filter(struct lin *packet_lin, struct filter *packet_filter)
@@ -203,7 +203,7 @@ void get_out_action(enum out_state state, uint8_t timeout_value)
     OUT_PORT->ODR |= OUT_0;
     break;
 
-  case out_1_dis:
+  case out_0_dis:
     OUT_PORT->ODR &= ~OUT_0;
     break;
 
