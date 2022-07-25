@@ -23,4 +23,6 @@ void config_uart(void);
 void config_lin(void);
 
 void set_baud(uint16_t _baud);
+
+void read_init_btn_state(bool* st_btn_0, bool* st_btn_1);
 #endif

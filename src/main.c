@@ -50,6 +50,8 @@ void main(void)
   // NB: The next string only for tests
   // curr_mode = config;
   curr_mode = GetDevMode();
+  /* Read initial state from buttons*/
+  read_init_btn_state(&btn_0, &btn_1);
   enum cmd curr_cmd = undef;
   uint16_t tmp_arr_index = 0x00U;
   uint8_t tmp_data;

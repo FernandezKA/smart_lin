@@ -101,3 +101,9 @@ void set_baud(uint16_t _baud)
   UART1->BRR1 = (prescaler & 0xFF0) >> 4;
   UART1->BRR2 = ((prescaler & 0xF000) >> 4) | (prescaler & 0x0F);
 }
+
+void read_init_btn_state(bool* st_btn_0, bool* st_btn_1)
+{
+  ((BTN_PORT->IDR & BTN_0) == BTN_0) ? (*st_btn_0 = false) : (*st_btn_0 = true);
+  ((BTN_PORT->IDR & BTN_1) == BTN_1) ? (*st_btn_1 = false) : (*st_btn_1 = true);
+}
